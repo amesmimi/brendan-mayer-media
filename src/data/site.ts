@@ -18,6 +18,11 @@ export const site = {
    */
   email: { user: 'hello', domain: 'example.com' },
   copyrightYear: 2026,
+  /**
+   * Unlisted preview mode for review before launch: pages ask search engines not to index them
+   * and the sitemap isn't advertised. Set to false at launch.
+   */
+  preview: true,
 } as const;
 
 export const nav = [

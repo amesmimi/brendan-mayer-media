@@ -37,7 +37,7 @@ const structuredData = {
 <link rel="canonical" href={canonical} />
 <meta name="author" content={site.photographer} />
 <!-- Ask AI crawlers not to use the photos for training (honoured by some, not all). -->
-<meta name="robots" content="index, follow, noai, noimageai" />
+<meta name="robots" content={`${site.preview ? 'noindex, nofollow' : 'index, follow'}, noai, noimageai`} />
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content={site.name} />

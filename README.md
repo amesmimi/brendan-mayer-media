@@ -57,6 +57,7 @@ In the repo settings, **Pages → Source** must be set to **GitHub Actions**.
 
 ## Before launch
 
+- [ ] Turn off preview mode: set `preview: false` in `src/data/site.ts` so search engines can index the site.
 - [ ] Replace the placeholder email in `src/data/site.ts` (`hello@example.com`) with Brendan's address.
 - [ ] Swap the `placeholder-*` photos for Brendan's work and update the YAML captions.
 - [ ] Confirm the bio and the artist list in `src/data/site.ts`.
