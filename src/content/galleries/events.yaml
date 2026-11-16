@@ -7,22 +7,16 @@ blurb: Launches, galas, conferences and private celebrations. Speakers, guests a
 photos:
   - file: placeholder-event-01.jpg
     title: Keynote, Victoria Conference Centre
-    meta: 1/200 · f/2.8 · ISO 3200
   - file: placeholder-event-02.jpg
     title: A toast to the team, Crystal Garden
-    meta: 1/160 · f/1.8 · ISO 2500
+    featured: 4
   - file: placeholder-event-03.jpg
     title: Panel in the round, Victoria Conference Centre
-    meta: 1/250 · f/2.8 · ISO 2000
   - file: placeholder-event-04.jpg
     title: Open mic, before doors
-    meta: 1/320 · f/1.4 · ISO 1600
   - file: placeholder-event-05.jpg
     title: Launch party, The Hudson
-    meta: 1/200 · f/2.0 · ISO 3200
   - file: placeholder-event-06.jpg
     title: Full house, Farquhar Auditorium
-    meta: 1/250 · f/2.8 · ISO 4000
   - file: placeholder-event-07.jpg
     title: Long-table dinner, Fort Street
-    meta: 1/125 · f/2.0 · ISO 2000

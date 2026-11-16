@@ -6,7 +6,6 @@ export interface Photo {
   image: ImageMetadata;
   title: string;
   alt: string;
-  meta?: string;
   /** true = in the slideshow; a number pins it to that slide position (1 = first). */
   featured: boolean | number;
   focus?: 'top' | 'center' | 'bottom';
@@ -62,7 +61,6 @@ async function load(): Promise<Gallery[]> {
         file: string;
         title: string;
         alt?: string;
-        meta?: string;
         featured: boolean | number;
         focus?: 'top' | 'center' | 'bottom';
       };
@@ -75,7 +73,6 @@ async function load(): Promise<Gallery[]> {
         image: images.get(`${slug}/${p.file}`)!,
         title: p.title,
         alt: p.alt ?? `${p.title}. ${data.label} photo by Brendan Mayer.`,
-        meta: p.meta,
         featured: p.featured,
         focus: p.focus,
         gallery: slug,

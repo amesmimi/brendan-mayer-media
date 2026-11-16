@@ -1,36 +1,37 @@
 # Festivals gallery: captions for photos in src/assets/galleries/festivals/
 # See concerts.yaml for what each field does.
 # Brendan's photos, from his Wix site. Most are small for now; swap in full-size exports when he sends them.
-# Titles are placeholders until he names the artists and festivals.
+# Titles are the artist names (from Brendan and the Wix site's labels). Hands up, Afternoon set and To the crowd
+# are still placeholders until he names them.
 label: Festivals
 order: 2
 blurb: Multi-day festivals from the main stage to the beer garden. Headliners, crowds and everything between.
 photos:
   - file: brendan-red-smoke.jpg
-    title: Red smoke, teal light
-    alt: A performer in a cap stands silhouetted in thick red and teal stage smoke.
+    title: Portugal. The Man
+    alt: A member of Portugal. The Man in a cap stands silhouetted in thick red and teal stage smoke.
     featured: 1
     focus: top
   - file: brendan-orange-light.jpg
-    title: Orange light
-    alt: A singer in a white jacket sings into a microphone under warm orange stage lights.
+    title: Third Eye Blind
+    alt: Third Eye Blind's singer, in a white jacket, sings into a microphone under warm orange stage lights.
   - file: brendan-crowd-silhouettes.jpg
     title: Hands up
     alt: Two fans silhouetted against blue stage lights raise their hands toward the stage.
   - file: brendan-pink-suit.jpg
-    title: Pink suit, blue sky
-    alt: A performer in sunglasses and a pink patterned suit sings on an outdoor stage.
+    title: Aqua
+    alt: A performer from Aqua in sunglasses and a pink patterned suit sings on an outdoor stage.
     focus: top
   - file: brendan-outdoor-stage.jpg
     title: Afternoon set
     alt: A tattooed singer with dark hair holds a microphone on an outdoor festival stage.
     focus: top
   - file: brendan-purple-drums.jpg
-    title: Drums in purple
-    alt: A drummer plays under purple and pink lights with glitter in the air.
+    title: Portugal. The Man
+    alt: Portugal. The Man's drummer plays under purple and pink lights with glitter in the air.
   - file: brendan-boombox-keys.jpg
-    title: Keys and the giant boombox
-    alt: A keyboardist plays in front of a giant pink boombox prop and a video screen.
+    title: Aqua
+    alt: Aqua's keyboardist plays in front of a giant pink boombox prop and a video screen.
   - file: brendan-point-to-crowd.jpg
     title: To the crowd
     alt: A rapper in a cap points out to the crowd from an outdoor stage.

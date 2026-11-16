@@ -37,11 +37,9 @@
             const link = pswp.currSlide?.data.element as HTMLElement | undefined;
             const title = document.createElement('b');
             title.textContent = link?.dataset.title ?? '';
-            const meta = document.createElement('span');
-            meta.textContent = link?.dataset.meta ?? '';
             const copyright = document.createElement('small');
             copyright.textContent = '© Brendan Mayer. All rights reserved.';
-            el.replaceChildren(title, ...(meta.textContent ? [meta] : []), copyright);
+            el.replaceChildren(title, copyright);
           };
           pswp.on('change', update);
           update();

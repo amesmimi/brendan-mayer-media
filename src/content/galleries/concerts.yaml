@@ -3,44 +3,39 @@
 #   file:     the photo's file name in src/assets/galleries/concerts/
 #   title:    caption shown on the site
 #   alt:      (optional) description for screen readers; defaults to the title
-#   meta:     (optional) camera settings, shown in small type
 #   featured: (optional) true = include in the homepage slideshow; a number pins it to that slide (1 = first)
 #   focus:    (optional) top or bottom = keep that part of the photo when it's cropped (e.g. to avoid cutting off heads)
-# Brendan's photos, from his Wix site. Titles are placeholders until he names the artists and venues.
+# Brendan's photos, from his Wix site. Titles are the artist names (from Brendan and the Wix site's labels);
+# Pedal steel is still a placeholder until he names the artist.
 label: Concerts
 order: 1
 blurb: Club shows, theatres and arenas. Tight light, fast moments, and the crowd as part of the story.
 photos:
   - file: brendan-sepia-guitar.jpg
-    title: Guitar solo
-    alt: A curly-haired guitarist plays a solo in warm, low light.
-    featured: true
+    title: Yonaka
+    alt: A curly-haired guitarist from Yonaka plays a solo in warm, low light.
     focus: top
+  - file: brendan-green-stage.jpg
+    title: July Talk
+    alt: July Talk performs on a stage washed in green light, the guitarist pointing up.
+  - file: brendan-lime-jacket.jpg
+    title: July Talk
+    alt: Leah Fay of July Talk, in a lime-green jacket, sings into a microphone through stage smoke.
   - file: brendan-red-hood.jpg
     title: Allan Rayman
     alt: Allan Rayman, bearded and in a black hoodie, sings in red stage light.
-    featured: true
+    featured: 3
     focus: top
-  - file: brendan-lime-jacket.jpg
-    title: Singer in the smoke
-    alt: A singer in a lime-green jacket sings into a microphone through stage smoke.
-    featured: true
-  - file: brendan-green-stage.jpg
-    title: Under the green lights
-    alt: A band performs on a stage washed in green light, the singer pointing up.
-    featured: true
   - file: brendan-saxophone.jpg
-    title: Saxophone solo
-    alt: A long-haired saxophonist plays in blue light in front of a city skyline backdrop.
-    featured: true
+    title: PIGS
+    alt: A long-haired saxophonist from PIGS plays in blue light in front of a city skyline backdrop.
   - file: brendan-pedal-steel.jpg
     title: Pedal steel
     alt: A bearded musician in a toque plays pedal steel guitar under blue light.
-    featured: true
     focus: top
   - file: brendan-graphic-tee.jpg
-    title: Arms open
-    alt: A singer in a graphic t-shirt holds a microphone out to the side on a dark stage.
+    title: Allan Rayman
+    alt: Allan Rayman, in a graphic t-shirt, holds a microphone out to the side on a dark stage.
   - file: brendan-blue-haze-guitar.jpg
-    title: Blue haze
-    alt: A guitarist plays a red electric guitar in blue stage haze.
+    title: Jason Isbell
+    alt: Jason Isbell plays a red electric guitar in blue stage haze.

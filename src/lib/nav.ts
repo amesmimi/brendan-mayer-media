@@ -7,7 +7,7 @@ export interface NavItem {
 
 /**
  * Top navigation: links to homepage sections. On the homepage they stay in-page; elsewhere they lead back
- * to the homepage section. Gallery pages are reached from the Work section ("View all" / "See all").
+ * to the homepage section. Gallery pages are reached from the Work section's "See all" button.
  */
 export function getNavItems(isHome: boolean): NavItem[] {
   const section = (hash: string) => (isHome ? hash : url(hash));

@@ -58,7 +58,6 @@ To give a photo a proper caption, open the gallery's file in `src/content/galler
 photos:
   - file: 2025-11-royals-breakaway-03.jpg # the web file name from Step 2
     title: Breakaway, Save-On-Foods Memorial Centre
-    meta: 1/1000 · f/2.8 · ISO 3200 # optional camera settings
     featured: true # optional: show it in the homepage slideshow
 ```
 

@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import portrait from '../assets/about/brendan-moneyshot.jpg';
-import { about, site } from '../data/site';
+import { about } from '../data/site';
 import { url } from '../lib/paths';
 ---
 
@@ -17,7 +17,6 @@ import { url } from '../lib/paths';
         loading="lazy"
         draggable="false"
       />
-      <figcaption>{site.location}</figcaption>
     </figure>
     <div class="body">
       <p class="eyebrow">About</p>
@@ -50,7 +49,7 @@ import { url } from '../lib/paths';
 <style>
   /* Dark panel, matching the services cards, so the portrait is the warm focal point */
   .about {
-    background: var(--green-950);
+    background: var(--charcoal-950);
     border: 1px solid var(--line);
     color: var(--cream);
     border-radius: var(--radius-lg);
@@ -75,19 +74,6 @@ import { url } from '../lib/paths';
     height: 100%;
     object-fit: cover;
     object-position: 50% 30%;
-  }
-
-  figcaption {
-    position: absolute;
-    left: 14px;
-    bottom: 14px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    background: rgb(8 32 29 / 0.75);
-    border: 1px solid var(--line);
-    color: var(--cream);
-    padding: 6px 10px;
-    border-radius: var(--radius-pill);
   }
 
   .body {

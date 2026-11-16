@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Brand green tile, cream camera body, amber lens. The camera is scaled to 80% so the tile has breathing room. -->
-  <rect width="64" height="64" rx="16" fill="#0F3430"/>
+  <!-- Warm charcoal tile, cream camera body, amber lens. The camera is scaled to 80% so the tile has breathing room. -->
+  <rect width="64" height="64" rx="16" fill="#1C1B19"/>
   <g transform="translate(32 33) scale(0.8) translate(-32 -33)">
     <rect x="22" y="13" width="17" height="9" rx="3" fill="#E6E0D7"/>
     <rect x="9" y="19" width="46" height="33" rx="8" fill="#E6E0D7"/>
-    <circle cx="32" cy="36" r="12" fill="#0F3430"/>
+    <circle cx="32" cy="36" r="12" fill="#1C1B19"/>
     <circle cx="32" cy="36" r="7.5" fill="#F2A93B"/>
-    <circle cx="47" cy="26" r="2.5" fill="#0F3430"/>
+    <circle cx="47" cy="26" r="2.5" fill="#1C1B19"/>
   </g>
 </svg>

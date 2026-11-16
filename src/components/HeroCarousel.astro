@@ -38,58 +38,34 @@ const { photos } = Astro.props;
         Brendan Mayer <span class="media">Media</span>
       </h1>
       <p>{site.tagline}</p>
-      <div class="hero-ctas">
-        <a class="btn btn-primary" href="#work">
-          View the work
-        </a>
-        <a class="btn btn-ghost" href="#contact">
-          Book a shoot
-        </a>
-      </div>
     </div>
 
     <div class="hero-bar">
-      <p class="hero-caption" aria-live="polite">
+      <p class="hero-caption">
         {photos.map((photo, i) => (
           <span data-caption hidden={i !== 0}>
             <b>{photo.galleryLabel}</b> · {photo.title}
-            {photo.meta && <> · {photo.meta}</>}
           </span>
         ))}
       </p>
-      <div class="segs" role="group" aria-label="Choose a photo">
-        {photos.map((photo, i) => (
-          <button
-            class:list={['seg', { 'is-active': i === 0 }]}
-            type="button"
-            aria-label={`Show photo ${i + 1}: ${photo.title}`}
-            aria-current={i === 0 ? 'true' : undefined}
-          >
+      {/* Progress indicator only. The header sets the scene; visitors browse photos in the Work section below. */}
+      <div class="segs" aria-hidden="true">
+        {photos.map((_, i) => (
+          <span class:list={['seg', { 'is-active': i === 0 }]}>
             <i />
-          </button>
+          </span>
         ))}
       </div>
-      <div class="hero-controls">
-        <button class="icon-btn" type="button" data-prev aria-label="Previous photo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M15 6l-6 6 6 6"></path>
-          </svg>
-        </button>
-        <button class="icon-btn" type="button" data-pause aria-pressed="false" aria-label="Pause slideshow">
-          <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <rect x="6" y="5" width="4" height="14" rx="1"></rect>
-            <rect x="14" y="5" width="4" height="14" rx="1"></rect>
-          </svg>
-          <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M8 5l11 7-11 7z"></path>
-          </svg>
-        </button>
-        <button class="icon-btn" type="button" data-next aria-label="Next photo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M9 6l6 6-6 6"></path>
-          </svg>
-        </button>
-      </div>
+      {/* Pause stays: anything that moves on its own for over 5s needs a way to stop it (WCAG 2.2.2). */}
+      <button class="icon-btn" type="button" data-pause aria-pressed="false" aria-label="Pause slideshow">
+        <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+          <rect x="14" y="5" width="4" height="14" rx="1"></rect>
+        </svg>
+        <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M8 5l11 7-11 7z"></path>
+        </svg>
+      </button>
     </div>
   </div>
 </section>
@@ -104,7 +80,7 @@ const { photos } = Astro.props;
     position: relative;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    background: var(--green-950);
+    background: var(--charcoal-950);
     min-height: clamp(540px, 78vh, 820px);
     display: flex;
     flex-direction: column;
@@ -118,9 +94,10 @@ const { photos } = Astro.props;
     position: absolute;
     inset: 0;
     pointer-events: none;
+    /* Charcoal shade, so red and blue stage light stay true */
     background:
-      linear-gradient(180deg, rgb(8 32 29 / 0) 35%, rgb(8 32 29 / 0.55) 65%, rgb(8 32 29 / 0.92) 100%),
-      linear-gradient(90deg, rgb(8 32 29 / 0.45) 0%, rgb(8 32 29 / 0) 55%);
+      linear-gradient(180deg, rgb(18 17 16 / 0) 35%, rgb(18 17 16 / 0.5) 65%, rgb(18 17 16 / 0.88) 100%),
+      linear-gradient(90deg, rgb(18 17 16 / 0.4) 0%, rgb(18 17 16 / 0) 55%);
   }
 
   .slide {
@@ -153,21 +130,26 @@ const { photos } = Astro.props;
     transform-origin: 50% 88%;
   }
 
-  .slide.is-active :global(img) {
-    animation: kenburns 7s ease-out forwards;
+  /* The outgoing slide keeps its zoom while it fades out, so it doesn't snap back to full size. */
+  .slide.is-active :global(img),
+  .slide.is-leaving :global(img) {
+    animation: kenburns 7s linear forwards;
   }
 
+  /* Paused by the visitor, or scrolled out of view */
   .stage.paused .slide.is-active :global(img),
-  .stage.paused .seg.is-active i {
+  .stage.paused .seg.is-active i,
+  .stage.offscreen .slide.is-active :global(img),
+  .stage.offscreen .seg.is-active i {
     animation-play-state: paused;
   }
 
   @keyframes kenburns {
     from {
-      transform: scale(1.02);
+      transform: scale(1);
     }
     to {
-      transform: scale(1.1);
+      transform: scale(1.08);
     }
   }
 
@@ -181,7 +163,7 @@ const { photos } = Astro.props;
   }
 
   h1 {
-    font-size: clamp(60px, 9.5vw, 156px);
+    font-size: clamp(56px, 7.5vw, 120px);
     font-weight: 900;
     line-height: 0.86;
   }
@@ -195,12 +177,6 @@ const { photos } = Astro.props;
   .hero-copy p {
     font-size: clamp(17px, 1.6vw, 21px);
     max-width: 34ch;
-  }
-
-  .hero-ctas {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
   }
 
   .hero-bar {
@@ -237,18 +213,8 @@ const { photos } = Astro.props;
     height: 4px;
     border-radius: 4px;
     background: rgb(230 224 215 / 0.25);
-    border: 0;
-    padding: 0;
-    cursor: pointer;
     position: relative;
     overflow: hidden;
-  }
-
-  /* Larger tap target without changing the look */
-  .seg::before {
-    content: '';
-    position: absolute;
-    inset: -14px 0;
   }
 
   .seg i {
@@ -273,9 +239,12 @@ const { photos } = Astro.props;
     }
   }
 
-  .hero-controls {
-    display: flex;
-    gap: 8px;
+  /* The progress bar times each slide, so it keeps its full length when the global reduced-motion rule
+     shortens animations. Otherwise pressing Play would flip through slides as fast as the screen redraws. */
+  @media (prefers-reduced-motion: reduce) {
+    .seg.is-active i {
+      animation-duration: var(--slide-duration) !important;
+    }
   }
 
   .icon-play,
@@ -298,6 +267,10 @@ const { photos } = Astro.props;
       flex-basis: 100%;
       order: 2;
     }
+    /* Bars fill the row so the pause button lines up with the right edge */
+    .segs {
+      flex: 1 1 auto;
+    }
   }
 </style>
 
@@ -306,7 +279,7 @@ const { photos } = Astro.props;
 
   document.querySelectorAll<HTMLElement>('[data-hero]').forEach((stage) => {
     const slides = [...stage.querySelectorAll<HTMLElement>('.slide')];
-    const segs = [...stage.querySelectorAll<HTMLButtonElement>('.seg')];
+    const segs = [...stage.querySelectorAll<HTMLElement>('.seg')];
     const captions = [...stage.querySelectorAll<HTMLElement>('[data-caption]')];
     const pauseButton = stage.querySelector<HTMLButtonElement>('[data-pause]')!;
     let current = 0;
@@ -315,19 +288,19 @@ const { photos } = Astro.props;
     const show = (n: number) => {
       current = (n + slides.length) % slides.length;
       slides.forEach((s, i) => {
-        s.classList.toggle('is-active', i === current);
-        s.setAttribute('aria-hidden', String(i !== current));
+        const on = i === current;
+        if (!on && s.classList.contains('is-active')) s.classList.add('is-leaving');
+        s.classList.toggle('is-active', on);
+        s.setAttribute('aria-hidden', String(!on));
       });
       captions.forEach((c, i) => (c.hidden = i !== current));
       segs.forEach((s, i) => {
         s.classList.remove('is-active');
         s.classList.toggle('done', i < current);
-        s.removeAttribute('aria-current');
       });
       const seg = segs[current];
       void seg.offsetWidth; // restart the progress animation
       seg.classList.add('is-active');
-      seg.setAttribute('aria-current', 'true');
     };
 
     const setPaused = (value: boolean) => {
@@ -337,24 +310,25 @@ const { photos } = Astro.props;
       pauseButton.setAttribute('aria-label', value ? 'Play slideshow' : 'Pause slideshow');
     };
 
+    // Once an outgoing slide has faded out, drop its zoom.
+    slides.forEach((s) =>
+      s.addEventListener('transitionend', (e) => {
+        if (e.target === s && e.propertyName === 'opacity' && !s.classList.contains('is-active')) {
+          s.classList.remove('is-leaving');
+        }
+      }),
+    );
+
     segs.forEach((seg, i) => {
-      seg.addEventListener('click', () => show(i));
       seg.querySelector('i')?.addEventListener('animationend', () => {
-        if (i === current && !paused) show(current + 1);
+        if (i === current && !paused && !stage.classList.contains('offscreen')) show(current + 1);
       });
     });
-    stage.querySelector('[data-prev]')?.addEventListener('click', () => show(current - 1));
-    stage.querySelector('[data-next]')?.addEventListener('click', () => show(current + 1));
     pauseButton.addEventListener('click', () => setPaused(!paused));
 
-    let touchX: number | null = null;
-    stage.addEventListener('touchstart', (e) => (touchX = e.touches[0].clientX), { passive: true });
-    stage.addEventListener('touchend', (e) => {
-      if (touchX === null) return;
-      const dx = e.changedTouches[0].clientX - touchX;
-      touchX = null;
-      if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
-    });
+    // Hold the slideshow while it's scrolled out of view, so visitors come back to where they left it.
+    // Kept separate from the visitor's own pause, so scrolling back never overrides their choice.
+    new IntersectionObserver(([entry]) => stage.classList.toggle('offscreen', !entry.isIntersecting)).observe(stage);
 
     // Don't auto-advance for people who prefer reduced motion.
     setPaused(reduceMotion);

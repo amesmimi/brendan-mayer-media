@@ -42,7 +42,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--green);
+  background: var(--charcoal);
   color: var(--cream);
   font-family: var(--font-body);
   font-size: var(--text-body);
@@ -58,7 +58,7 @@ body::before {
   inset: 0 0 auto;
   height: env(safe-area-inset-top, 0px);
   z-index: 60;
-  background: var(--green-950);
+  background: var(--charcoal-950);
 }
 
 img {
@@ -250,7 +250,7 @@ p {
   display: grid;
   place-items: center;
   flex: none;
-  background: rgb(8 32 29 / 0.55);
+  background: rgb(18 17 16 / 0.55);
   color: var(--cream);
   border: 1px solid rgb(230 224 215 / 0.3);
   cursor: pointer;
@@ -262,7 +262,7 @@ p {
 }
 
 .icon-btn:hover {
-  background: rgb(8 32 29 / 0.85);
+  background: rgb(18 17 16 / 0.85);
   border-color: var(--cream);
 }
 
@@ -282,9 +282,9 @@ p {
 /* ---------- Photo viewer (PhotoSwipe) theme ---------- */
 .pswp {
   --pswp-bg: var(--night);
-  --pswp-placeholder-bg: var(--green-950);
+  --pswp-placeholder-bg: var(--charcoal-950);
   --pswp-icon-color: var(--cream);
-  --pswp-icon-color-secondary: var(--green-950);
+  --pswp-icon-color-secondary: var(--charcoal-950);
   font-family: var(--font-body);
 }
 
@@ -302,7 +302,7 @@ p {
   display: grid;
   gap: 2px;
   color: var(--cream);
-  background: linear-gradient(transparent, rgb(5 20 18 / 0.85) 40%);
+  background: linear-gradient(transparent, rgb(10 10 9 / 0.85) 40%);
   pointer-events: none;
 }
 
@@ -310,7 +310,6 @@ p {
   font-weight: 600;
 }
 
-.pswp__caption span,
 .pswp__caption small {
   font-family: var(--font-mono);
   font-size: 12px;

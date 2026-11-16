@@ -9,14 +9,13 @@ export const site = {
   description:
     'Brendan Mayer is a concert, festival, event and sports photographer based in Victoria, BC, working with artists, promoters, venues and teams.',
   location: 'Victoria, BC',
-  serviceArea: 'Based in Victoria, BC. Travels across Vancouver Island and the Lower Mainland.',
+  serviceArea: 'Based in Victoria, BC.',
   instagram: { handle: '@brendanmayer', url: 'https://www.instagram.com/brendanmayer/' },
   /**
-   * Placeholder until launch. Brendan's real address replaces this just before go-live,
-   * so it never sits in the public repo during development.
-   * Stored in two parts and assembled in the browser so simple scrapers can't harvest it.
+   * Brendan's Gmail, approved by him for the site. Switching to a work address later (e.g. hello@brendanmayermedia.ca)
+   * is a change here only. Stored in two parts and assembled in the browser so simple scrapers can't harvest it.
    */
-  email: { user: 'hello', domain: 'example.com' },
+  email: { user: 'brendanjmayer', domain: 'gmail.com' },
   copyrightYear: 2026,
   /**
    * Unlisted preview mode for review before launch: pages ask search engines not to index them
@@ -47,16 +46,21 @@ export const about = {
   cvFile: null as string | null,
 };
 
-/** Service cards. `gallery` links to the matching gallery page and must match a gallery file name. */
+/**
+ * Service cards. `gallery` links to the matching gallery page and must match a gallery file name.
+ * `photo` (optional) picks the card's photo by file name from that gallery; otherwise it uses the gallery's second photo.
+ */
 export const services = [
   {
     gallery: 'concerts',
-    title: 'Concerts and tours',
+    photo: 'brendan-red-hood.jpg',
+    title: 'Concerts',
     text: 'Live coverage for artists, management, venues and promoters.',
     items: ['First three songs or the full set', 'Edited gallery within 48 hours', 'Press and social-ready crops'],
   },
   {
     gallery: 'festivals',
+    photo: 'brendan-crowd-silhouettes.jpg',
     title: 'Festivals',
     text: 'Full-day or multi-day coverage of stages, crowds and atmosphere.',
     items: ['Artist sets and crowd moments', 'Same-night selects for socials', 'Sponsor and site photography'],

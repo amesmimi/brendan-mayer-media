@@ -22,7 +22,6 @@ const items = await Promise.all(photos.map(async (photo) => ({ photo, large: awa
         data-pswp-width={large.width}
         data-pswp-height={large.height}
         data-title={photo.title}
-        data-meta={photo.meta}
       >
         <Picture
           src={photo.image}
@@ -53,7 +52,7 @@ const items = await Promise.all(photos.map(async (photo) => ({ photo, large: awa
     aspect-ratio: 3 / 2;
     border-radius: var(--radius-md);
     overflow: hidden;
-    background: var(--green-950);
+    background: var(--charcoal-950);
     cursor: zoom-in;
   }
 

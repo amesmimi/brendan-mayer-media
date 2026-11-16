@@ -19,7 +19,6 @@ const galleries = defineCollection({
           file: z.string(),
           title: z.string(),
           alt: z.string().optional(),
-          meta: z.string().optional(),
           // true = in the homepage slideshow; a number (1, 2, ...) also pins it to that slide position.
           featured: z.union([z.boolean(), z.number().int().positive()]).default(false),
           // Where to anchor the photo when it's cropped (homepage slideshow, gallery grid). Default: centre.

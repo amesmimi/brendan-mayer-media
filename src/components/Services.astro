@@ -9,10 +9,12 @@ interface Props {
 }
 
 const { galleries } = Astro.props;
-// Each card shows the second photo of its gallery (the first already leads the filmstrip), or the first if it's the only one.
+// Each card shows its chosen `photo` if set, otherwise the second photo of its gallery (the first already leads the
+// filmstrip), or the first if it's the only one.
 const cards = services.map((service) => {
   const photos = galleries.find((g) => g.slug === service.gallery)?.photos ?? [];
-  return { ...service, photo: photos[1] ?? photos[0] };
+  const chosen = 'photo' in service ? photos.find((p) => p.file === service.photo) : undefined;
+  return { ...service, photo: chosen ?? photos[1] ?? photos[0] };
 });
 ---
 
@@ -69,7 +71,7 @@ const cards = services.map((service) => {
   }
 
   .service {
-    background: var(--green-950);
+    background: var(--charcoal-950);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     padding: 12px;

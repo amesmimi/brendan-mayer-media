@@ -1,5 +1,5 @@
 ---
-import { Image, Picture } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import type { Gallery } from '../lib/galleries';
 import { viewerImage, widthsFor } from '../lib/images';
 import { url } from '../lib/paths';
@@ -56,7 +56,6 @@ const panels = await Promise.all(
             data-pswp-width={large.width}
             data-pswp-height={large.height}
             data-title={photo.title}
-            data-meta={photo.meta}
           >
             <Picture
               src={photo.image}
@@ -73,29 +72,9 @@ const panels = await Promise.all(
                 <path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7" />
               </svg>
             </span>
-            <span class="frame-cap">
-              {photo.title}
-              {photo.meta && <span>{photo.meta}</span>}
-            </span>
+            <span class="frame-cap">{photo.title}</span>
           </a>
         ))}
-        {/* Last item: a preview card leading to the full gallery page */}
-        <a class="endcard" href={url(`galleries/${gallery.slug}/`)}>
-          <span class="mini" aria-hidden="true">
-            {gallery.photos.slice(0, 4).map((photo) => (
-              <Image src={photo.image} alt="" width={300} loading="lazy" draggable="false" />
-            ))}
-          </span>
-          <span class="endcard-text">
-            <b>View all {gallery.photos.length}</b>
-            <span>
-              {gallery.label} gallery
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M9 6l6 6-6 6" />
-              </svg>
-            </span>
-          </span>
-        </a>
       </div>
       <div class="strip-foot">
         <div class="track" aria-hidden="true">
@@ -133,7 +112,7 @@ const panels = await Promise.all(
     gap: 6px;
     padding: 6px;
     border-radius: var(--radius-pill);
-    background: var(--green-950);
+    background: var(--charcoal-950);
     border: 1px solid var(--line);
     flex: 0 0 auto;
     max-width: 100%;
@@ -191,6 +170,8 @@ const panels = await Promise.all(
     scrollbar-width: none;
     overscroll-behavior-x: contain;
     border-radius: var(--radius-md);
+    /* Lets photos size themselves against the strip's width (cqw units) */
+    container-type: inline-size;
   }
 
   .strip::-webkit-scrollbar {
@@ -205,8 +186,7 @@ const panels = await Promise.all(
     border-radius: var(--radius-md);
     overflow: hidden;
     scroll-snap-align: start;
-    background: var(--green-950);
-    cursor: zoom-in;
+    background: var(--charcoal-950);
     text-decoration: none;
   }
 
@@ -215,6 +195,14 @@ const panels = await Promise.all(
     width: auto;
     object-fit: cover;
     transition: transform 0.6s var(--ease);
+  }
+
+  /* Tablet and up: no photo is wider than half the strip, so two always fit whole, expand icons included.
+     Wider photos are cropped evenly at the sides. */
+  @media (min-width: 700px) {
+    .frame :global(img) {
+      max-width: calc((100cqw - 14px) / 2);
+    }
   }
 
   .frame:hover :global(img) {
@@ -227,16 +215,10 @@ const panels = await Promise.all(
     right: 0;
     bottom: 0;
     padding: 40px 16px 14px;
-    background: linear-gradient(180deg, transparent, rgb(8 32 29 / 0.85));
+    background: linear-gradient(180deg, transparent, rgb(18 17 16 / 0.85));
     font-size: 14px;
     display: grid;
     gap: 2px;
-  }
-
-  .frame-cap span {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--cream-muted);
   }
 
   .expand {
@@ -249,7 +231,7 @@ const panels = await Promise.all(
     border-radius: 50%;
     display: grid;
     place-items: center;
-    background: rgb(8 32 29 / 0.6);
+    background: rgb(18 17 16 / 0.6);
     border: 1px solid rgb(230 224 215 / 0.35);
     color: var(--cream);
     backdrop-filter: blur(8px);
@@ -272,70 +254,6 @@ const panels = await Promise.all(
     border-color: var(--amber);
     color: var(--ink);
     transform: scale(1.06);
-  }
-
-  .endcard {
-    flex: none;
-    height: clamp(300px, 56vh, 580px);
-    width: clamp(240px, 24vw, 320px);
-    scroll-snap-align: start;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--line);
-    background: var(--green-950);
-    text-decoration: none;
-    display: grid;
-    grid-template-rows: minmax(0, 1fr) auto;
-    gap: 16px;
-    padding: 14px;
-    transition: border-color 0.2s;
-  }
-
-  .endcard:hover,
-  .endcard:focus-visible {
-    border-color: var(--amber);
-  }
-
-  .mini {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: 1fr;
-    gap: 6px;
-    min-height: 0;
-  }
-
-  .mini :global(img) {
-    width: 100%;
-    height: 100%;
-    min-height: 0;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-
-  .endcard-text {
-    display: grid;
-    gap: 6px;
-    padding: 4px 6px 6px;
-  }
-
-  .endcard-text b {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 30px;
-    text-transform: uppercase;
-    line-height: 0.95;
-  }
-
-  .endcard-text span {
-    display: inline-flex;
-    gap: 8px;
-    align-items: center;
-    font-weight: 600;
-    color: var(--amber);
-  }
-
-  .endcard-text svg {
-    width: 18px;
-    height: 18px;
   }
 
   .strip-foot {
