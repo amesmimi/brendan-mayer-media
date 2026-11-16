@@ -262,7 +262,6 @@ const cats = await Promise.all(
       align-items: center;
       gap: 10px;
       transform: translateY(-50%);
-      transition: top 0.15s linear;
     }
 
     .thumb b {
@@ -299,6 +298,8 @@ const cats = await Promise.all(
     const cats = [...wall.querySelectorAll<HTMLElement>('.cat')];
     const thumbs = [...root.querySelectorAll<HTMLElement>('[data-thumb]')];
     const bubbles = [...root.querySelectorAll<HTMLElement>('[data-bubble]')];
+    const phoneScrub = root.querySelector<HTMLElement>('.mscrub');
+    const siteHeader = document.querySelector<HTMLElement>('.site-header');
 
     // The phone scrubber needs JavaScript, so it stays hidden without it.
     root.querySelectorAll<HTMLElement>('[data-scrub]').forEach((s) => (s.hidden = false));
@@ -306,6 +307,7 @@ const cats = await Promise.all(
     let frame = 0;
     let idle = 0;
     let current = -1;
+    let bubbleCurrent = -1;
 
     // The current section is the last one whose first row has passed the line under the sticky labels.
     const update = () => {
@@ -321,10 +323,32 @@ const cats = await Promise.all(
       cats.forEach((cat, i) => {
         if (cat.getBoundingClientRect().top <= line) active = i;
       });
-      if (active === current) return;
-      current = active;
-      cats.forEach((cat, i) => cat.classList.toggle('is-current', i === active));
-      bubbles.forEach((b) => (b.textContent = cats[active].dataset.label ?? ''));
+      if (active !== current) {
+        current = active;
+        cats.forEach((cat, i) => cat.classList.toggle('is-current', i === active));
+      }
+
+      /*
+       * Phones: the track runs alongside the photos only. It starts at the first photo (not beside the Gallery
+       * heading), sticks under the top bar once the photos reach it, and ends at the last photo. The bubble names
+       * the section it's sitting over, so it changes as it crosses into the next one.
+       */
+      if (phoneScrub && getComputedStyle(phoneScrub).display !== 'none') {
+        const barBottom = (siteHeader?.getBoundingClientRect().bottom ?? header) + 12;
+        const railTop = Math.max(barBottom, top);
+        const railBottom = Math.max(railTop, Math.min(window.innerHeight - 16, bottom));
+        phoneScrub.style.top = `${railTop}px`;
+        phoneScrub.style.bottom = `${window.innerHeight - railBottom}px`;
+        const y = railTop + progress * (railBottom - railTop);
+        let under = 0;
+        cats.forEach((cat, i) => {
+          if (cat.getBoundingClientRect().top <= y) under = i;
+        });
+        if (under !== bubbleCurrent) {
+          bubbleCurrent = under;
+          bubbles.forEach((b) => (b.textContent = cats[under].dataset.label ?? ''));
+        }
+      }
     };
 
     const onScroll = () => {
