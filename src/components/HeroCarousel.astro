@@ -40,30 +40,6 @@ const { photos } = Astro.props;
   ))}
 </section>
 
-{/* TEMP (remove before launch): arrows for flicking through the header photos while picking and framing them */}
-<div class="wrap hero-dev" data-hero-dev>
-  <button type="button" data-hero-prev aria-label="Previous header photo">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-      <path d="M15 5l-7 7 7 7"></path>
-    </svg>
-  </button>
-  <button type="button" data-hero-pause aria-label="Pause header slideshow" aria-pressed="false">
-    <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <rect x="6" y="5" width="4" height="14"></rect>
-      <rect x="14" y="5" width="4" height="14"></rect>
-    </svg>
-    <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M8 5l11 7-11 7z"></path>
-    </svg>
-  </button>
-  <span data-hero-count>1 / {photos.length}</span>
-  <button type="button" data-hero-next aria-label="Next header photo">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-      <path d="M9 5l7 7-7 7"></path>
-    </svg>
-  </button>
-</div>
-
 <style>
   /*
    * Sized by width, but never taller than the screen below the top bar minus a strip, so on laptops the whole photo
@@ -212,49 +188,6 @@ const { photos } = Astro.props;
       transform: scale(1.04);
     }
   }
-
-  /* TEMP (remove before launch) */
-  .hero-dev {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    padding-top: 10px;
-    font-family: var(--font-mono);
-    font-size: var(--text-label);
-    color: var(--cream-muted);
-  }
-
-  .hero-dev button {
-    display: grid;
-    place-items: center;
-    width: 36px;
-    height: 36px;
-    padding: 0;
-    border: 1px solid var(--line);
-    background: transparent;
-    color: var(--cream);
-    cursor: pointer;
-  }
-
-  .hero-dev button:hover {
-    border-color: var(--amber);
-    color: var(--amber);
-  }
-
-  .hero-dev svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  .hero-dev .icon-play,
-  .hero-dev [aria-pressed='true'] .icon-pause {
-    display: none;
-  }
-
-  .hero-dev [aria-pressed='true'] .icon-play {
-    display: block;
-  }
 </style>
 
 <script>
@@ -286,39 +219,11 @@ const { photos } = Astro.props;
     );
 
     let timer = 0;
-    let held = false; // TEMP: set by the pause button under the header
-    const start = () => {
-      if (!held) timer ||= window.setInterval(() => show(current + 1), SLIDE_MS);
-    };
+    const start = () => (timer ||= window.setInterval(() => show(current + 1), SLIDE_MS));
     const stop = () => {
       window.clearInterval(timer);
       timer = 0;
     };
-
-    // TEMP (remove before launch): arrows under the header. Each click restarts the timer so the photo stays put.
-    const dev = document.querySelector<HTMLElement>('[data-hero-dev]');
-    const count = dev?.querySelector<HTMLElement>('[data-hero-count]');
-    const step = (by: number) => {
-      show(current + by);
-      if (count) count.textContent = `${current + 1} / ${slides.length}`;
-      if (timer) {
-        stop();
-        start();
-      }
-    };
-    dev?.querySelector('[data-hero-prev]')?.addEventListener('click', () => step(-1));
-    dev?.querySelector('[data-hero-next]')?.addEventListener('click', () => step(1));
-    const pause = dev?.querySelector<HTMLElement>('[data-hero-pause]');
-    pause?.addEventListener('click', () => {
-      held = !held;
-      pause.setAttribute('aria-pressed', String(held));
-      pause.setAttribute('aria-label', held ? 'Play header slideshow' : 'Pause header slideshow');
-      hero.classList.toggle('paused', held || reduceMotion);
-      if (held) stop();
-      else if (!reduceMotion && !hero.classList.contains('offscreen')) start();
-    });
-    const tick = () => count && (count.textContent = `${current + 1} / ${slides.length}`);
-    new MutationObserver(tick).observe(hero, { subtree: true, attributes: true, attributeFilter: ['class'] });
 
     // There's no pause button, so people who prefer reduced motion get a still header (the first photo).
     hero.classList.toggle('paused', reduceMotion);
