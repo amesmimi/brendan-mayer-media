@@ -1,5 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
+import { Image, Picture } from 'astro:assets';
 import type { Gallery } from '../lib/galleries';
 import { viewerImage, widthsFor } from '../lib/images';
 import { url } from '../lib/paths';
@@ -67,12 +67,35 @@ const panels = await Promise.all(
               loading="lazy"
               draggable="false"
             />
+            {/* Expand icon: shows a tap opens the photo full screen */}
+            <span class="expand" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7" />
+              </svg>
+            </span>
             <span class="frame-cap">
               {photo.title}
               {photo.meta && <span>{photo.meta}</span>}
             </span>
           </a>
         ))}
+        {/* Last item: a preview card leading to the full gallery page */}
+        <a class="endcard" href={url(`galleries/${gallery.slug}/`)}>
+          <span class="mini" aria-hidden="true">
+            {gallery.photos.slice(0, 4).map((photo) => (
+              <Image src={photo.image} alt="" width={300} loading="lazy" draggable="false" />
+            ))}
+          </span>
+          <span class="endcard-text">
+            <b>View all {gallery.photos.length}</b>
+            <span>
+              {gallery.label} gallery
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+            </span>
+          </span>
+        </a>
       </div>
       <div class="strip-foot">
         <div class="track" aria-hidden="true">
@@ -90,8 +113,14 @@ const panels = await Promise.all(
             </svg>
           </button>
         </div>
-        <a class="link-arrow" href={url(`galleries/${gallery.slug}/`)}>
-          Open the full {gallery.label} gallery <span aria-hidden="true">→</span>
+        <a class="btn btn-ghost" href={url(`galleries/${gallery.slug}/`)}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1.5" />
+            <rect x="14" y="3" width="7" height="7" rx="1.5" />
+            <rect x="3" y="14" width="7" height="7" rx="1.5" />
+            <rect x="14" y="14" width="7" height="7" rx="1.5" />
+          </svg>
+          See all {gallery.photos.length} {gallery.label.toLowerCase()} photos
         </a>
       </div>
     </div>
@@ -208,6 +237,105 @@ const panels = await Promise.all(
     font-family: var(--font-mono);
     font-size: 12px;
     color: var(--cream-muted);
+  }
+
+  .expand {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgb(8 32 29 / 0.6);
+    border: 1px solid rgb(230 224 215 / 0.35);
+    color: var(--cream);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      border-color 0.2s,
+      transform 0.2s;
+  }
+
+  .expand svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .frame:hover .expand,
+  .frame:focus-visible .expand {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: var(--ink);
+    transform: scale(1.06);
+  }
+
+  .endcard {
+    flex: none;
+    height: clamp(300px, 56vh, 580px);
+    width: clamp(240px, 24vw, 320px);
+    scroll-snap-align: start;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line);
+    background: var(--green-950);
+    text-decoration: none;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 16px;
+    padding: 14px;
+    transition: border-color 0.2s;
+  }
+
+  .endcard:hover,
+  .endcard:focus-visible {
+    border-color: var(--amber);
+  }
+
+  .mini {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 1fr;
+    gap: 6px;
+    min-height: 0;
+  }
+
+  .mini :global(img) {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .endcard-text {
+    display: grid;
+    gap: 6px;
+    padding: 4px 6px 6px;
+  }
+
+  .endcard-text b {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 30px;
+    text-transform: uppercase;
+    line-height: 0.95;
+  }
+
+  .endcard-text span {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    font-weight: 600;
+    color: var(--amber);
+  }
+
+  .endcard-text svg {
+    width: 18px;
+    height: 18px;
   }
 
   .strip-foot {

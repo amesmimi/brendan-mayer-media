@@ -1,5 +1,5 @@
 ---
-import { nav } from '../data/site';
+import { getNavItems } from '../lib/nav';
 import { url } from '../lib/paths';
 
 interface Props {
@@ -7,8 +7,8 @@ interface Props {
 }
 
 const { isHome = false } = Astro.props;
-// On the homepage, section links stay in-page; elsewhere they lead back to the homepage section.
 const link = (hash: string) => (isHome ? hash : url(hash));
+const items = getNavItems(isHome);
 ---
 
 <header class="site-header">
@@ -17,9 +17,9 @@ const link = (hash: string) => (isHome ? hash : url(hash));
       Brendan Mayer <span>Media</span>
     </a>
     <ul class="nav-links">
-      {nav.map((item) => (
+      {items.map((item) => (
         <li>
-          <a href={link(item.href)}>{item.label}</a>
+          <a href={item.href}>{item.label}</a>
         </li>
       ))}
     </ul>
@@ -34,9 +34,9 @@ const link = (hash: string) => (isHome ? hash : url(hash));
           </svg>
         </summary>
         <ul>
-          {nav.map((item) => (
+          {items.map((item) => (
             <li>
-              <a href={link(item.href)}>{item.label}</a>
+              <a href={item.href}>{item.label}</a>
             </li>
           ))}
         </ul>

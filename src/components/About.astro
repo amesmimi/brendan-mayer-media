@@ -34,11 +34,11 @@ import { url } from '../lib/paths';
         </ul>
       </div>
       <div class="ctas">
-        <a class="btn btn-dark" href="#contact">
+        <a class="btn btn-primary" href="#contact">
           Work with me
         </a>
         {about.cvFile && (
-          <a class="btn btn-outline" href={url(about.cvFile)} download>
+          <a class="btn btn-ghost" href={url(about.cvFile)} download>
             Download CV (PDF)
           </a>
         )}
@@ -48,18 +48,16 @@ import { url } from '../lib/paths';
 </section>
 
 <style>
+  /* Dark panel, matching the services cards, so the portrait is the warm focal point */
   .about {
-    background: var(--cream);
-    color: var(--ink);
+    background: var(--green-950);
+    border: 1px solid var(--line);
+    color: var(--cream);
     border-radius: var(--radius-lg);
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
     gap: clamp(28px, 5vw, 72px);
     padding: clamp(20px, 3vw, 36px);
-  }
-
-  .eyebrow {
-    color: var(--amber-ink);
   }
 
   .photo {
@@ -85,8 +83,9 @@ import { url } from '../lib/paths';
     bottom: 14px;
     font-family: var(--font-mono);
     font-size: 12px;
-    background: rgb(230 224 215 / 0.9);
-    color: var(--ink);
+    background: rgb(8 32 29 / 0.75);
+    border: 1px solid var(--line);
+    color: var(--cream);
     padding: 6px 10px;
     border-radius: var(--radius-pill);
   }
@@ -99,8 +98,9 @@ import { url } from '../lib/paths';
     min-width: 0;
   }
 
-  .body > p {
+  .body > p:not(.eyebrow) {
     max-width: 60ch;
+    color: var(--cream-muted);
   }
 
   .credits {
@@ -113,7 +113,7 @@ import { url } from '../lib/paths';
     font-size: var(--text-label);
     font-weight: 500;
     letter-spacing: 0.14em;
-    color: var(--ink-muted);
+    color: var(--cream-muted);
   }
 
   .chips {
@@ -126,7 +126,7 @@ import { url } from '../lib/paths';
   }
 
   .chips li {
-    border: 1px solid rgb(15 52 48 / 0.25);
+    border: 1px solid rgb(230 224 215 / 0.22);
     border-radius: var(--radius-pill);
     padding: 6px 14px;
     font-size: var(--text-small);
@@ -137,25 +137,6 @@ import { url } from '../lib/paths';
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
-  }
-
-  .btn-dark {
-    background: var(--ink);
-    color: var(--cream);
-  }
-
-  .btn-dark:hover {
-    background: var(--green-700);
-  }
-
-  .btn-outline {
-    color: var(--ink);
-    border-color: rgb(15 52 48 / 0.4);
-  }
-
-  .btn-outline:hover {
-    background: rgb(15 52 48 / 0.06);
-    border-color: var(--ink);
   }
 
   @media (max-width: 860px) {

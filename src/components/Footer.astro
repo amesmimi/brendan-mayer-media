@@ -1,6 +1,5 @@
 ---
 import { site } from '../data/site';
-import { getGalleries } from '../lib/galleries';
 import { url } from '../lib/paths';
 
 interface Props {
@@ -8,7 +7,6 @@ interface Props {
 }
 
 const { isHome = false } = Astro.props;
-const galleries = await getGalleries();
 const link = (hash: string) => (isHome ? hash : url(hash));
 ---
 
@@ -17,21 +15,6 @@ const link = (hash: string) => (isHome ? hash : url(hash));
     <a class="footer-mark" href={url()}>
       Brendan Mayer <span>Media</span>
     </a>
-    <nav aria-label="Galleries">
-      <ul class="footer-nav">
-        {galleries.map((g) => (
-          <li>
-            <a href={url(`galleries/${g.slug}/`)}>{g.label}</a>
-          </li>
-        ))}
-        <li>
-          <a href={link('#about')}>About</a>
-        </li>
-        <li>
-          <a href={link('#contact')}>Contact</a>
-        </li>
-      </ul>
-    </nav>
     <div class="footer-social">
       <a class="icon-btn" href={site.instagram.url} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -52,7 +35,6 @@ const link = (hash: string) => (isHome ? hash : url(hash));
       copied, downloaded or reused without written permission.{' '}
       <a href={link('#contact')}>Licensing enquiries welcome.</a>
     </p>
-    <p class="legal small">This site doesn't use cookies or collect personal information.</p>
   </div>
 </footer>
 
@@ -84,26 +66,6 @@ const link = (hash: string) => (isHome ? hash : url(hash));
     color: var(--amber);
   }
 
-  .footer-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px 28px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .footer-nav a {
-    text-decoration: none;
-    color: var(--cream-muted);
-    font-weight: 500;
-  }
-
-  .footer-nav a:hover {
-    color: var(--cream);
-  }
-
   .footer-social {
     display: flex;
     gap: 10px;
@@ -114,10 +76,5 @@ const link = (hash: string) => (isHome ? hash : url(hash));
     font-size: 14px;
     color: var(--cream-muted);
     max-width: 60ch;
-  }
-
-  .legal.small {
-    font-size: 13px;
-    opacity: 0.8;
   }
 </style>

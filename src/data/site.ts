@@ -25,13 +25,6 @@ export const site = {
   preview: true,
 } as const;
 
-export const nav = [
-  { label: 'Work', href: '#work' },
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Contact', href: '#contact' },
-] as const;
-
 export const about = {
   heading: "Hi, I'm Brendan",
   paragraphs: [

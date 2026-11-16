@@ -25,6 +25,7 @@ const { title, description, image, isHome = false } = Astro.props;
     <meta name="theme-color" content="#0F3430" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={url('apple-touch-icon.png')} />
     <link rel="sitemap" href={url('sitemap-index.xml')} />
     <SEO title={title} description={description} image={image} />
   </head>
