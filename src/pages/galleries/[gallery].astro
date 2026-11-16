@@ -1,112 +1,33 @@
 ---
+/**
+ * The old one-page-per-category gallery addresses, kept so links already shared still work:
+ * each forwards to its section of the single Gallery page (e.g. /galleries/sports/ → /gallery/#sports).
+ */
 import type { GetStaticPaths } from 'astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import GalleryGrid from '../../components/GalleryGrid.astro';
-import ContactCTA from '../../components/ContactCTA.astro';
-import { getGalleries, type Gallery } from '../../lib/galleries';
-import { site } from '../../data/site';
+import { getGalleries } from '../../lib/galleries';
 import { url } from '../../lib/paths';
 
 export const getStaticPaths = (async () => {
   const galleries = await getGalleries();
-  return galleries.map((gallery) => ({ params: { gallery: gallery.slug }, props: { gallery, galleries } }));
+  return galleries.map((gallery) => ({ params: { gallery: gallery.slug }, props: { slug: gallery.slug } }));
 }) satisfies GetStaticPaths;
 
-interface Props {
-  gallery: Gallery;
-  galleries: Gallery[];
-}
-
-const { gallery, galleries } = Astro.props;
+const target = url(`gallery/#${Astro.props.slug}`);
 ---
 
-<BaseLayout
-  title={`${gallery.label} photography`}
-  description={`${gallery.label} photography by ${site.photographer}, ${site.location}. ${gallery.blurb}`}
-  image={gallery.photos[0]?.image}
->
-  <section class="wrap intro" aria-labelledby="gallery-title">
-    <div class="heading">
-      <h1 id="gallery-title">{gallery.label}</h1>
-      <p class="blurb">{gallery.blurb}</p>
-    </div>
-    <nav aria-label="Galleries">
-      <ul class="cats">
-        {galleries.map((g) => (
-          <li>
-            <a
-              href={url(`galleries/${g.slug}/`)}
-              aria-current={g.slug === gallery.slug ? 'page' : undefined}
-              data-astro-prefetch
-            >
-              {g.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  </section>
-
-  <div class="wrap">
-    <GalleryGrid photos={gallery.photos} label={gallery.label} />
-  </div>
-
-  <ContactCTA />
-</BaseLayout>
-
-<style>
-  .intro {
-    padding-top: clamp(48px, 5vw, 72px);
-    padding-bottom: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: end;
-    gap: 24px 48px;
-  }
-
-  .heading {
-    display: grid;
-    gap: 14px;
-    min-width: 0;
-  }
-
-  h1 {
-    font-size: clamp(64px, 9vw, 128px);
-    font-weight: 900;
-    line-height: 0.88;
-  }
-
-  .blurb {
-    color: var(--cream-muted);
-    max-width: 52ch;
-  }
-
-  .cats {
-    view-transition-name: gallery-links;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 26px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    font-weight: 600;
-  }
-
-  .cats a {
-    text-decoration: none;
-    text-underline-offset: 6px;
-    text-decoration-thickness: 2px;
-    color: var(--cream-muted);
-  }
-
-  .cats a:hover {
-    color: var(--amber);
-  }
-
-  .cats a[aria-current='page'] {
-    color: var(--cream);
-    text-decoration: underline;
-    text-decoration-color: var(--amber);
-  }
-</style>
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+    <link rel="canonical" href={new URL(url('gallery/'), Astro.site).href} />
+    <title>Moved to the gallery</title>
+  </head>
+  <body>
+    <p>
+      This gallery has moved. <a href={target}>See it in the gallery</a>.
+    </p>
+  </body>
+</html>

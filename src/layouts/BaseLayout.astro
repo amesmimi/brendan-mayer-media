@@ -51,7 +51,7 @@ const { title, description, image, imageFocus, isHome = false } = Astro.props;
     <main id="main">
       <slot />
     </main>
-    <Footer isHome={isHome} />
+    <Footer />
     <Lightbox />
     <script>
       import '../scripts/site';

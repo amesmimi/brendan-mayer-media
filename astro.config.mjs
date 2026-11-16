@@ -16,8 +16,9 @@ export default defineConfig({
   site: SITE,
   base: BASE,
   trailingSlash: 'always',
-  integrations: [sitemap()],
-  // Links marked data-astro-prefetch start loading on hover/tap, so switching galleries feels instant.
+  // The old /galleries/<name>/ pages only forward to the Gallery page, so they stay out of the sitemap.
+  integrations: [sitemap({ filter: (page) => !page.includes('/galleries/') })],
+  // Links marked data-astro-prefetch start loading on hover/tap, so opening the gallery feels instant.
   prefetch: { defaultStrategy: 'hover' },
   // No Markdown code blocks on this site; turning highlighting off avoids Shiki's inline styles under the CSP.
   markdown: { syntaxHighlight: false },

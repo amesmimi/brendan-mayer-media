@@ -1,5 +1,6 @@
 import type { ImageMetadata } from 'astro';
 import { getCollection } from 'astro:content';
+import { site } from '../data/site';
 
 export interface Photo {
   file: string;
@@ -96,4 +97,11 @@ export async function getFeaturedPhotos(): Promise<Photo[]> {
   }
   for (const p of pinned) result.splice(Math.min(p.featured - 1, result.length), 0, p);
   return result;
+}
+
+/** The photo shown in link previews for the homepage and gallery page (`shareImage` in site.ts). */
+export async function getSharePhoto(): Promise<Photo | undefined> {
+  const { gallery, file } = site.shareImage;
+  const photo = (await getGalleries()).find((g) => g.slug === gallery)?.photos.find((p) => p.file === file);
+  return photo ?? (await getFeaturedPhotos())[0];
 }

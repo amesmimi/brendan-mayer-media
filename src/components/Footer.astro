@@ -1,40 +1,17 @@
 ---
 import { site } from '../data/site';
-import { url } from '../lib/paths';
-
-interface Props {
-  isHome?: boolean;
-}
-
-const { isHome = false } = Astro.props;
-const link = (hash: string) => (isHome ? hash : url(hash));
 ---
 
 <footer class="site-footer wrap">
-  <p>
-    {`© ${site.copyrightYear} ${site.photographer}.`} All photographs are protected by copyright and may not be reused
-    without written permission.
-  </p>
-  <a href={link('#contact')}>Licensing enquiries welcome</a>
+  <p>{`© ${site.copyrightYear} ${site.photographer}.`}</p>
 </footer>
 
 <style>
   .site-footer {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px 32px;
-    flex-wrap: wrap;
     padding-top: 22px;
     padding-bottom: max(28px, env(safe-area-inset-bottom, 0px));
     font-size: 13px;
     color: var(--cream-muted);
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  a:hover {
-    color: var(--amber);
+    text-align: center;
   }
 </style>

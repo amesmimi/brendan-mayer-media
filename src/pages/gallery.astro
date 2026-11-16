@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GalleryWall from '../components/GalleryWall.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import { getGalleries, getSharePhoto } from '../lib/galleries';
+import { site } from '../data/site';
+
+const galleries = await getGalleries();
+const share = await getSharePhoto();
+---
+
+<BaseLayout
+  title="Gallery"
+  description={`Concert, festival, event and sports photography by ${site.photographer}, ${site.location}.`}
+  image={share?.image}
+  imageFocus={share?.focus}
+>
+  <section class="wrap intro" aria-labelledby="gallery-title">
+    <h1 id="gallery-title">Gallery</h1>
+    <p>{site.galleryIntro}</p>
+  </section>
+
+  <div class="wrap">
+    <GalleryWall galleries={galleries} />
+  </div>
+
+  <ContactCTA />
+</BaseLayout>
+
+<style>
+  .intro {
+    padding-top: clamp(48px, 5vw, 64px);
+    padding-bottom: 44px;
+    display: grid;
+    gap: 14px;
+  }
+
+  h1 {
+    font-size: clamp(64px, 9vw, 128px);
+    font-weight: 900;
+    line-height: 0.88;
+  }
+
+  p {
+    color: var(--cream-muted);
+    max-width: 52ch;
+  }
+</style>

@@ -1,0 +1,341 @@
+---
+import { Picture } from 'astro:assets';
+import type { Gallery } from '../lib/galleries';
+import { PHOTO_QUALITY, viewerImage, widthsFor } from '../lib/images';
+
+interface Props {
+  galleries: Gallery[];
+}
+
+const { galleries } = Astro.props;
+
+// Every gallery's photos in one continuous wall.
+const cats = await Promise.all(
+  galleries.map(async (gallery) => {
+    const items = await Promise.all(
+      gallery.photos.map(async (photo) => ({ photo, large: await viewerImage(photo.image) })),
+    );
+    return { gallery, items };
+  }),
+);
+---
+
+<div class="wall-root" data-wall-root>
+  <!-- One viewer for the whole wall, so the full-screen view swipes through every photo. -->
+  <div class="wall protect" data-gallery data-wall>
+    {cats.map(({ gallery, items }) => (
+      <section class="cat" id={gallery.slug} aria-labelledby={`${gallery.slug}-title`} data-label={gallery.label}>
+        <ul class="grid">
+          {items.map(({ photo, large }, i) => (
+            <li>
+              <a
+                class={photo.focus ? `focus-${photo.focus}` : undefined}
+                href={large.src}
+                data-pswp-width={large.width}
+                data-pswp-height={large.height}
+              >
+                <Picture
+                  src={photo.image}
+                  alt={photo.alt}
+                  formats={['avif', 'webp']}
+                  widths={widthsFor(photo.image, [400, 700, 1000, 1400])}
+                  quality={PHOTO_QUALITY}
+                  sizes="(min-width: 1680px) 500px, (min-width: 900px) 30vw, 50vw"
+                  loading={i < 6 && gallery === galleries[0] ? 'eager' : 'lazy'}
+                  draggable="false"
+                />
+              </a>
+            </li>
+          ))}
+        </ul>
+        {/* A line beside the section as tall as its photos, with its name riding down it while you're in it */}
+        <div class="side">
+          <h2 class="label" id={`${gallery.slug}-title`}>
+            <svg class="cam" viewBox="9 13 46 39" aria-hidden="true">
+              <rect class="body" x="22" y="13" width="17" height="9" rx="3"></rect>
+              <rect class="body" x="9" y="19" width="46" height="33" rx="8"></rect>
+              <circle class="hole" cx="32" cy="36" r="12"></circle>
+              <circle class="lens" cx="32" cy="36" r="7.5"></circle>
+              <circle class="hole" cx="47" cy="26" r="2.5"></circle>
+            </svg>
+            {gallery.label}
+          </h2>
+        </div>
+      </section>
+    ))}
+  </div>
+
+  {/* On phones there's no room beside the photos, so a slim scrubber sits on the right edge instead */}
+  <div class="mscrub" aria-hidden="true" data-scrub hidden>
+    <div class="rail">
+      <span class="track"></span>
+      <span class="thumb" data-thumb>
+        <span class="bubble" data-bubble>
+          {cats[0]?.gallery.label}
+        </span>
+        <b></b>
+      </span>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* A slightly bigger gap between sections, which also breaks the side line into one chunk per section */
+  .wall {
+    display: grid;
+    gap: 22px;
+  }
+
+  .cat {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 120px;
+    gap: 28px;
+  }
+
+  .side {
+    position: relative;
+  }
+
+  .side::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 3px;
+    width: 2px;
+    background: var(--line);
+    transition: background-color 0.3s ease;
+  }
+
+  /* Sticks below the header while its section is on screen, then is pushed off by the next one */
+  .label {
+    position: sticky;
+    top: calc(var(--header-height) + 24px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 18px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--cream-muted);
+    transition: color 0.3s ease;
+  }
+
+  .label .cam {
+    display: none;
+    width: 22px;
+    height: 19px;
+    flex: none;
+  }
+
+  .cam .body {
+    fill: var(--cream);
+  }
+
+  .cam .hole {
+    fill: var(--charcoal);
+  }
+
+  .cam .lens {
+    fill: var(--amber);
+  }
+
+  .cat.is-current .side::before {
+    background: var(--amber);
+  }
+
+  .cat.is-current .label {
+    color: var(--amber);
+  }
+
+  .cat.is-current .label .cam {
+    display: block;
+  }
+
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .grid a {
+    display: block;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: var(--charcoal-950);
+    /* Amber expand icon as the cursor; magnifying glass as a fallback */
+    cursor:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23f2a93b' stroke='%23121110' stroke-width='1'/%3E%3Cg transform='translate%288 8%29 scale%280.6667%29' fill='none' stroke='%23121110' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7'/%3E%3C/g%3E%3C/svg%3E")
+        16 16,
+      zoom-in;
+  }
+
+  .grid :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+      transform 0.6s var(--ease),
+      filter 0.3s;
+  }
+
+  .grid a.focus-top :global(img) {
+    object-position: 50% 0%;
+  }
+
+  .grid a.focus-bottom :global(img) {
+    object-position: 50% 85%;
+  }
+
+  .grid a:hover :global(img) {
+    transform: scale(1.03);
+    filter: brightness(1.08);
+  }
+
+  .mscrub {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .wall {
+      gap: 14px;
+    }
+
+    .cat {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* The side line is hidden, but the section names stay as headings for screen readers */
+    .side {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4px;
+    }
+
+    /* Shows while the wall is on screen, and brightens while scrolling */
+    .mscrub:not([hidden]) {
+      display: block;
+      position: fixed;
+      top: calc(env(safe-area-inset-top, 0px) + var(--header-height) + 16px);
+      bottom: max(16px, env(safe-area-inset-bottom, 0px));
+      right: 4px;
+      width: 2px;
+      z-index: 40;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .rail {
+      position: absolute;
+      inset: 0;
+    }
+
+    .track {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: 2px;
+      background: rgb(230 224 215 / 0.3);
+    }
+
+    .thumb {
+      position: absolute;
+      top: 0;
+      right: -2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateY(-50%);
+      transition: top 0.15s linear;
+    }
+
+    .thumb b {
+      width: 6px;
+      height: 28px;
+      background: var(--amber);
+    }
+
+    .bubble {
+      background: var(--charcoal-950);
+      border: 1px solid rgb(230 224 215 / 0.22);
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--amber);
+      white-space: nowrap;
+    }
+
+    .wall-root.in-wall .mscrub {
+      opacity: 0.5;
+    }
+
+    .wall-root.in-wall.scrolling .mscrub {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-wall-root]').forEach((root) => {
+    const wall = root.querySelector<HTMLElement>('[data-wall]');
+    if (!wall) return;
+    const cats = [...wall.querySelectorAll<HTMLElement>('.cat')];
+    const thumbs = [...root.querySelectorAll<HTMLElement>('[data-thumb]')];
+    const bubbles = [...root.querySelectorAll<HTMLElement>('[data-bubble]')];
+
+    // The phone scrubber needs JavaScript, so it stays hidden without it.
+    root.querySelectorAll<HTMLElement>('[data-scrub]').forEach((s) => (s.hidden = false));
+
+    let frame = 0;
+    let idle = 0;
+    let current = -1;
+
+    // The current section is the last one whose first row has passed the line under the sticky labels.
+    const update = () => {
+      frame = 0;
+      const header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 78;
+      const line = header + 48;
+      const { top, bottom } = wall.getBoundingClientRect();
+      const progress = Math.min(1, Math.max(0, (window.innerHeight * 0.35 - top) / (bottom - top || 1)));
+      thumbs.forEach((t) => (t.style.top = `${progress * 100}%`));
+      root.classList.toggle('in-wall', top < window.innerHeight && bottom > 0);
+
+      let active = 0;
+      cats.forEach((cat, i) => {
+        if (cat.getBoundingClientRect().top <= line) active = i;
+      });
+      if (active === current) return;
+      current = active;
+      cats.forEach((cat, i) => cat.classList.toggle('is-current', i === active));
+      bubbles.forEach((b) => (b.textContent = cats[active].dataset.label ?? ''));
+    };
+
+    const onScroll = () => {
+      frame ||= requestAnimationFrame(update);
+      root.classList.add('scrolling');
+      window.clearTimeout(idle);
+      idle = window.setTimeout(() => root.classList.remove('scrolling'), 1200);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => (frame ||= requestAnimationFrame(update)));
+    update();
+  });
+</script>

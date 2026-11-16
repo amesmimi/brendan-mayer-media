@@ -4,14 +4,15 @@ import HeroCarousel from '../components/HeroCarousel.astro';
 import About from '../components/About.astro';
 import Services from '../components/Services.astro';
 import ContactCTA from '../components/ContactCTA.astro';
-import { getFeaturedPhotos, getGalleries } from '../lib/galleries';
+import { getFeaturedPhotos, getGalleries, getSharePhoto } from '../lib/galleries';
 import { site } from '../data/site';
 
 const galleries = await getGalleries();
 const featured = await getFeaturedPhotos();
+const share = await getSharePhoto();
 ---
 
-<BaseLayout isHome image={featured[0]?.image} imageFocus={featured[0]?.focus}>
+<BaseLayout isHome image={share?.image} imageFocus={share?.focus}>
   <HeroCarousel photos={featured} />
   <div class="wrap intro">
     <h1>{site.intro}</h1>

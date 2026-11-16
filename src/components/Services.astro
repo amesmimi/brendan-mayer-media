@@ -30,7 +30,7 @@ const rows = await Promise.all(
 
 <section class="wrap services" id="services" aria-label="What I shoot">
   {rows.map((row, i) => (
-    <article class:list={['row', { flip: i % 2 === 1 }]} aria-labelledby={`service-${row.gallery}`}>
+    <article class:list={['row', { flip: i % 2 === 1 }]} id={row.gallery} aria-labelledby={`service-${row.gallery}`}>
       <div class="mosaic protect" data-gallery>
         {row.tiles.map(({ photo, x, large }, k) => (
           <a
@@ -59,7 +59,7 @@ const rows = await Promise.all(
       <div class="copy">
         <h2 id={`service-${row.gallery}`}>{row.title}</h2>
         <p>{row.text}</p>
-        <a class="more" href={url(`galleries/${row.gallery}/`)} data-astro-prefetch>
+        <a class="more" href={url(`gallery/#${row.gallery}`)} data-astro-prefetch>
           View gallery<span class="visually-hidden">: {row.title}</span>
         </a>
       </div>

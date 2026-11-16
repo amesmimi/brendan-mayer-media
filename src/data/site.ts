@@ -7,6 +7,9 @@ export const site = {
   photographer: 'Brendan Mayer',
   /** The big statement under the header slideshow; the homepage's main heading. */
   intro: 'I photograph live music, festivals, events and sports on Vancouver Island.',
+  /** The line under the Gallery heading. */
+  galleryIntro:
+    'Concerts, festivals, events and sports from Vancouver Island and beyond. Tap any photo to see it full screen.',
   description:
     'Brendan Mayer is a concert, festival, event and sports photographer based in Victoria, BC, working with artists, promoters, venues and teams.',
   location: 'Victoria, BC',
@@ -18,6 +21,11 @@ export const site = {
    */
   email: { user: 'brendanjmayer', domain: 'gmail.com' },
   copyrightYear: 2026,
+  /**
+   * The photo shown when someone shares a link to the homepage (iMessage, Slack, social posts), cropped to 1200×630.
+   * Separate from the header slideshow, so slide 1 can be something else. The gallery page uses it too.
+   */
+  shareImage: { gallery: 'festivals', file: 'brendan-red-smoke.jpg' },
   /**
    * Unlisted preview mode for review before launch: pages ask search engines not to index them
    * and the sitemap isn't advertised. Set to false at launch.
