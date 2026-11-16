@@ -5,8 +5,6 @@
 export const site = {
   name: 'Brendan Mayer Media',
   photographer: 'Brendan Mayer',
-  /** Short line beside the wordmark in the top bar (hidden on phones). */
-  descriptor: 'Photographer based in Victoria, BC',
   /** The big statement under the header slideshow; the homepage's main heading. */
   intro: 'I photograph live music, festivals, events and sports on Vancouver Island.',
   description:
@@ -76,9 +74,9 @@ export const services: Service[] = [
     title: 'Concerts',
     text: 'Live coverage for artists, management, venues and promoters. First three songs or the full set, edited within 48 hours.',
     photos: [
-      { file: 'brendan-red-hood.jpg' },
-      { file: 'brendan-green-stage.jpg', x: 30 },
       { file: 'brendan-sepia-guitar.jpg', x: 15 },
+      { file: 'brendan-green-stage.jpg', x: 30 },
+      { file: 'brendan-blue-haze-guitar.jpg' },
     ],
   },
   {
@@ -87,7 +85,7 @@ export const services: Service[] = [
     text: 'Full-day or multi-day coverage of stages, crowds and atmosphere, with same-night selects for socials.',
     photos: [
       { file: 'brendan-crowd-silhouettes.jpg' },
-      { file: 'brendan-red-smoke.jpg' },
+      { file: 'brendan-purple-drums.jpg' },
       { file: 'brendan-orange-light.jpg', x: 5 },
     ],
   },

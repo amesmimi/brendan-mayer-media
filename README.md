@@ -31,7 +31,7 @@ src/
   assets/about/            Brendan's portrait
   assets/site/             other site images (contact background)
   content/galleries/*.yaml one file per gallery: label, order, blurb, optional photo captions
-  data/site.ts             site copy: top bar line, intro line, about text, services, email, Instagram
+  data/site.ts             site copy: intro line, about text, services, email, Instagram
   components/              Header, HeroCarousel, GalleryGrid, Lightbox, About, Services, ContactCTA, Footer, SEO
   layouts/BaseLayout.astro page shell (fonts, header, footer, photo viewer)
   pages/                   index, galleries/[gallery], 404, robots.txt
