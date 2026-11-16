@@ -27,7 +27,7 @@ const artists = new Intl.ListFormat('en-CA', { type: 'conjunction' }).format(abo
       <p class:list={{ lead: i === 0 }}>{p}</p>
     ))}
     <p class="artists">Artists photographed include {artists}.</p>
-    {/* Booking lives in the nav's "Book a shoot"; the CV link shows once there's a CV to share */}
+    {/* Booking lives in the nav's "Work with me"; the CV link shows once there's a CV to share */}
     {about.cvFile && (
       <a class="cv" href={url(about.cvFile)} download>
         Download CV (PDF)
