@@ -1,13 +1,13 @@
 # Events gallery: photo order and descriptions for src/assets/galleries/events/
-# See concerts.yaml for what each field does.
+# See live-music.yaml for what each field does.
 label: Events
-order: 4
+order: 3
 blurb: Community gatherings, cultural celebrations and the people who make them.
 photos:
   - file: brendan-farm.jpg
     title: Farm
     alt: A farmer in a plaid shirt studies a bunch of freshly picked greens, standing in a field of yellow flowers.
-    featured: 4
+    featured: 3
     # Framed a little high in the slideshow so the top of his head isn't cut off
     heroY: 5
   - file: brendan-ceremonial-dance.jpg

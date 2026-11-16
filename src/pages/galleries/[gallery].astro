@@ -1,15 +1,21 @@
 ---
 /**
- * The old one-page-per-category gallery addresses, kept so links already shared still work:
- * each forwards to its section of the single Gallery page (e.g. /galleries/sports/ → /gallery/#sports).
+ * The old one-page-per-category gallery addresses, kept so links already shared still work: each forwards to its
+ * section of the single Gallery page (e.g. /galleries/sports/ → /gallery/#sports). Concerts and Festivals were
+ * merged into Live Music, so both of those go there.
  */
 import type { GetStaticPaths } from 'astro';
-import { getGalleries } from '../../lib/galleries';
 import { url } from '../../lib/paths';
 
-export const getStaticPaths = (async () => {
-  const galleries = await getGalleries();
-  return galleries.map((gallery) => ({ params: { gallery: gallery.slug }, props: { slug: gallery.slug } }));
+// Old address → its section now. (Defined inside, since Astro runs getStaticPaths on its own.)
+export const getStaticPaths = (() => {
+  const OLD_GALLERIES: Record<string, string> = {
+    concerts: 'live-music',
+    festivals: 'live-music',
+    sports: 'sports',
+    events: 'events',
+  };
+  return Object.entries(OLD_GALLERIES).map(([gallery, slug]) => ({ params: { gallery }, props: { slug } }));
 }) satisfies GetStaticPaths;
 
 const target = url(`gallery/#${Astro.props.slug}`);

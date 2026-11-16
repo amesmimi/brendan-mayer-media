@@ -61,6 +61,10 @@ const rows = await Promise.all(
             />
           </a>
         ))}
+        {/* Empty squares hold the layout while a service has fewer than three photos */}
+        {Array.from({ length: Math.max(0, 3 - row.tiles.length) }, (_, k) => (
+          <span class:list={['slot', { big: row.tiles.length + k === 0 }]} aria-hidden="true" />
+        ))}
       </div>
       <div class="copy">
         <h2 id={`service-${row.gallery}`}>{row.title}</h2>
@@ -103,14 +107,15 @@ const rows = await Promise.all(
     align-items: start;
   }
 
-  .mosaic a {
+  .mosaic a,
+  .mosaic .slot {
     display: block;
     aspect-ratio: 1;
     overflow: hidden;
     background: var(--charcoal-950);
   }
 
-  .mosaic a.big {
+  .mosaic .big {
     grid-column: span 2;
     grid-row: span 2;
   }

@@ -20,10 +20,9 @@ Inside the project, open the `incoming` folder. There's one folder per gallery:
 
 ```
 incoming/
-  concerts/
-  festivals/
-  events/
+  live-music/  ← concerts and festivals
   sports/
+  events/
   about/      ← the About photo
   site/       ← other site images (the contact section background)
 ```

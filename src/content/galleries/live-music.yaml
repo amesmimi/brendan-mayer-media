@@ -1,0 +1,45 @@
+# Live Music gallery (concerts and festivals): photo order and descriptions for src/assets/galleries/live-music/
+# Photos listed here appear first, in this order. Unlisted photos still appear afterwards.
+#   file:     the photo's file name in src/assets/galleries/live-music/
+#   title:    (optional) not shown on the site; a label for you (e.g. the artist), used in the screen-reader text
+#   alt:      (optional) description for screen readers; defaults to the title
+#   caption:  (optional) shown above the copyright line when the photo is opened full screen
+#   featured: (optional) true = include in the homepage slideshow; a number pins it to that slide (1 = first)
+#   focus:    (optional) top or bottom = keep that part of the photo when it's cropped (e.g. to avoid cutting off heads)
+#   x:        (optional) gallery squares: where to crop across the photo, 0 (left) to 100 (right) in steps of 5
+#   heroY:    (optional) slideshow only: how far down to frame the photo, 0 (top) to 100 (bottom) in steps of 5
+# Titles are the artist names; captions add the festival where we know it.
+label: Live Music
+order: 1
+blurb: Concerts and festivals, from club shows to main stages. Tight light, fast moments, and the crowd as part of the story.
+photos:
+  - file: brendan-red-hood.jpg
+    x: 40
+    title: Allan Rayman
+    caption: Allan Rayman
+    alt: Allan Rayman, bearded and in a black hoodie, sings in red stage light.
+    featured: 1
+    # Framed a little low in the slideshow so there's less space above his head
+    heroY: 30
+    focus: top
+  - file: brendan-sepia-guitar.jpg
+    x: 15
+    title: Yonaka
+    caption: Yonaka
+    alt: A curly-haired guitarist from Yonaka plays a solo in warm, low light.
+    focus: top
+  - file: brendan-red-smoke.jpg
+    title: Portugal. The Man
+    caption: Portugal. The Man, Laketown Shakedown
+    alt: A member of Portugal. The Man in a cap stands silhouetted in thick red and teal stage smoke at Laketown Shakedown.
+    focus: top
+  - file: brendan-green-stage.jpg
+    x: 35
+    title: July Talk
+    caption: July Talk
+    alt: July Talk's guitarist raises his hand beside the singer at her keyboard, the stage washed in green light.
+  - file: brendan-pedal-steel.jpg
+    title: Aaron Goldstein
+    caption: Aaron Goldstein
+    alt: Aaron Goldstein, bearded and in a grey toque, plays pedal steel under deep blue stage light.
+    focus: top

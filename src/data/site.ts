@@ -8,10 +8,9 @@ export const site = {
   /** The big statement under the header slideshow; the homepage's main heading. */
   intro: 'I photograph live music, sports, and events on Vancouver Island.',
   /** The line under the Gallery heading. */
-  galleryIntro:
-    'Concerts, sports, festivals and events from Vancouver Island and beyond. Tap any photo to see it full screen.',
+  galleryIntro: 'Live music, sports and events from Vancouver Island and beyond. Tap any photo to see it full screen.',
   description:
-    'Brendan Mayer is a concert, sports, festival and event photographer based in Victoria, BC, working with artists, promoters, venues and teams.',
+    'Brendan Mayer is a live music, sports and event photographer based in Victoria, BC, working with artists, promoters, venues and teams.',
   location: 'Victoria, BC',
   serviceArea: 'Based in Victoria, BC. Available across Vancouver Island and beyond.',
   instagram: { handle: '@brendanmayer', url: 'https://www.instagram.com/brendanmayer/' },
@@ -25,7 +24,7 @@ export const site = {
    * The photo shown when someone shares a link to the homepage (iMessage, Slack, social posts), cropped to 1200×630.
    * Separate from the header slideshow, so slide 1 can be something else. The gallery page uses it too.
    */
-  shareImage: { gallery: 'festivals', file: 'brendan-red-smoke.jpg' },
+  shareImage: { gallery: 'live-music', file: 'brendan-red-smoke.jpg' },
   /**
    * Unlisted preview mode for review before launch: pages ask search engines not to index them
    * and the sitemap isn't advertised. Set to false at launch.
@@ -78,13 +77,13 @@ export interface Service {
 /** The "What I shoot" section, one row per service. */
 export const services: Service[] = [
   {
-    gallery: 'concerts',
-    title: 'Concerts',
-    text: 'Live coverage for artists, management, venues and promoters. First three songs or the full set, edited within 48 hours.',
+    gallery: 'live-music',
+    title: 'Live Music',
+    text: 'Concerts and festivals for artists, management, venues and promoters. First three songs or the full set, edited within 48 hours.',
     photos: [
       { file: 'brendan-sepia-guitar.jpg', x: 15 },
+      { file: 'brendan-pedal-steel.jpg' },
       { file: 'brendan-green-stage.jpg', x: 30 },
-      { file: 'brendan-blue-haze-guitar.jpg' },
     ],
   },
   {
@@ -95,16 +94,6 @@ export const services: Service[] = [
       { file: 'brendan-whitecaps-huddle.jpg', x: 45 },
       { file: 'brendan-swimmer.jpg' },
       { file: 'brendan-cirque-du-soleil.jpg', x: 70 },
-    ],
-  },
-  {
-    gallery: 'festivals',
-    title: 'Festivals',
-    text: 'Full-day or multi-day coverage of stages, crowds and atmosphere, with same-night selects for socials.',
-    photos: [
-      { file: 'brendan-crowd-silhouettes.jpg' },
-      { file: 'brendan-purple-drums.jpg' },
-      { file: 'brendan-orange-light.jpg', x: 5 },
     ],
   },
   {

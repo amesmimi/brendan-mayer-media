@@ -1,5 +1,5 @@
 # Sports gallery: photo order and descriptions for src/assets/galleries/sports/
-# See concerts.yaml for what each field does.
+# See live-music.yaml for what each field does.
 label: Sports
 order: 2
 blurb: Game-day action and the athletes behind it, from the pitch to the pool.

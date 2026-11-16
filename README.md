@@ -1,6 +1,6 @@
 # Brendan Mayer Media
 
-Portfolio site for Brendan Mayer, a concert, sports, festival and event photographer based in Victoria, BC.
+Portfolio site for Brendan Mayer, a live music, sports and event photographer based in Victoria, BC.
 Built with [Astro](https://astro.build) as a static site and hosted free on GitHub Pages.
 
 ## Quick start
