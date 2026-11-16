@@ -229,20 +229,6 @@ p {
   background: rgb(230 224 215 / 0.08);
 }
 
-.link-arrow {
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  border-bottom: 2px solid var(--amber);
-  padding-bottom: 2px;
-}
-
-.link-arrow:hover {
-  color: var(--amber);
-}
-
 .icon-btn {
   width: 48px;
   height: 48px;

@@ -2,59 +2,83 @@
 import { Picture } from 'astro:assets';
 import { services } from '../data/site';
 import type { Gallery } from '../lib/galleries';
-import { widthsFor } from '../lib/images';
+import { viewerImage, widthsFor } from '../lib/images';
+import { url } from '../lib/paths';
 
 interface Props {
   galleries: Gallery[];
 }
 
 const { galleries } = Astro.props;
-// Each card shows its chosen `photo` if set, otherwise the second photo of its gallery (the first already leads the
-// filmstrip), or the first if it's the only one.
-const cards = services.map((service) => {
-  const photos = galleries.find((g) => g.slug === service.gallery)?.photos ?? [];
-  const chosen = 'photo' in service ? photos.find((p) => p.file === service.photo) : undefined;
-  return { ...service, photo: chosen ?? photos[1] ?? photos[0] };
-});
+
+// Each service shows three of its gallery's photos, cropped square: one big, two small stacked beside it.
+const rows = await Promise.all(
+  services.map(async (service) => {
+    const photos = galleries.find((g) => g.slug === service.gallery)?.photos ?? [];
+    const picks = service.photos.flatMap(({ file, x = 50 }) => {
+      const photo = photos.find((p) => p.file === file);
+      if (!photo) console.warn(`[services] ${service.title}: no photo "${file}" in the ${service.gallery} gallery.`);
+      return photo ? [{ photo, x: Math.round(x / 5) * 5 }] : [];
+    });
+    const tiles = await Promise.all(
+      picks.map(async (pick) => ({ ...pick, large: await viewerImage(pick.photo.image) })),
+    );
+    return { ...service, tiles };
+  }),
+);
 ---
 
 <section class="section wrap" id="services" aria-labelledby="services-title">
-  <div class="section-head">
-    <div class="section-title">
-      <p class="eyebrow">Services</p>
-      <h2 id="services-title">What I shoot</h2>
-    </div>
+  <div class="intro">
+    <p class="eyebrow">Services</p>
+    <h2 id="services-title">What I shoot</h2>
+    <p class="lede">
+      Four kinds of work, each with a few favourites. Tap any photo to see it full screen, or open the full gallery.
+    </p>
   </div>
-  <div class="services">
-    {cards.map((card) => (
-      <article class="service">
-        {card.photo && (
-          <figure class="protect">
-            <Picture
-              src={card.photo.image}
-              alt=""
-              formats={['avif', 'webp']}
-              widths={widthsFor(card.photo.image, [400, 700])}
-              sizes="(min-width: 1240px) 25vw, (min-width: 680px) 50vw, 92vw"
-              loading="lazy"
-              draggable="false"
-            />
-          </figure>
-        )}
-        <div class="body">
-          <h3>{card.title}</h3>
-          <p>{card.text}</p>
-          <ul>
-            {card.items.map((item) => (
+  <div class="rows">
+    {rows.map((row, i) => (
+      <article class:list={['row', { flip: i % 2 === 1 }]} aria-labelledby={`service-${row.gallery}`}>
+        <div class="mosaic protect" data-gallery>
+          {row.tiles.map(({ photo, x, large }, k) => (
+            <a
+              class:list={[{ big: k === 0 }, `x-${x}`]}
+              href={large.src}
+              data-pswp-width={large.width}
+              data-pswp-height={large.height}
+              data-title={photo.title}
+            >
+              <Picture
+                src={photo.image}
+                alt={photo.alt}
+                formats={['avif', 'webp']}
+                widths={widthsFor(photo.image, k === 0 ? [500, 800, 1100, 1400] : [300, 500, 700])}
+                sizes={k === 0 ? '(min-width: 900px) 48vw, 62vw' : '(min-width: 900px) 24vw, 31vw'}
+                loading="lazy"
+                draggable="false"
+              />
+            </a>
+          ))}
+        </div>
+        <div class="copy">
+          <h3 id={`service-${row.gallery}`}>{row.title}</h3>
+          <p>{row.text}</p>
+          <ul class="bullets">
+            {row.items.map((item) => (
               <li>{item}</li>
             ))}
           </ul>
-          <div class="ctas">
-            <a class="btn btn-primary" href="#contact" data-mailto={`Booking enquiry: ${card.title}`}>
-              Book this
-            </a>
-            <a class="link-arrow" href="#work" data-show-gallery={card.gallery}>
-              See examples <span aria-hidden="true">→</span>
+          <div>
+            <a class="btn btn-ghost" href={url(`galleries/${row.gallery}/`)} data-astro-prefetch>
+              {/* The site's camera mark, as in the favicon */}
+              <svg class="cam" viewBox="9 13 46 39" aria-hidden="true">
+                <rect class="body" x="22" y="13" width="17" height="9" rx="3"></rect>
+                <rect class="body" x="9" y="19" width="46" height="33" rx="8"></rect>
+                <circle class="hole" cx="32" cy="36" r="12"></circle>
+                <circle class="lens" cx="32" cy="36" r="7.5"></circle>
+                <circle class="hole" cx="47" cy="26" r="2.5"></circle>
+              </svg>
+              View gallery
             </a>
           </div>
         </div>
@@ -64,88 +88,198 @@ const cards = services.map((service) => {
 </section>
 
 <style>
-  .services {
+  .intro {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
+    gap: 14px;
+    margin-bottom: clamp(48px, 6vw, 80px);
   }
 
-  .service {
-    background: var(--charcoal-950);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    padding: 12px;
-    display: grid;
-    grid-template-rows: auto 1fr;
+  .lede {
+    color: var(--cream-muted);
+    max-width: 58ch;
   }
 
-  figure {
-    margin: 0;
-    border-radius: calc(var(--radius-lg) - 8px);
+  .rows {
+    display: grid;
+    gap: clamp(56px, 6vw, 80px);
+  }
+
+  /* Photos take three-quarters of the row; every other row puts them on the right */
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(280px, 1fr);
+    gap: 48px;
+    align-items: center;
+  }
+
+  .row.flip {
+    grid-template-columns: minmax(280px, 1fr) minmax(0, 3fr);
+  }
+
+  .row.flip .mosaic {
+    order: 2;
+  }
+
+  /* Three equal columns: the big square spans two columns and two rows, so all three are true squares */
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    align-items: start;
+  }
+
+  .mosaic a {
+    display: block;
+    aspect-ratio: 1;
+    border-radius: var(--radius-md);
     overflow: hidden;
-    aspect-ratio: 4 / 3;
+    background: var(--charcoal-950);
   }
 
-  figure :global(img) {
+  .mosaic a.big {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .mosaic :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.6s var(--ease);
   }
 
-  .body {
-    padding: 22px 14px 14px;
-    display: grid;
-    gap: 14px;
-    grid-template-rows: auto auto 1fr auto;
+  .mosaic a:hover :global(img) {
+    transform: scale(1.03);
   }
 
-  .body p {
+  /* Horizontal crop from each photo's `x` in site.ts (classes, since the security policy blocks inline styles) */
+  .x-0 :global(img) {
+    object-position: 0% 50%;
+  }
+  .x-5 :global(img) {
+    object-position: 5% 50%;
+  }
+  .x-10 :global(img) {
+    object-position: 10% 50%;
+  }
+  .x-15 :global(img) {
+    object-position: 15% 50%;
+  }
+  .x-20 :global(img) {
+    object-position: 20% 50%;
+  }
+  .x-25 :global(img) {
+    object-position: 25% 50%;
+  }
+  .x-30 :global(img) {
+    object-position: 30% 50%;
+  }
+  .x-35 :global(img) {
+    object-position: 35% 50%;
+  }
+  .x-40 :global(img) {
+    object-position: 40% 50%;
+  }
+  .x-45 :global(img) {
+    object-position: 45% 50%;
+  }
+  .x-55 :global(img) {
+    object-position: 55% 50%;
+  }
+  .x-60 :global(img) {
+    object-position: 60% 50%;
+  }
+  .x-65 :global(img) {
+    object-position: 65% 50%;
+  }
+  .x-70 :global(img) {
+    object-position: 70% 50%;
+  }
+  .x-75 :global(img) {
+    object-position: 75% 50%;
+  }
+  .x-80 :global(img) {
+    object-position: 80% 50%;
+  }
+  .x-85 :global(img) {
+    object-position: 85% 50%;
+  }
+  .x-90 :global(img) {
+    object-position: 90% 50%;
+  }
+  .x-95 :global(img) {
+    object-position: 95% 50%;
+  }
+  .x-100 :global(img) {
+    object-position: 100% 50%;
+  }
+
+  .copy {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+  }
+
+  .copy h3 {
+    font-size: clamp(48px, 5vw, 72px);
+    line-height: 0.92;
+  }
+
+  .copy p {
     color: var(--cream-muted);
   }
 
-  ul {
+  .bullets {
+    list-style: none;
     margin: 0;
     padding: 0;
-    list-style: none;
     display: grid;
-    gap: 6px;
-    font-size: var(--text-small);
-    align-content: start;
+    gap: 8px;
+    font-size: 16px;
   }
 
-  li {
+  .bullets li {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     align-items: baseline;
   }
 
-  li::before {
+  .bullets li::before {
     content: '';
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: var(--amber);
     flex: none;
     transform: translateY(-2px);
   }
 
-  .ctas {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 18px;
-    align-items: center;
-    padding-top: 8px;
+  .cam {
+    width: 24px;
+    height: 20px;
   }
 
-  @media (max-width: 1240px) {
-    .services {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+  .cam .body {
+    fill: currentColor;
+  }
+
+  .cam .hole {
+    fill: var(--charcoal);
+  }
+
+  .cam .lens {
+    fill: var(--amber);
+  }
+
+  @media (max-width: 900px) {
+    .row,
+    .row.flip {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 28px;
     }
-  }
-
-  @media (max-width: 680px) {
-    .services {
-      grid-template-columns: 1fr;
+    .row.flip .mosaic {
+      order: 0;
     }
   }
 </style>

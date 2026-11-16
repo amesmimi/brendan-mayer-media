@@ -46,30 +46,60 @@ export const about = {
   cvFile: null as string | null,
 };
 
-/**
- * Service cards. `gallery` links to the matching gallery page and must match a gallery file name.
- * `photo` (optional) picks the card's photo by file name from that gallery; otherwise it uses the gallery's second photo.
- */
-export const services = [
+export interface ServicePhoto {
+  /** File name in the service's gallery folder. */
+  file: string;
+  /**
+   * Where to crop the photo when it's cut to a square, from 0 (keep the left edge) to 100 (keep the right edge),
+   * in steps of 5. Leave it out to keep the centre.
+   */
+  x?: number;
+}
+
+export interface Service {
+  /** Must match a gallery file name; the "View gallery" button opens that gallery. */
+  gallery: string;
+  title: string;
+  text: string;
+  items: string[];
+  /** Three photos from the gallery: the big square first, then the two small ones stacked beside it. */
+  photos: ServicePhoto[];
+}
+
+/** The "What I shoot" section, one row per service. */
+export const services: Service[] = [
   {
     gallery: 'concerts',
-    photo: 'brendan-red-hood.jpg',
     title: 'Concerts',
     text: 'Live coverage for artists, management, venues and promoters.',
     items: ['First three songs or the full set', 'Edited gallery within 48 hours', 'Press and social-ready crops'],
+    photos: [
+      { file: 'brendan-red-hood.jpg' },
+      { file: 'brendan-green-stage.jpg', x: 30 },
+      { file: 'brendan-sepia-guitar.jpg', x: 15 },
+    ],
   },
   {
     gallery: 'festivals',
-    photo: 'brendan-crowd-silhouettes.jpg',
     title: 'Festivals',
     text: 'Full-day or multi-day coverage of stages, crowds and atmosphere.',
     items: ['Artist sets and crowd moments', 'Same-night selects for socials', 'Sponsor and site photography'],
+    photos: [
+      { file: 'brendan-crowd-silhouettes.jpg' },
+      { file: 'brendan-red-smoke.jpg' },
+      { file: 'brendan-orange-light.jpg', x: 5 },
+    ],
   },
   {
     gallery: 'events',
     title: 'Events',
     text: 'Launches, galas, conferences and private celebrations.',
     items: ['Speakers, panels and award moments', 'Candid guests and atmosphere', 'Fast selects for press and socials'],
+    photos: [
+      { file: 'placeholder-event-02.jpg' },
+      { file: 'placeholder-event-03.jpg' },
+      { file: 'placeholder-event-01.jpg' },
+    ],
   },
   {
     gallery: 'sports',
@@ -80,8 +110,13 @@ export const services = [
       'Fast-glass low-light coverage',
       'Team, roster and promo shots',
     ],
+    photos: [
+      { file: 'placeholder-sports-01.jpg' },
+      { file: 'placeholder-sports-02.jpg' },
+      { file: 'placeholder-sports-05.jpg' },
+    ],
   },
-] as const;
+];
 
 /** Questions pre-filled into booking emails. */
 export const bookingChecklist = ['Date', 'Venue / location', 'Type of event', 'What the photos are for', 'Budget'];

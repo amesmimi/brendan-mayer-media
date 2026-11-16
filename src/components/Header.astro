@@ -1,4 +1,5 @@
 ---
+import { getGalleries } from '../lib/galleries';
 import { getNavItems } from '../lib/nav';
 import { url } from '../lib/paths';
 
@@ -8,7 +9,9 @@ interface Props {
 
 const { isHome = false } = Astro.props;
 const link = (hash: string) => (isHome ? hash : url(hash));
-const items = getNavItems(isHome);
+const firstGallery = (await getGalleries())[0]?.slug;
+const galleryHref = url(firstGallery ? `galleries/${firstGallery}/` : '');
+const items = getNavItems(isHome, galleryHref, Astro.url.pathname.includes('/galleries/'));
 ---
 
 <header class="site-header">
@@ -19,7 +22,9 @@ const items = getNavItems(isHome);
     <ul class="nav-links">
       {items.map((item) => (
         <li>
-          <a href={item.href}>{item.label}</a>
+          <a href={item.href} aria-current={item.current ? 'page' : undefined}>
+            {item.label}
+          </a>
         </li>
       ))}
     </ul>
@@ -36,7 +41,9 @@ const items = getNavItems(isHome);
         <ul>
           {items.map((item) => (
             <li>
-              <a href={item.href}>{item.label}</a>
+              <a href={item.href} aria-current={item.current ? 'page' : undefined}>
+                {item.label}
+              </a>
             </li>
           ))}
         </ul>
@@ -95,7 +102,8 @@ const items = getNavItems(isHome);
     color: var(--cream-muted);
   }
 
-  .nav-links a:hover {
+  .nav-links a:hover,
+  .nav-links a[aria-current='page'] {
     color: var(--cream);
   }
 
