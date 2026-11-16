@@ -19,11 +19,19 @@ const galleries = defineCollection({
           file: z.string(),
           // Not shown on the site: a label for us (e.g. the artist), also used in the screen-reader text.
           title: z.string().optional(),
+          // Shown above the copyright line when the photo is opened full screen. Leave it out to show only the copyright.
+          caption: z.string().optional(),
           alt: z.string().optional(),
           // true = in the homepage slideshow; a number (1, 2, ...) also pins it to that slide position.
           featured: z.union([z.boolean(), z.number().int().positive()]).default(false),
           // Where to anchor the photo when it's cropped (homepage slideshow, gallery grid). Default: centre.
           focus: z.enum(['top', 'center', 'bottom']).optional(),
+          // Gallery tiles are square: where to crop a wide photo, from 0 (keep the left edge) to 100 (keep the right edge),
+          // in steps of 5, so the subject sits in the middle of its square. Default: centre.
+          x: z.number().int().min(0).max(100).multipleOf(5).optional(),
+          // Homepage slideshow only, finer than focus: how far down the photo to frame it, from 0 (keep the top) to
+          // 100 (keep the bottom), in steps of 5. Overrides focus there.
+          heroY: z.number().int().min(0).max(100).multipleOf(5).optional(),
         }),
       )
       .default([]),

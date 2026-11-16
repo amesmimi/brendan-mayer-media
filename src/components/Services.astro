@@ -2,7 +2,7 @@
 import { Picture } from 'astro:assets';
 import { services } from '../data/site';
 import type { Gallery } from '../lib/galleries';
-import { PHOTO_QUALITY, viewerImage, widthsFor } from '../lib/images';
+import { PHOTO_QUALITY, coverSizes, viewerImage, widthsFor } from '../lib/images';
 import { url } from '../lib/paths';
 
 interface Props {
@@ -36,6 +36,7 @@ const rows = await Promise.all(
           <a
             class:list={[{ big: k === 0 }, `x-${x}`]}
             href={large.src}
+            data-caption={photo.caption}
             data-pswp-width={large.width}
             data-pswp-height={large.height}
           >
@@ -43,13 +44,18 @@ const rows = await Promise.all(
               src={photo.image}
               alt={photo.alt}
               formats={['avif', 'webp']}
-              widths={widthsFor(photo.image, k === 0 ? [500, 800, 1100, 1600, 2000] : [300, 500, 800])}
+              widths={widthsFor(
+                photo.image,
+                k === 0 ? [500, 800, 1100, 1600, 2000, 2600, 3200] : [300, 500, 800, 1100, 1400, 1800],
+              )}
               quality={PHOTO_QUALITY}
-              sizes={
+              sizes={coverSizes(
+                photo.image,
+                1,
                 k === 0
                   ? '(min-width: 1680px) 790px, (min-width: 900px) 50vw, 66vw'
-                  : '(min-width: 1680px) 395px, (min-width: 900px) 25vw, 33vw'
-              }
+                  : '(min-width: 1680px) 395px, (min-width: 900px) 25vw, 33vw',
+              )}
               loading="lazy"
               draggable="false"
             />

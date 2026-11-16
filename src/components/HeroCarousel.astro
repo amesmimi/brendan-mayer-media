@@ -10,11 +10,19 @@ interface Props {
 const { photos } = Astro.props;
 ---
 
-<!-- Edge-to-edge slideshow with nothing over the photos: a slow crossfade and gentle zoom. -->
+<!--
+  Edge-to-edge slideshow with nothing over the photos: a slow crossfade and gentle zoom.
+  On phones the header is taller than it is wide, so each photo is shown wider than the screen (sides cropped off);
+  the 750px size hint makes phones load a file big enough for that instead of one sized to the screen width.
+-->
 <section class="hero protect" aria-label="Featured photographs" data-hero>
   {photos.map((photo, i) => (
     <figure
-      class:list={['slide', photo.focus && `focus-${photo.focus}`, { 'is-active': i === 0 }]}
+      class:list={[
+        'slide',
+        photo.heroY !== undefined ? `y-${photo.heroY}` : photo.focus && `focus-${photo.focus}`,
+        { 'is-active': i === 0 },
+      ]}
       aria-hidden={i === 0 ? 'false' : 'true'}
     >
       <Picture
@@ -23,7 +31,7 @@ const { photos } = Astro.props;
         formats={['avif', 'webp']}
         widths={widthsFor(photo.image, [800, 1200, 1600, 2000, 2400, 2800, 3200])}
         quality={PHOTO_QUALITY}
-        sizes="100vw"
+        sizes="(max-width: 750px) 750px, 100vw"
         loading={i === 0 ? 'eager' : 'lazy'}
         fetchpriority={i === 0 ? 'high' : 'auto'}
         draggable="false"
@@ -32,10 +40,38 @@ const { photos } = Astro.props;
   ))}
 </section>
 
+{/* TEMP (remove before launch): arrows for flicking through the header photos while picking and framing them */}
+<div class="wrap hero-dev" data-hero-dev>
+  <button type="button" data-hero-prev aria-label="Previous header photo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M15 5l-7 7 7 7"></path>
+    </svg>
+  </button>
+  <button type="button" data-hero-pause aria-label="Pause header slideshow" aria-pressed="false">
+    <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <rect x="6" y="5" width="4" height="14"></rect>
+      <rect x="14" y="5" width="4" height="14"></rect>
+    </svg>
+    <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M8 5l11 7-11 7z"></path>
+    </svg>
+  </button>
+  <span data-hero-count>1 / {photos.length}</span>
+  <button type="button" data-hero-next aria-label="Next header photo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M9 5l7 7-7 7"></path>
+    </svg>
+  </button>
+</div>
+
 <style>
+  /*
+   * Sized by width, but never taller than the screen below the top bar minus a strip, so on laptops the whole photo
+   * is in view and the top of the intro line peeks in underneath as a cue to scroll.
+   */
   .hero {
     position: relative;
-    height: clamp(420px, 56vw, 820px);
+    height: clamp(420px, min(56vw, calc(100svh - var(--header-height) - 40px)), 820px);
     overflow: hidden;
     background: var(--charcoal-950);
   }
@@ -69,6 +105,92 @@ const { photos } = Astro.props;
     transform-origin: 50% 88%;
   }
 
+  /* Finer framing from a photo's `heroY` (classes, since the security policy blocks inline styles) */
+  .slide.y-0 :global(img) {
+    object-position: 50% 0%;
+    transform-origin: 50% 0%;
+  }
+  .slide.y-5 :global(img) {
+    object-position: 50% 5%;
+    transform-origin: 50% 5%;
+  }
+  .slide.y-10 :global(img) {
+    object-position: 50% 10%;
+    transform-origin: 50% 10%;
+  }
+  .slide.y-15 :global(img) {
+    object-position: 50% 15%;
+    transform-origin: 50% 15%;
+  }
+  .slide.y-20 :global(img) {
+    object-position: 50% 20%;
+    transform-origin: 50% 20%;
+  }
+  .slide.y-25 :global(img) {
+    object-position: 50% 25%;
+    transform-origin: 50% 25%;
+  }
+  .slide.y-30 :global(img) {
+    object-position: 50% 30%;
+    transform-origin: 50% 30%;
+  }
+  .slide.y-35 :global(img) {
+    object-position: 50% 35%;
+    transform-origin: 50% 35%;
+  }
+  .slide.y-40 :global(img) {
+    object-position: 50% 40%;
+    transform-origin: 50% 40%;
+  }
+  .slide.y-45 :global(img) {
+    object-position: 50% 45%;
+    transform-origin: 50% 45%;
+  }
+  .slide.y-50 :global(img) {
+    object-position: 50% 50%;
+    transform-origin: 50% 50%;
+  }
+  .slide.y-55 :global(img) {
+    object-position: 50% 55%;
+    transform-origin: 50% 55%;
+  }
+  .slide.y-60 :global(img) {
+    object-position: 50% 60%;
+    transform-origin: 50% 60%;
+  }
+  .slide.y-65 :global(img) {
+    object-position: 50% 65%;
+    transform-origin: 50% 65%;
+  }
+  .slide.y-70 :global(img) {
+    object-position: 50% 70%;
+    transform-origin: 50% 70%;
+  }
+  .slide.y-75 :global(img) {
+    object-position: 50% 75%;
+    transform-origin: 50% 75%;
+  }
+  .slide.y-80 :global(img) {
+    object-position: 50% 80%;
+    transform-origin: 50% 80%;
+  }
+  .slide.y-85 :global(img) {
+    object-position: 50% 85%;
+    transform-origin: 50% 85%;
+  }
+  .slide.y-90 :global(img) {
+    object-position: 50% 90%;
+    transform-origin: 50% 90%;
+  }
+  .slide.y-95 :global(img) {
+    object-position: 50% 95%;
+    transform-origin: 50% 95%;
+  }
+  .slide.y-100 :global(img) {
+    object-position: 50% 100%;
+    transform-origin: 50% 100%;
+  }
+
   /* The outgoing slide keeps its zoom while it fades out, so it doesn't snap back to full size. */
   .slide.is-active :global(img),
   .slide.is-leaving :global(img) {
@@ -81,13 +203,57 @@ const { photos } = Astro.props;
     animation-play-state: paused;
   }
 
+  /* A gentle 4% push-in: enough to feel alive, small enough that photos stay crisp and barely more cropped */
   @keyframes kenburns {
     from {
       transform: scale(1);
     }
     to {
-      transform: scale(1.08);
+      transform: scale(1.04);
     }
+  }
+
+  /* TEMP (remove before launch) */
+  .hero-dev {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    padding-top: 10px;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    color: var(--cream-muted);
+  }
+
+  .hero-dev button {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--cream);
+    cursor: pointer;
+  }
+
+  .hero-dev button:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+
+  .hero-dev svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .hero-dev .icon-play,
+  .hero-dev [aria-pressed='true'] .icon-pause {
+    display: none;
+  }
+
+  .hero-dev [aria-pressed='true'] .icon-play {
+    display: block;
   }
 </style>
 
@@ -119,17 +285,46 @@ const { photos } = Astro.props;
       }),
     );
 
+    let timer = 0;
+    let held = false; // TEMP: set by the pause button under the header
+    const start = () => {
+      if (!held) timer ||= window.setInterval(() => show(current + 1), SLIDE_MS);
+    };
+    const stop = () => {
+      window.clearInterval(timer);
+      timer = 0;
+    };
+
+    // TEMP (remove before launch): arrows under the header. Each click restarts the timer so the photo stays put.
+    const dev = document.querySelector<HTMLElement>('[data-hero-dev]');
+    const count = dev?.querySelector<HTMLElement>('[data-hero-count]');
+    const step = (by: number) => {
+      show(current + by);
+      if (count) count.textContent = `${current + 1} / ${slides.length}`;
+      if (timer) {
+        stop();
+        start();
+      }
+    };
+    dev?.querySelector('[data-hero-prev]')?.addEventListener('click', () => step(-1));
+    dev?.querySelector('[data-hero-next]')?.addEventListener('click', () => step(1));
+    const pause = dev?.querySelector<HTMLElement>('[data-hero-pause]');
+    pause?.addEventListener('click', () => {
+      held = !held;
+      pause.setAttribute('aria-pressed', String(held));
+      pause.setAttribute('aria-label', held ? 'Play header slideshow' : 'Pause header slideshow');
+      hero.classList.toggle('paused', held || reduceMotion);
+      if (held) stop();
+      else if (!reduceMotion && !hero.classList.contains('offscreen')) start();
+    });
+    const tick = () => count && (count.textContent = `${current + 1} / ${slides.length}`);
+    new MutationObserver(tick).observe(hero, { subtree: true, attributes: true, attributeFilter: ['class'] });
+
     // There's no pause button, so people who prefer reduced motion get a still header (the first photo).
     hero.classList.toggle('paused', reduceMotion);
     if (reduceMotion) return;
 
     // Hold the slideshow while it's scrolled out of view, so visitors come back to where they left it.
-    let timer = 0;
-    const start = () => (timer ||= window.setInterval(() => show(current + 1), SLIDE_MS));
-    const stop = () => {
-      window.clearInterval(timer);
-      timer = 0;
-    };
     new IntersectionObserver(([entry]) => {
       hero.classList.toggle('offscreen', !entry.isIntersecting);
       if (entry.isIntersecting) start();

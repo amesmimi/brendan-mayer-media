@@ -2,7 +2,7 @@
 import { Picture } from 'astro:assets';
 import portrait from '../assets/about/brendan.jpg';
 import { about } from '../data/site';
-import { PHOTO_QUALITY } from '../lib/images';
+import { PHOTO_QUALITY, coverSizes, widthsFor } from '../lib/images';
 import { url } from '../lib/paths';
 
 const artists = new Intl.ListFormat('en-CA', { type: 'conjunction' }).format(about.artists);
@@ -14,9 +14,9 @@ const artists = new Intl.ListFormat('en-CA', { type: 'conjunction' }).format(abo
       src={portrait}
       alt="Brendan Mayer smiling, wearing a black toque and tan jacket"
       formats={['avif', 'webp']}
-      widths={[500, 800, 1100, 1400]}
+      widths={widthsFor(portrait, [500, 800, 1100, 1400, 2000, 2600, 3200])}
       quality={PHOTO_QUALITY}
-      sizes="(min-width: 1680px) 700px, (min-width: 900px) 42vw, 100vw"
+      sizes={coverSizes(portrait, 4 / 5, '(min-width: 1680px) 700px, (min-width: 900px) 42vw, 100vw')}
       loading="lazy"
       draggable="false"
     />

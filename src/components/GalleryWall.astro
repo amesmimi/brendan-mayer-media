@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import type { Gallery } from '../lib/galleries';
-import { PHOTO_QUALITY, viewerImage, widthsFor } from '../lib/images';
+import { PHOTO_QUALITY, coverSizes, viewerImage, widthsFor } from '../lib/images';
 
 interface Props {
   galleries: Gallery[];
@@ -29,8 +29,9 @@ const cats = await Promise.all(
           {items.map(({ photo, large }, i) => (
             <li>
               <a
-                class={photo.focus ? `focus-${photo.focus}` : undefined}
+                class:list={[photo.focus && `focus-${photo.focus}`, photo.x !== undefined && `x-${photo.x}`]}
                 href={large.src}
+                data-caption={photo.caption}
                 data-pswp-width={large.width}
                 data-pswp-height={large.height}
               >
@@ -38,9 +39,9 @@ const cats = await Promise.all(
                   src={photo.image}
                   alt={photo.alt}
                   formats={['avif', 'webp']}
-                  widths={widthsFor(photo.image, [400, 700, 1000, 1400])}
+                  widths={widthsFor(photo.image, [400, 700, 1000, 1400, 2000, 2600])}
                   quality={PHOTO_QUALITY}
-                  sizes="(min-width: 1680px) 500px, (min-width: 900px) 30vw, 50vw"
+                  sizes={coverSizes(photo.image, 1, '(min-width: 1680px) 500px, (min-width: 900px) 30vw, 50vw')}
                   loading={i < 6 && gallery === galleries[0] ? 'eager' : 'lazy'}
                   draggable="false"
                 />
@@ -167,7 +168,7 @@ const cats = await Promise.all(
 
   .grid a {
     display: block;
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 1; /* square, like an Instagram grid */
     overflow: hidden;
     background: var(--charcoal-950);
     /* Amber expand icon as the cursor; magnifying glass as a fallback */
@@ -186,12 +187,79 @@ const cats = await Promise.all(
       filter 0.3s;
   }
 
-  .grid a.focus-top :global(img) {
-    object-position: 50% 0%;
+  /* Square crops: `x` in the gallery files sets the left-right position, `focus` the top-bottom one
+     (classes, since the security policy blocks inline styles) */
+  .grid :global(img) {
+    object-position: var(--x, 50%) var(--y, 50%);
   }
 
-  .grid a.focus-bottom :global(img) {
-    object-position: 50% 85%;
+  .grid a.focus-top {
+    --y: 0%;
+  }
+
+  .grid a.focus-bottom {
+    --y: 85%;
+  }
+
+  .grid a.x-0 {
+    --x: 0%;
+  }
+  .grid a.x-5 {
+    --x: 5%;
+  }
+  .grid a.x-10 {
+    --x: 10%;
+  }
+  .grid a.x-15 {
+    --x: 15%;
+  }
+  .grid a.x-20 {
+    --x: 20%;
+  }
+  .grid a.x-25 {
+    --x: 25%;
+  }
+  .grid a.x-30 {
+    --x: 30%;
+  }
+  .grid a.x-35 {
+    --x: 35%;
+  }
+  .grid a.x-40 {
+    --x: 40%;
+  }
+  .grid a.x-45 {
+    --x: 45%;
+  }
+  .grid a.x-55 {
+    --x: 55%;
+  }
+  .grid a.x-60 {
+    --x: 60%;
+  }
+  .grid a.x-65 {
+    --x: 65%;
+  }
+  .grid a.x-70 {
+    --x: 70%;
+  }
+  .grid a.x-75 {
+    --x: 75%;
+  }
+  .grid a.x-80 {
+    --x: 80%;
+  }
+  .grid a.x-85 {
+    --x: 85%;
+  }
+  .grid a.x-90 {
+    --x: 90%;
+  }
+  .grid a.x-95 {
+    --x: 95%;
+  }
+  .grid a.x-100 {
+    --x: 100%;
   }
 
   .grid a:hover :global(img) {

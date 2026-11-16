@@ -12,7 +12,11 @@ const background = Object.values(backgrounds)[0]?.default;
 const reverse = (s: string) => [...s].reverse().join('');
 ---
 
-<!-- Edge-to-edge photo band; the email address is the call to action. -->
+<!--
+  Edge-to-edge photo band; the email address is the call to action.
+  On phones the band is taller than it is wide, so the photo is drawn far wider than the screen; the 1300px size hint
+  makes phones load a file big enough for that instead of one sized to the screen width.
+-->
 <section class="contact protect" id="contact" aria-labelledby="contact-title">
   {background && (
     <Picture
@@ -22,7 +26,7 @@ const reverse = (s: string) => [...s].reverse().join('');
       formats={['avif', 'webp']}
       widths={[800, 1400, 2000, 2800, 3200]}
       quality={PHOTO_QUALITY}
-      sizes="100vw"
+      sizes="(max-width: 900px) 1300px, 100vw"
       loading="lazy"
       draggable="false"
     />

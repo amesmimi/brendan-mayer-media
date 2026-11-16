@@ -6,12 +6,12 @@ export const site = {
   name: 'Brendan Mayer Media',
   photographer: 'Brendan Mayer',
   /** The big statement under the header slideshow; the homepage's main heading. */
-  intro: 'I photograph live music, festivals, events and sports on Vancouver Island.',
+  intro: 'I photograph live music, sports, and events on Vancouver Island.',
   /** The line under the Gallery heading. */
   galleryIntro:
-    'Concerts, festivals, events and sports from Vancouver Island and beyond. Tap any photo to see it full screen.',
+    'Concerts, sports, festivals and events from Vancouver Island and beyond. Tap any photo to see it full screen.',
   description:
-    'Brendan Mayer is a concert, festival, event and sports photographer based in Victoria, BC, working with artists, promoters, venues and teams.',
+    'Brendan Mayer is a concert, sports, festival and event photographer based in Victoria, BC, working with artists, promoters, venues and teams.',
   location: 'Victoria, BC',
   serviceArea: 'Based in Victoria, BC. Available across Vancouver Island and beyond.',
   instagram: { handle: '@brendanmayer', url: 'https://www.instagram.com/brendanmayer/' },
@@ -88,6 +88,16 @@ export const services: Service[] = [
     ],
   },
   {
+    gallery: 'sports',
+    title: 'Sports',
+    text: 'Game-day action for teams, leagues, athletes and media, plus team and promo shots.',
+    photos: [
+      { file: 'brendan-whitecaps-huddle.jpg', x: 45 },
+      { file: 'brendan-swimmer.jpg' },
+      { file: 'brendan-cirque-du-soleil.jpg', x: 70 },
+    ],
+  },
+  {
     gallery: 'festivals',
     title: 'Festivals',
     text: 'Full-day or multi-day coverage of stages, crowds and atmosphere, with same-night selects for socials.',
@@ -102,19 +112,9 @@ export const services: Service[] = [
     title: 'Events',
     text: 'Launches, galas, conferences and private celebrations. Speakers, guests and the room.',
     photos: [
-      { file: 'placeholder-event-02.jpg' },
-      { file: 'placeholder-event-03.jpg' },
-      { file: 'placeholder-event-01.jpg' },
-    ],
-  },
-  {
-    gallery: 'sports',
-    title: 'Sports',
-    text: 'Game-day action for teams, leagues, athletes and media, plus team and promo shots.',
-    photos: [
-      { file: 'placeholder-sports-01.jpg' },
-      { file: 'placeholder-sports-02.jpg' },
-      { file: 'placeholder-sports-05.jpg' },
+      { file: 'brendan-ceremonial-dance.jpg', x: 100 },
+      { file: 'brendan-bar-portrait.jpg', x: 60 },
+      { file: 'brendan-mother-and-son.jpg' },
     ],
   },
 ];

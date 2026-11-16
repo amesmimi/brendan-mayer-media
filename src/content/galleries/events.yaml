@@ -1,20 +1,31 @@
 # Events gallery: photo order and descriptions for src/assets/galleries/events/
 # See concerts.yaml for what each field does.
-# PLACEHOLDER captions below: replace with Brendan's real events, venues and dates.
 label: Events
-order: 3
-blurb: Launches, galas, conferences and private celebrations. Speakers, guests and the moments people talk about after.
+order: 4
+blurb: Community gatherings, cultural celebrations and the people who make them.
 photos:
-  - file: placeholder-event-01.jpg
-    title: Keynote, Victoria Conference Centre
-  - file: placeholder-event-02.jpg
-    title: A toast to the team, Crystal Garden
-  - file: placeholder-event-03.jpg
-    title: Panel in the round, Victoria Conference Centre
-  - file: placeholder-event-04.jpg
-    title: Open mic, before doors
-    featured: 3
-  - file: placeholder-event-05.jpg
-    title: Launch party, The Hudson
-  - file: placeholder-event-06.jpg
-    title: Full house, Farquhar Auditorium
+  - file: brendan-farm.jpg
+    title: Farm
+    alt: A farmer in a plaid shirt studies a bunch of freshly picked greens, standing in a field of yellow flowers.
+    featured: 4
+    # Framed a little high in the slideshow so the top of his head isn't cut off
+    heroY: 5
+  - file: brendan-ceremonial-dance.jpg
+    x: 100
+    title: Ceremony
+    alt: A dancer in a maroon fringed robe and woven headband raises both hands, with cadets holding flags behind.
+  - file: brendan-bar-portrait.jpg
+    x: 75
+    title: Portrait at the bar
+    alt: An older man in a flat cap and white shirt leans on a bar and smiles, with shelves of bottles behind him.
+  - file: brendan-mother-and-son.jpg
+    title: Mother and son
+    alt: A smiling mother holds her young son, who grins at the camera.
+  - file: brendan-greek-fest.jpg
+    focus: top
+    title: Greek fest
+    alt: A woman in sunglasses and an "I can't keep calm, I'm Greek" T-shirt sings and gestures at the Greek festival.
+  - file: brendan-carved-paddle.jpg
+    x: 40
+    title: Carved paddle
+    alt: A man in white gloves holds up a carved paddle painted in red and black formline designs.
