@@ -23,9 +23,11 @@ interface Props {
   image?: ImageMetadata;
   imageFocus?: 'top' | 'center' | 'bottom';
   isHome?: boolean;
+  /** The page ends with the contact section, so "Work with me" scrolls to it instead of going to the homepage's. */
+  hasContact?: boolean;
 }
 
-const { title, description, image, imageFocus, isHome = false } = Astro.props;
+const { title, description, image, imageFocus, isHome = false, hasContact = isHome } = Astro.props;
 ---
 
 <!doctype html>
@@ -47,7 +49,7 @@ const { title, description, image, imageFocus, isHome = false } = Astro.props;
     <a class="skip-link" href="#main">
       Skip to content
     </a>
-    <Header isHome={isHome} />
+    <Header isHome={isHome} hasContact={hasContact} />
     <main id="main">
       <slot />
     </main>

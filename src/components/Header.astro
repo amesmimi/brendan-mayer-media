@@ -4,10 +4,13 @@ import { url } from '../lib/paths';
 
 interface Props {
   isHome?: boolean;
+  /** This page has its own contact section to scroll to. */
+  hasContact?: boolean;
 }
 
-const { isHome = false } = Astro.props;
-const link = (hash: string) => (isHome ? hash : url(hash));
+const { isHome = false, hasContact = isHome } = Astro.props;
+// "Work with me" scrolls to this page's contact section when it has one, else goes to the homepage's.
+const contactHref = hasContact ? '#contact' : url('#contact');
 const items = getNavItems(isHome);
 ---
 
@@ -23,13 +26,13 @@ const items = getNavItems(isHome);
         </li>
       ))}
       <li>
-        <a class="book" href={link('#contact')}>
+        <a class="book" href={contactHref}>
           Work with me
         </a>
       </li>
     </ul>
     <div class="nav-actions">
-      <a class="book" href={link('#contact')}>
+      <a class="book" href={contactHref}>
         Work with me
       </a>
       <details class="mobile-menu" data-mobile-menu>
