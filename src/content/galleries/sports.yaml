@@ -1,4 +1,4 @@
-# Sports gallery: captions for photos in src/assets/galleries/sports/
+# Sports gallery: photo order and descriptions for src/assets/galleries/sports/
 # See concerts.yaml for what each field does.
 # PLACEHOLDER captions below: replace with Brendan's real teams, venues and dates.
 label: Sports
@@ -7,7 +7,7 @@ blurb: Hockey, soccer, track and more. Peak action from the sidelines and the ri
 photos:
   - file: placeholder-sports-01.jpg
     title: 200m butterfly, Saanich Commonwealth Place
-    featured: 2
+    featured: 4
   - file: placeholder-sports-02.jpg
     title: Breakaway, Save-On-Foods Memorial Centre
   - file: placeholder-sports-03.jpg

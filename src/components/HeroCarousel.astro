@@ -44,7 +44,7 @@ const { photos } = Astro.props;
       <p class="hero-caption">
         {photos.map((photo, i) => (
           <span data-caption hidden={i !== 0}>
-            <b>{photo.galleryLabel}</b> · {photo.title}
+            <b>{photo.galleryLabel}</b>
           </span>
         ))}
       </p>

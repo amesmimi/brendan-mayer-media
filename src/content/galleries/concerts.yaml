@@ -1,7 +1,7 @@
-# Concerts gallery: captions for photos in src/assets/galleries/concerts/
+# Concerts gallery: photo order and descriptions for src/assets/galleries/concerts/
 # Photos listed here appear first, in this order. Unlisted photos still appear afterwards.
 #   file:     the photo's file name in src/assets/galleries/concerts/
-#   title:    caption shown on the site
+#   title:    (optional) not shown on the site; a label for you (e.g. the artist), used in the screen-reader text
 #   alt:      (optional) description for screen readers; defaults to the title
 #   featured: (optional) true = include in the homepage slideshow; a number pins it to that slide (1 = first)
 #   focus:    (optional) top or bottom = keep that part of the photo when it's cropped (e.g. to avoid cutting off heads)
@@ -24,7 +24,7 @@ photos:
   - file: brendan-red-hood.jpg
     title: Allan Rayman
     alt: Allan Rayman, bearded and in a black hoodie, sings in red stage light.
-    featured: 3
+    featured: 1
     focus: top
   - file: brendan-saxophone.jpg
     title: PIGS

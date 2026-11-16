@@ -17,7 +17,8 @@ const galleries = defineCollection({
       .array(
         z.object({
           file: z.string(),
-          title: z.string(),
+          // Not shown on the site: a label for us (e.g. the artist), also used in the screen-reader text.
+          title: z.string().optional(),
           alt: z.string().optional(),
           // true = in the homepage slideshow; a number (1, 2, ...) also pins it to that slide position.
           featured: z.union([z.boolean(), z.number().int().positive()]).default(false),

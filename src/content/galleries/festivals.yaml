@@ -1,4 +1,4 @@
-# Festivals gallery: captions for photos in src/assets/galleries/festivals/
+# Festivals gallery: photo order and descriptions for src/assets/galleries/festivals/
 # See concerts.yaml for what each field does.
 # Brendan's photos, from his Wix site. Most are small for now; swap in full-size exports when he sends them.
 # Titles are the artist names (from Brendan and the Wix site's labels). Hands up, Afternoon set and To the crowd
@@ -10,7 +10,7 @@ photos:
   - file: brendan-red-smoke.jpg
     title: Portugal. The Man
     alt: A member of Portugal. The Man in a cap stands silhouetted in thick red and teal stage smoke.
-    featured: 1
+    featured: 2
     focus: top
   - file: brendan-orange-light.jpg
     title: Third Eye Blind

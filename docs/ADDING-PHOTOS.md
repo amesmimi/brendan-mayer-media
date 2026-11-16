@@ -49,20 +49,21 @@ For every new photo this:
 
 It skips photos it has already done. You'll see a ✓ for each new photo, and a ! if something needs fixing (usually an unsupported file type: export it as a JPEG).
 
-## Step 3 (optional): Add captions
+## Step 3 (optional): Order and describe photos
 
-New photos appear on the site automatically, after the captioned ones, using their file name as the caption.
-To give a photo a proper caption, open the gallery's file in `src/content/galleries/` (e.g. `sports.yaml`) and add an entry:
+New photos appear on the site automatically, after the listed ones. Photos have no titles on the site, so there's nothing you have to fill in.
+To set a photo's order, describe it for screen readers or add it to the homepage slideshow, open the gallery's file in `src/content/galleries/` (e.g. `sports.yaml`) and add an entry:
 
 ```yaml
 photos:
   - file: 2025-11-royals-breakaway-03.jpg # the web file name from Step 2
-    title: Breakaway, Save-On-Foods Memorial Centre
+    alt: A forward skates in alone on a breakaway. # optional: description for screen readers
     featured: true # optional: show it in the homepage slideshow
 ```
 
 - Photos appear in the order they're listed. Move an entry up or down to reorder.
-- `alt` (optional) is a description for people using screen readers. If you leave it out, the title is used.
+- `alt` (optional) describes the photo for people using screen readers. Without it they hear "Sports photo by Brendan Mayer."
+- `title` (optional) isn't shown on the site. It's a handy label (e.g. the artist) and is added to the screen-reader text.
 - Keep the spacing exactly as shown. YAML cares about indentation.
 
 ## Step 4: Preview, then publish

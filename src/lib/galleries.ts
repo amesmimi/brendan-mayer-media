@@ -4,7 +4,8 @@ import { getCollection } from 'astro:content';
 export interface Photo {
   file: string;
   image: ImageMetadata;
-  title: string;
+  /** Optional label (e.g. the artist); not shown on the site. */
+  title?: string;
   alt: string;
   /** true = in the slideshow; a number pins it to that slide position (1 = first). */
   featured: boolean | number;
@@ -30,12 +31,6 @@ const images = new Map(
   Object.entries(imageModules).map(([p, mod]) => [p.replace('/src/assets/galleries/', ''), mod.default]),
 );
 
-/** "placeholder-sports-03.jpg" -> "Placeholder sports 03" */
-const titleFromFile = (file: string) => {
-  const words = file.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ');
-  return words.charAt(0).toUpperCase() + words.slice(1);
-};
-
 let cache: Promise<Gallery[]> | undefined;
 
 /** All galleries in display order, each with its photos (captioned ones first, in YAML order). */
@@ -59,20 +54,17 @@ async function load(): Promise<Gallery[]> {
 
       type Entry = {
         file: string;
-        title: string;
+        title?: string;
         alt?: string;
         featured: boolean | number;
         focus?: 'top' | 'center' | 'bottom';
       };
-      const entries: Entry[] = [
-        ...listed,
-        ...unlisted.map((file) => ({ file, title: titleFromFile(file), featured: false })),
-      ];
+      const entries: Entry[] = [...listed, ...unlisted.map((file) => ({ file, featured: false }))];
       const photos: Photo[] = entries.map((p) => ({
         file: p.file,
         image: images.get(`${slug}/${p.file}`)!,
         title: p.title,
-        alt: p.alt ?? `${p.title}. ${data.label} photo by Brendan Mayer.`,
+        alt: p.alt ?? [p.title, `${data.label} photo by Brendan Mayer.`].filter(Boolean).join('. '),
         featured: p.featured,
         focus: p.focus,
         gallery: slug,

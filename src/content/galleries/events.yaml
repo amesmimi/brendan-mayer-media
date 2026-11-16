@@ -1,4 +1,4 @@
-# Events gallery: captions for photos in src/assets/galleries/events/
+# Events gallery: photo order and descriptions for src/assets/galleries/events/
 # See concerts.yaml for what each field does.
 # PLACEHOLDER captions below: replace with Brendan's real events, venues and dates.
 label: Events
@@ -9,7 +9,7 @@ photos:
     title: Keynote, Victoria Conference Centre
   - file: placeholder-event-02.jpg
     title: A toast to the team, Crystal Garden
-    featured: 4
+    featured: 3
   - file: placeholder-event-03.jpg
     title: Panel in the round, Victoria Conference Centre
   - file: placeholder-event-04.jpg
