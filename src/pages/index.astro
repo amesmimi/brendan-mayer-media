@@ -11,7 +11,7 @@ const galleries = await getGalleries();
 const featured = await getFeaturedPhotos();
 ---
 
-<BaseLayout isHome image={featured[0]?.image}>
+<BaseLayout isHome image={featured[0]?.image} imageFocus={featured[0]?.focus}>
   <HeroCarousel photos={featured} />
   <WorkTabs galleries={galleries} />
   <About />

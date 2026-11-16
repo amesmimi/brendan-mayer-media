@@ -101,6 +101,25 @@ p {
   margin: 0;
 }
 
+/* ---------- Page-to-page transitions ----------
+ * Browsers that support cross-document view transitions (Chrome, Edge, Safari) cross-fade between pages
+ * instead of flashing; the header and gallery chips stay still. Others navigate normally.
+ */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.22s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
 /* ---------- Layout ---------- */
 .wrap {
   max-width: var(--max-width);

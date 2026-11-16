@@ -35,7 +35,11 @@ const { gallery, galleries } = Astro.props;
       <ul class="chips">
         {galleries.map((g) => (
           <li>
-            <a href={url(`galleries/${g.slug}/`)} aria-current={g.slug === gallery.slug ? 'page' : undefined}>
+            <a
+              href={url(`galleries/${g.slug}/`)}
+              aria-current={g.slug === gallery.slug ? 'page' : undefined}
+              data-astro-prefetch
+            >
               {g.label}
             </a>
           </li>
@@ -80,6 +84,7 @@ const { gallery, galleries } = Astro.props;
   }
 
   .chips {
+    view-transition-name: gallery-chips;
     display: flex;
     flex-wrap: wrap;
     gap: 6px;

@@ -7,7 +7,9 @@ export interface Photo {
   title: string;
   alt: string;
   meta?: string;
-  featured: boolean;
+  /** true = in the slideshow; a number pins it to that slide position (1 = first). */
+  featured: boolean | number;
+  focus?: 'top' | 'center' | 'bottom';
   gallery: string;
   galleryLabel: string;
 }
@@ -56,7 +58,14 @@ async function load(): Promise<Gallery[]> {
       const listedFiles = new Set(listed.map((p) => p.file));
       const unlisted = inFolder.filter((f) => !listedFiles.has(f)).sort();
 
-      type Entry = { file: string; title: string; alt?: string; meta?: string; featured: boolean };
+      type Entry = {
+        file: string;
+        title: string;
+        alt?: string;
+        meta?: string;
+        featured: boolean | number;
+        focus?: 'top' | 'center' | 'bottom';
+      };
       const entries: Entry[] = [
         ...listed,
         ...unlisted.map((file) => ({ file, title: titleFromFile(file), featured: false })),
@@ -68,6 +77,7 @@ async function load(): Promise<Gallery[]> {
         alt: p.alt ?? `${p.title}. ${data.label} photo by Brendan Mayer.`,
         meta: p.meta,
         featured: p.featured,
+        focus: p.focus,
         gallery: slug,
         galleryLabel: data.label,
       }));
@@ -77,16 +87,24 @@ async function load(): Promise<Gallery[]> {
     .sort((a, b) => a.order - b.order);
 }
 
-/** Photos for the homepage slideshow: those marked `featured`, alternating between galleries. */
+/**
+ * Photos for the homepage slideshow: those marked `featured`, alternating between galleries.
+ * Photos featured with a number are pinned to that position (`featured: 1` is always the first slide).
+ * If nothing is featured yet, it falls back to the first photo of each gallery.
+ */
 export async function getFeaturedPhotos(): Promise<Photo[]> {
   const galleries = await getGalleries();
-  const queues = galleries.map((g) => {
-    const featured = g.photos.filter((p) => p.featured);
-    return featured.length ? featured : g.photos.slice(0, 1);
-  });
+  const all = galleries.flatMap((g) => g.photos);
+  if (!all.some((p) => p.featured)) return galleries.flatMap((g) => g.photos.slice(0, 1));
+
+  const pinned = all
+    .filter((p): p is Photo & { featured: number } => typeof p.featured === 'number')
+    .sort((a, b) => a.featured - b.featured);
+  const queues = galleries.map((g) => g.photos.filter((p) => p.featured === true));
   const result: Photo[] = [];
   for (let i = 0; queues.some((q) => i < q.length); i++) {
     for (const q of queues) if (q[i]) result.push(q[i]);
   }
+  for (const p of pinned) result.splice(Math.min(p.featured - 1, result.length), 0, p);
   return result;
 }

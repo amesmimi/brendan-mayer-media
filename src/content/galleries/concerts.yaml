@@ -4,28 +4,43 @@
 #   title:    caption shown on the site
 #   alt:      (optional) description for screen readers; defaults to the title
 #   meta:     (optional) camera settings, shown in small type
-#   featured: (optional) true = include in the homepage slideshow
-# PLACEHOLDER captions below: replace with Brendan's real artists, venues and dates.
+#   featured: (optional) true = include in the homepage slideshow; a number pins it to that slide (1 = first)
+#   focus:    (optional) top or bottom = keep that part of the photo when it's cropped (e.g. to avoid cutting off heads)
+# Brendan's photos, from his Wix site. Titles are placeholders until he names the artists and venues.
 label: Concerts
 order: 1
 blurb: Club shows, theatres and arenas. Tight light, fast moments, and the crowd as part of the story.
 photos:
-  - file: placeholder-concert-01.jpg
-    title: Vocalist in the haze, Capital Ballroom
-    meta: 1/250 · f/2.0 · ISO 3200
+  - file: brendan-sepia-guitar.jpg
+    title: Guitar solo
+    alt: A curly-haired guitarist plays a solo in warm, low light.
     featured: true
-  - file: placeholder-concert-02.jpg
-    title: Front row, Save-On-Foods Memorial Centre
-    meta: 1/320 · f/2.8 · ISO 2500
-  - file: placeholder-concert-03.jpg
-    title: Headliner under the lasers, Royal Theatre
-    meta: 1/200 · f/1.8 · ISO 3200
-  - file: placeholder-concert-04.jpg
-    title: Encore lights, Save-On-Foods Memorial Centre
-    meta: 1/500 · f/2.8 · ISO 4000
-  - file: placeholder-concert-05.jpg
-    title: Hands up for the last chorus, Capital Ballroom
-    meta: 1/250 · f/2.0 · ISO 5000
-  - file: placeholder-concert-06.jpg
-    title: Opening night, McPherson Playhouse
-    meta: 1/320 · f/2.8 · ISO 3200
+    focus: top
+  - file: brendan-red-hood.jpg
+    title: Allan Rayman
+    alt: Allan Rayman, bearded and in a black hoodie, sings in red stage light.
+    featured: true
+    focus: top
+  - file: brendan-lime-jacket.jpg
+    title: Singer in the smoke
+    alt: A singer in a lime-green jacket sings into a microphone through stage smoke.
+    featured: true
+  - file: brendan-green-stage.jpg
+    title: Under the green lights
+    alt: A band performs on a stage washed in green light, the singer pointing up.
+    featured: true
+  - file: brendan-saxophone.jpg
+    title: Saxophone solo
+    alt: A long-haired saxophonist plays in blue light in front of a city skyline backdrop.
+    featured: true
+  - file: brendan-pedal-steel.jpg
+    title: Pedal steel
+    alt: A bearded musician in a toque plays pedal steel guitar under blue light.
+    featured: true
+    focus: top
+  - file: brendan-graphic-tee.jpg
+    title: Arms open
+    alt: A singer in a graphic t-shirt holds a microphone out to the side on a dark stage.
+  - file: brendan-blue-haze-guitar.jpg
+    title: Blue haze
+    alt: A guitarist plays a red electric guitar in blue stage haze.

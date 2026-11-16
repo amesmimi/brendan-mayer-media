@@ -17,6 +17,8 @@ export default defineConfig({
   base: BASE,
   trailingSlash: 'always',
   integrations: [sitemap()],
+  // Links marked data-astro-prefetch start loading on hover/tap, so switching galleries feels instant.
+  prefetch: { defaultStrategy: 'hover' },
   // No Markdown code blocks on this site; turning highlighting off avoids Shiki's inline styles under the CSP.
   markdown: { syntaxHighlight: false },
   build: {

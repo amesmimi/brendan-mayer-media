@@ -6,15 +6,26 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Lightbox from '../components/Lightbox.astro';
 import { url } from '../lib/paths';
+// Font files are preloaded so text renders in the right fonts straight away, with no flash of fallback fonts.
+import displayHeavy from '@fontsource/big-shoulders-display/files/big-shoulders-display-latin-800-normal.woff2?url';
+import displayBlack from '@fontsource/big-shoulders-display/files/big-shoulders-display-latin-900-normal.woff2?url';
+import bodyRegular from '@fontsource/hanken-grotesk/files/hanken-grotesk-latin-400-normal.woff2?url';
+import bodyMedium from '@fontsource/hanken-grotesk/files/hanken-grotesk-latin-500-normal.woff2?url';
+import bodySemibold from '@fontsource/hanken-grotesk/files/hanken-grotesk-latin-600-normal.woff2?url';
+import monoRegular from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2?url';
+import monoMedium from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2?url';
+
+const fonts = [displayHeavy, displayBlack, bodyRegular, bodyMedium, bodySemibold, monoRegular, monoMedium];
 
 interface Props {
   title?: string;
   description?: string;
   image?: ImageMetadata;
+  imageFocus?: 'top' | 'center' | 'bottom';
   isHome?: boolean;
 }
 
-const { title, description, image, isHome = false } = Astro.props;
+const { title, description, image, imageFocus, isHome = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -24,10 +35,13 @@ const { title, description, image, isHome = false } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0F3430" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
+    {fonts.map((href) => (
+      <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+    ))}
     <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={url('apple-touch-icon.png')} />
     <link rel="sitemap" href={url('sitemap-index.xml')} />
-    <SEO title={title} description={description} image={image} />
+    <SEO title={title} description={description} image={image} imageFocus={imageFocus} />
   </head>
   <body>
     <a class="skip-link" href="#main">

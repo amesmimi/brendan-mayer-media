@@ -17,6 +17,7 @@ const items = await Promise.all(photos.map(async (photo) => ({ photo, large: awa
   {items.map(({ photo, large }, i) => (
     <li>
       <a
+        class={photo.focus ? `focus-${photo.focus}` : undefined}
         href={large.src}
         data-pswp-width={large.width}
         data-pswp-height={large.height}
@@ -63,6 +64,14 @@ const items = await Promise.all(photos.map(async (photo) => ({ photo, large: awa
     transition:
       transform 0.6s var(--ease),
       filter 0.3s;
+  }
+
+  a.focus-top :global(img) {
+    object-position: 50% 0%;
+  }
+
+  a.focus-bottom :global(img) {
+    object-position: 50% 85%;
   }
 
   a:hover :global(img) {

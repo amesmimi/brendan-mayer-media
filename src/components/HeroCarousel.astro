@@ -15,7 +15,10 @@ const { photos } = Astro.props;
   <div class="stage protect" data-hero>
     <div class="slides">
       {photos.map((photo, i) => (
-        <figure class:list={['slide', { 'is-active': i === 0 }]} aria-hidden={i === 0 ? 'false' : 'true'}>
+        <figure
+          class:list={['slide', photo.focus && `focus-${photo.focus}`, { 'is-active': i === 0 }]}
+          aria-hidden={i === 0 ? 'false' : 'true'}
+        >
           <Picture
             src={photo.image}
             alt={photo.alt}
@@ -137,6 +140,17 @@ const { photos } = Astro.props;
     height: 100%;
     object-fit: cover;
     transform-origin: 60% 40%;
+  }
+
+  /* Photos marked `focus: top` (or bottom) in the captions file are anchored there when cropped */
+  .slide.focus-top :global(img) {
+    object-position: 50% 12%;
+    transform-origin: 50% 12%;
+  }
+
+  .slide.focus-bottom :global(img) {
+    object-position: 50% 88%;
+    transform-origin: 50% 88%;
   }
 
   .slide.is-active :global(img) {

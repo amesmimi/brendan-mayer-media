@@ -26,11 +26,15 @@ const checklist = bookingChecklist.map((q) => q.toLowerCase()).join(', ');
         draggable="false"
       />
     )}
-    <p class="eyebrow">Bookings and enquiries</p>
-    <h2 id="contact-title">Got a show, festival, event or game coming up?</h2>
-    <p>Email me and I'll get back to you within two days.</p>
-    <p class="include">
-      <b>Helpful to include:</b> {checklist}.
+    <div class="heading">
+      <p class="eyebrow">Bookings and enquiries</p>
+      <h2 id="contact-title">Got a shoot coming up?</h2>
+    </div>
+    <p class="intro">
+      Email me and I'll get back to you within two days.{' '}
+      <span>
+        <b>Helpful to include:</b> {checklist}.
+      </span>
     </p>
     <div class="email-row">
       <span
@@ -75,9 +79,12 @@ const checklist = bookingChecklist.map((q) => q.toLowerCase()).join(', ');
     border-radius: var(--radius-lg);
     overflow: hidden;
     isolation: isolate;
-    padding: clamp(40px, 7vw, 96px) clamp(22px, 5vw, 72px);
+    /* Fills the screen below the header (capped on very tall screens), so "Book a shoot" lands on the whole section */
+    min-height: min(calc(100svh - var(--header-height) - 48px), 820px);
+    padding: clamp(40px, 6vw, 80px) clamp(22px, 5vw, 72px);
     display: grid;
-    gap: 28px;
+    align-content: center;
+    gap: 24px;
     background: var(--green-950);
   }
 
@@ -99,20 +106,25 @@ const checklist = bookingChecklist.map((q) => q.toLowerCase()).join(', ');
     background: linear-gradient(90deg, rgb(8 32 29 / 0.94) 0%, rgb(8 32 29 / 0.82) 50%, rgb(8 32 29 / 0.4) 100%);
   }
 
+  .heading {
+    display: grid;
+    gap: 12px;
+  }
+
   h2 {
-    max-width: 19ch;
+    font-size: clamp(52px, 8.5vw, 128px);
   }
 
-  .contact > p {
-    max-width: 52ch;
+  .intro {
+    max-width: 60ch;
+    font-size: clamp(17px, 1.4vw, 20px);
   }
 
-  .include {
-    font-size: var(--text-small);
+  .intro span {
     color: var(--cream-muted);
   }
 
-  .include b {
+  .intro b {
     color: var(--cream);
     font-weight: 600;
   }
@@ -146,6 +158,7 @@ const checklist = bookingChecklist.map((q) => q.toLowerCase()).join(', ');
     font-size: var(--text-label);
     color: var(--amber);
     min-height: 1.4em;
+    margin-top: -8px;
   }
 
   .meta {

@@ -1,30 +1,36 @@
 # Festivals gallery: captions for photos in src/assets/galleries/festivals/
 # See concerts.yaml for what each field does.
-# PLACEHOLDER captions below: replace with Brendan's real festivals, stages and dates.
+# Brendan's photos, from his Wix site. Most are small for now; swap in full-size exports when he sends them.
+# Titles are placeholders until he names the artists and festivals.
 label: Festivals
 order: 2
 blurb: Multi-day festivals from the main stage to the beer garden. Headliners, crowds and everything between.
 photos:
-  - file: placeholder-festival-01.jpg
-    title: Main stage after dark, Royal Athletic Park
-    meta: 1/160 · f/2.8 · ISO 3200
-    featured: true
-  - file: placeholder-festival-02.jpg
-    title: Confetti drop on the final song
-    meta: 1/500 · f/2.8 · ISO 2000
-  - file: placeholder-festival-03.jpg
-    title: Late-night set, second stage
-    meta: 1/250 · f/2.0 · ISO 2500
-    featured: true
-  - file: placeholder-festival-04.jpg
-    title: Golden hour headliner, Victoria Folk Music Festival
-    meta: 1/640 · f/4 · ISO 400
-  - file: placeholder-festival-05.jpg
-    title: Purple wash, main stage
-    meta: 1/200 · f/2.8 · ISO 3200
-  - file: placeholder-festival-06.jpg
-    title: Confetti cannons, closing night
-    meta: 1/250 · f/2.8 · ISO 3200
-  - file: placeholder-festival-07.jpg
-    title: The dance floor from above, Ship Point
-    meta: 1/320 · f/4 · ISO 1600
+  - file: brendan-red-smoke.jpg
+    title: Red smoke, teal light
+    alt: A performer in a cap stands silhouetted in thick red and teal stage smoke.
+    featured: 1
+    focus: top
+  - file: brendan-orange-light.jpg
+    title: Orange light
+    alt: A singer in a white jacket sings into a microphone under warm orange stage lights.
+  - file: brendan-crowd-silhouettes.jpg
+    title: Hands up
+    alt: Two fans silhouetted against blue stage lights raise their hands toward the stage.
+  - file: brendan-pink-suit.jpg
+    title: Pink suit, blue sky
+    alt: A performer in sunglasses and a pink patterned suit sings on an outdoor stage.
+    focus: top
+  - file: brendan-outdoor-stage.jpg
+    title: Afternoon set
+    alt: A tattooed singer with dark hair holds a microphone on an outdoor festival stage.
+    focus: top
+  - file: brendan-purple-drums.jpg
+    title: Drums in purple
+    alt: A drummer plays under purple and pink lights with glitter in the air.
+  - file: brendan-boombox-keys.jpg
+    title: Keys and the giant boombox
+    alt: A keyboardist plays in front of a giant pink boombox prop and a video screen.
+  - file: brendan-point-to-crowd.jpg
+    title: To the crowd
+    alt: A rapper in a cap points out to the crowd from an outdoor stage.
