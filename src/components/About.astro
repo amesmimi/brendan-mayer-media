@@ -1,0 +1,170 @@
+---
+import { Picture } from 'astro:assets';
+import portrait from '../assets/about/brendan-moneyshot.jpg';
+import { about, site } from '../data/site';
+import { url } from '../lib/paths';
+---
+
+<section class="section wrap" id="about" aria-labelledby="about-title">
+  <div class="about">
+    <figure class="photo protect">
+      <Picture
+        src={portrait}
+        alt="Brendan Mayer smiling, wearing a black toque and tan jacket"
+        formats={['avif', 'webp']}
+        widths={[500, 800, 1100, 1400]}
+        sizes="(min-width: 860px) 42vw, 92vw"
+        loading="lazy"
+        draggable="false"
+      />
+      <figcaption>{site.location}</figcaption>
+    </figure>
+    <div class="body">
+      <p class="eyebrow">About</p>
+      <h2 id="about-title">{about.heading}</h2>
+      {about.paragraphs.map((p) => (
+        <p>{p}</p>
+      ))}
+      <div class="credits">
+        <h3>Artists I've photographed</h3>
+        <ul class="chips">
+          {about.artists.map((artist) => (
+            <li>{artist}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="ctas">
+        <a class="btn btn-dark" href="#contact">
+          Work with me
+        </a>
+        {about.cvFile && (
+          <a class="btn btn-outline" href={url(about.cvFile)} download>
+            Download CV (PDF)
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    background: var(--cream);
+    color: var(--ink);
+    border-radius: var(--radius-lg);
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: clamp(28px, 5vw, 72px);
+    padding: clamp(20px, 3vw, 36px);
+  }
+
+  .eyebrow {
+    color: var(--amber-ink);
+  }
+
+  .photo {
+    margin: 0;
+    position: relative;
+    border-radius: calc(var(--radius-lg) - 10px);
+    overflow: hidden;
+    min-height: 420px;
+  }
+
+  .photo :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 42% 30%;
+  }
+
+  figcaption {
+    position: absolute;
+    left: 14px;
+    bottom: 14px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    background: rgb(230 224 215 / 0.9);
+    color: var(--ink);
+    padding: 6px 10px;
+    border-radius: var(--radius-pill);
+  }
+
+  .body {
+    display: grid;
+    gap: 22px;
+    align-content: center;
+    padding-block: clamp(8px, 2vw, 28px);
+    min-width: 0;
+  }
+
+  .body > p {
+    max-width: 60ch;
+  }
+
+  .credits {
+    display: grid;
+    gap: 12px;
+  }
+
+  .credits h3 {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: var(--ink-muted);
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .chips li {
+    border: 1px solid rgb(15 52 48 / 0.25);
+    border-radius: var(--radius-pill);
+    padding: 6px 14px;
+    font-size: var(--text-small);
+    font-weight: 500;
+  }
+
+  .ctas {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn-dark {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .btn-dark:hover {
+    background: var(--green-700);
+  }
+
+  .btn-outline {
+    color: var(--ink);
+    border-color: rgb(15 52 48 / 0.4);
+  }
+
+  .btn-outline:hover {
+    background: rgb(15 52 48 / 0.06);
+    border-color: var(--ink);
+  }
+
+  @media (max-width: 860px) {
+    .about {
+      grid-template-columns: 1fr;
+    }
+    .photo {
+      min-height: 0;
+      aspect-ratio: 4 / 3.4;
+    }
+  }
+</style>

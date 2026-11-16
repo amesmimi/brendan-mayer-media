@@ -1,0 +1,304 @@
+/* Self-hosted fonts (Latin subset only): no requests to Google, nothing extra for the CSP to allow. */
+@import '@fontsource/big-shoulders-display/latin-800';
+@import '@fontsource/big-shoulders-display/latin-900';
+@import '@fontsource/hanken-grotesk/latin-400';
+@import '@fontsource/hanken-grotesk/latin-500';
+@import '@fontsource/hanken-grotesk/latin-600';
+@import '@fontsource/ibm-plex-mono/latin-400';
+@import '@fontsource/ibm-plex-mono/latin-500';
+@import './tokens.css';
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  /* Sections space themselves with margin, so in-page links land with the content just under the header. */
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(env(safe-area-inset-top, 0px) + var(--header-height) + 24px);
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--green);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+/* Paints the area under a phone's status bar to match the header. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 60;
+  background: var(--green-950);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: var(--text-h2);
+}
+
+h3 {
+  font-size: var(--text-h3);
+  line-height: 1;
+}
+
+p {
+  margin: 0;
+}
+
+/* ---------- Layout ---------- */
+.wrap {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+
+.section {
+  margin-top: var(--section-gap);
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.section-head > .section-title {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 200;
+  background: var(--amber);
+  color: var(--ink);
+  padding: 12px 18px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: calc(env(safe-area-inset-top, 0px) + 12px);
+}
+
+/* ---------- Buttons and links ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  font: 600 16px/1 var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+.btn-primary {
+  background: var(--amber);
+  color: var(--ink);
+}
+
+.btn-primary:hover {
+  background: var(--amber-hover);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--cream);
+  border-color: rgb(230 224 215 / 0.45);
+}
+
+.btn-ghost:hover {
+  border-color: var(--cream);
+  background: rgb(230 224 215 / 0.08);
+}
+
+.link-arrow {
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  border-bottom: 2px solid var(--amber);
+  padding-bottom: 2px;
+}
+
+.link-arrow:hover {
+  color: var(--amber);
+}
+
+.icon-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex: none;
+  background: rgb(8 32 29 / 0.55);
+  color: var(--cream);
+  border: 1px solid rgb(230 224 215 / 0.3);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
+}
+
+.icon-btn:hover {
+  background: rgb(8 32 29 / 0.85);
+  border-color: var(--cream);
+}
+
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ---------- Image protection (light deterrents) ---------- */
+.protect img {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* ---------- Photo viewer (PhotoSwipe) theme ---------- */
+.pswp {
+  --pswp-bg: var(--night);
+  --pswp-placeholder-bg: var(--green-950);
+  --pswp-icon-color: var(--cream);
+  --pswp-icon-color-secondary: var(--green-950);
+  font-family: var(--font-body);
+}
+
+.pswp__img {
+  border-radius: var(--radius-sm);
+}
+
+.pswp__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 16px max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-bottom, 0px));
+  text-align: center;
+  display: grid;
+  gap: 2px;
+  color: var(--cream);
+  background: linear-gradient(transparent, rgb(5 20 18 / 0.85) 40%);
+  pointer-events: none;
+}
+
+.pswp__caption b {
+  font-weight: 600;
+}
+
+.pswp__caption span,
+.pswp__caption small {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--cream-muted);
+}
+
+.pswp__counter {
+  font-family: var(--font-mono);
+  font-size: 13px;
+}

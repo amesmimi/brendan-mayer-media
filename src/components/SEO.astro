@@ -1,0 +1,53 @@
+---
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: ImageMetadata;
+}
+
+const { title, description = site.description, image } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.location} photographer`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const ogImage = image
+  ? await getImage({ src: image, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 80 })
+  : undefined;
+const ogImageUrl = ogImage ? new URL(ogImage.src, Astro.site).href : undefined;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: site.name,
+  description: site.description,
+  url: new URL(import.meta.env.BASE_URL, Astro.site).href,
+  image: ogImageUrl,
+  areaServed: ['Victoria, BC', 'Vancouver Island', 'Lower Mainland'],
+  address: { '@type': 'PostalAddress', addressLocality: 'Victoria', addressRegion: 'BC', addressCountry: 'CA' },
+  founder: { '@type': 'Person', name: site.photographer, jobTitle: 'Photographer' },
+  sameAs: [site.instagram.url],
+};
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="author" content={site.photographer} />
+<!-- Ask AI crawlers not to use the photos for training (honoured by some, not all). -->
+<meta name="robots" content="index, follow, noai, noimageai" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:locale" content="en_CA" />
+{ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+{ogImageUrl && <meta property="og:image:width" content="1200" />}
+{ogImageUrl && <meta property="og:image:height" content="630" />}
+<meta name="twitter:card" content="summary_large_image" />
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />

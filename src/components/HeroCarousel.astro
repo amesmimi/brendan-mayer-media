@@ -1,0 +1,348 @@
+---
+import { Picture } from 'astro:assets';
+import type { Photo } from '../lib/galleries';
+import { widthsFor } from '../lib/images';
+import { site } from '../data/site';
+
+interface Props {
+  photos: Photo[];
+}
+
+const { photos } = Astro.props;
+---
+
+<section class="hero wrap" aria-label="Featured photographs">
+  <div class="stage protect" data-hero>
+    <div class="slides">
+      {photos.map((photo, i) => (
+        <figure class:list={['slide', { 'is-active': i === 0 }]} aria-hidden={i === 0 ? 'false' : 'true'}>
+          <Picture
+            src={photo.image}
+            alt={photo.alt}
+            formats={['avif', 'webp']}
+            widths={widthsFor(photo.image, [800, 1200, 1600, 2000, 2400])}
+            sizes="(min-width: 1440px) 1344px, calc(100vw - 32px)"
+            loading={i === 0 ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            draggable="false"
+          />
+        </figure>
+      ))}
+    </div>
+
+    <div class="hero-copy">
+      <h1>
+        Brendan Mayer <span class="media">Media</span>
+      </h1>
+      <p>{site.tagline}</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#work">
+          View the work
+        </a>
+        <a class="btn btn-ghost" href="#contact">
+          Book a shoot
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-bar">
+      <p class="hero-caption" aria-live="polite">
+        {photos.map((photo, i) => (
+          <span data-caption hidden={i !== 0}>
+            <b>{photo.galleryLabel}</b> · {photo.title}
+            {photo.meta && <> · {photo.meta}</>}
+          </span>
+        ))}
+      </p>
+      <div class="segs" role="group" aria-label="Choose a photo">
+        {photos.map((photo, i) => (
+          <button
+            class:list={['seg', { 'is-active': i === 0 }]}
+            type="button"
+            aria-label={`Show photo ${i + 1}: ${photo.title}`}
+            aria-current={i === 0 ? 'true' : undefined}
+          >
+            <i />
+          </button>
+        ))}
+      </div>
+      <div class="hero-controls">
+        <button class="icon-btn" type="button" data-prev aria-label="Previous photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6"></path>
+          </svg>
+        </button>
+        <button class="icon-btn" type="button" data-pause aria-pressed="false" aria-label="Pause slideshow">
+          <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+            <rect x="14" y="5" width="4" height="14" rx="1"></rect>
+          </svg>
+          <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M8 5l11 7-11 7z"></path>
+          </svg>
+        </button>
+        <button class="icon-btn" type="button" data-next aria-label="Next photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M9 6l6 6-6 6"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: 16px;
+  }
+
+  /* Copy and controls sit in normal flow at the bottom, so the headline can't be pushed off the top. */
+  .stage {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--green-950);
+    min-height: clamp(540px, 78vh, 820px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: clamp(28px, 4vh, 48px);
+    padding: clamp(96px, 12vh, 140px) clamp(20px, 4vw, 56px) clamp(20px, 3vw, 32px);
+  }
+
+  .stage::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgb(8 32 29 / 0) 35%, rgb(8 32 29 / 0.55) 65%, rgb(8 32 29 / 0.92) 100%),
+      linear-gradient(90deg, rgb(8 32 29 / 0.45) 0%, rgb(8 32 29 / 0) 55%);
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+
+  .slide.is-active {
+    opacity: 1;
+  }
+
+  .slide :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform-origin: 60% 40%;
+  }
+
+  .slide.is-active :global(img) {
+    animation: kenburns 7s ease-out forwards;
+  }
+
+  .stage.paused .slide.is-active :global(img),
+  .stage.paused .seg.is-active i {
+    animation-play-state: paused;
+  }
+
+  @keyframes kenburns {
+    from {
+      transform: scale(1.02);
+    }
+    to {
+      transform: scale(1.1);
+    }
+  }
+
+  .hero-copy {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 20px;
+    max-width: 980px;
+    min-width: 0;
+  }
+
+  h1 {
+    font-size: clamp(60px, 9.5vw, 156px);
+    font-weight: 900;
+    line-height: 0.86;
+  }
+
+  .media {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--amber);
+  }
+
+  .hero-copy p {
+    font-size: clamp(17px, 1.6vw, 21px);
+    max-width: 34ch;
+  }
+
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero-bar {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .hero-caption {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    color: var(--cream-muted);
+    flex: 1 1 260px;
+    min-width: 0;
+  }
+
+  .hero-caption b {
+    color: var(--cream);
+    font-weight: 500;
+  }
+
+  .segs {
+    display: flex;
+    gap: 6px;
+    flex: 0 1 220px;
+    min-width: 120px;
+  }
+
+  .seg {
+    flex: 1;
+    height: 4px;
+    border-radius: 4px;
+    background: rgb(230 224 215 / 0.25);
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Larger tap target without changing the look */
+  .seg::before {
+    content: '';
+    position: absolute;
+    inset: -14px 0;
+  }
+
+  .seg i {
+    position: absolute;
+    inset: 0;
+    background: var(--cream);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .seg.done i {
+    transform: scaleX(1);
+  }
+
+  .seg.is-active i {
+    animation: fill var(--slide-duration) linear forwards;
+  }
+
+  @keyframes fill {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .hero-controls {
+    display: flex;
+    gap: 8px;
+  }
+
+  .icon-play,
+  .paused .icon-pause {
+    display: none;
+  }
+
+  .paused .icon-play {
+    display: block;
+  }
+
+  @media (max-width: 640px) {
+    .stage {
+      min-height: clamp(560px, 84vh, 760px);
+    }
+    .media {
+      -webkit-text-stroke-width: 1.5px;
+    }
+    .hero-caption {
+      flex-basis: 100%;
+      order: 2;
+    }
+  }
+</style>
+
+<script>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('[data-hero]').forEach((stage) => {
+    const slides = [...stage.querySelectorAll<HTMLElement>('.slide')];
+    const segs = [...stage.querySelectorAll<HTMLButtonElement>('.seg')];
+    const captions = [...stage.querySelectorAll<HTMLElement>('[data-caption]')];
+    const pauseButton = stage.querySelector<HTMLButtonElement>('[data-pause]')!;
+    let current = 0;
+    let paused = false;
+
+    const show = (n: number) => {
+      current = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => {
+        s.classList.toggle('is-active', i === current);
+        s.setAttribute('aria-hidden', String(i !== current));
+      });
+      captions.forEach((c, i) => (c.hidden = i !== current));
+      segs.forEach((s, i) => {
+        s.classList.remove('is-active');
+        s.classList.toggle('done', i < current);
+        s.removeAttribute('aria-current');
+      });
+      const seg = segs[current];
+      void seg.offsetWidth; // restart the progress animation
+      seg.classList.add('is-active');
+      seg.setAttribute('aria-current', 'true');
+    };
+
+    const setPaused = (value: boolean) => {
+      paused = value;
+      stage.classList.toggle('paused', value);
+      pauseButton.setAttribute('aria-pressed', String(value));
+      pauseButton.setAttribute('aria-label', value ? 'Play slideshow' : 'Pause slideshow');
+    };
+
+    segs.forEach((seg, i) => {
+      seg.addEventListener('click', () => show(i));
+      seg.querySelector('i')?.addEventListener('animationend', () => {
+        if (i === current && !paused) show(current + 1);
+      });
+    });
+    stage.querySelector('[data-prev]')?.addEventListener('click', () => show(current - 1));
+    stage.querySelector('[data-next]')?.addEventListener('click', () => show(current + 1));
+    pauseButton.addEventListener('click', () => setPaused(!paused));
+
+    let touchX: number | null = null;
+    stage.addEventListener('touchstart', (e) => (touchX = e.touches[0].clientX), { passive: true });
+    stage.addEventListener('touchend', (e) => {
+      if (touchX === null) return;
+      const dx = e.changedTouches[0].clientX - touchX;
+      touchX = null;
+      if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+    });
+
+    // Don't auto-advance for people who prefer reduced motion.
+    setPaused(reduceMotion);
+  });
+</script>

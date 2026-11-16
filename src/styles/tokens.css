@@ -1,0 +1,47 @@
+/*
+ * Design tokens, locked from design pass 3.
+ * A single deliberate dark look: Brendan's brand green with cream text, stage-light amber for actions.
+ */
+:root {
+  /* Colour */
+  --green-950: #08201d;
+  --green: #0f3430; /* brand green */
+  --green-700: #17463f;
+  --line: rgb(230 224 215 / 0.14);
+  --cream: #e6e0d7; /* brand cream */
+  --cream-muted: #b8b6a9;
+  --amber: #f2a93b; /* calls to action */
+  --amber-hover: #ffbe5c;
+  --ink: #0f3430; /* text on cream and amber */
+  --ink-muted: #4b5f5a;
+  --amber-ink: #8a4d00; /* amber-toned text on cream */
+  --night: #051412; /* photo viewer background */
+
+  /* Type */
+  --font-display: 'Big Shoulders Display', 'Arial Narrow', 'Roboto Condensed', Impact, sans-serif;
+  --font-body: 'Hanken Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --text-body: 17px;
+  --text-small: 15px;
+  --text-label: 13px;
+  --text-h2: clamp(44px, 7vw, 96px);
+  --text-h3: clamp(28px, 3vw, 36px);
+
+  /* Shape */
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+  --radius-pill: 999px;
+
+  /* Space */
+  --gutter: clamp(16px, 4vw, 48px);
+  --max-width: 1440px;
+  --section-gap: clamp(72px, 10vw, 136px);
+  --header-height: 72px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --slide-duration: 6.5s;
+
+  color-scheme: dark;
+}

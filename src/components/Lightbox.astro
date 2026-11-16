@@ -1,0 +1,54 @@
+---
+/**
+ * Full-screen photo viewer (PhotoSwipe). Any element with `data-gallery` becomes a gallery;
+ * its links with `data-pswp-width`/`data-pswp-height` open in the viewer with swipe, pinch-zoom
+ * and keyboard support. Without JavaScript the links simply open the large image.
+ */
+---
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import 'photoswipe/style.css';
+
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((gallery) => {
+    const lightbox = new PhotoSwipeLightbox({
+      gallery,
+      children: 'a[data-pswp-width]',
+      pswpModule: () => import('photoswipe'),
+      bgOpacity: 1,
+      showHideAnimationType: 'fade',
+      // Leave room for the top bar and caption so photos are never cut off.
+      paddingFn: (viewport) =>
+        viewport.x < 700 ? { top: 56, bottom: 96, left: 0, right: 0 } : { top: 72, bottom: 104, left: 80, right: 80 },
+      closeTitle: 'Close photo viewer',
+      arrowPrevTitle: 'Previous photo',
+      arrowNextTitle: 'Next photo',
+      zoomTitle: 'Zoom',
+    });
+
+    lightbox.on('uiRegister', () => {
+      lightbox.pswp?.ui?.registerElement({
+        name: 'caption',
+        order: 9,
+        isButton: false,
+        appendTo: 'root',
+        onInit: (el, pswp) => {
+          const update = () => {
+            const link = pswp.currSlide?.data.element as HTMLElement | undefined;
+            const title = document.createElement('b');
+            title.textContent = link?.dataset.title ?? '';
+            const meta = document.createElement('span');
+            meta.textContent = link?.dataset.meta ?? '';
+            const copyright = document.createElement('small');
+            copyright.textContent = '© Brendan Mayer. All rights reserved.';
+            el.replaceChildren(title, ...(meta.textContent ? [meta] : []), copyright);
+          };
+          pswp.on('change', update);
+          update();
+        },
+      });
+    });
+
+    lightbox.init();
+  });
+</script>

@@ -1,0 +1,82 @@
+---
+import { Picture } from 'astro:assets';
+import type { Photo } from '../lib/galleries';
+import { viewerImage, widthsFor } from '../lib/images';
+
+interface Props {
+  photos: Photo[];
+  label: string;
+}
+
+const { photos, label } = Astro.props;
+const items = await Promise.all(photos.map(async (photo) => ({ photo, large: await viewerImage(photo.image) })));
+---
+
+<!-- Uniform 3:2 crops keep every row aligned; the viewer shows each photo uncropped. -->
+<ul class="grid protect" data-gallery aria-label={`${label} photos`}>
+  {items.map(({ photo, large }, i) => (
+    <li>
+      <a
+        href={large.src}
+        data-pswp-width={large.width}
+        data-pswp-height={large.height}
+        data-title={photo.title}
+        data-meta={photo.meta}
+      >
+        <Picture
+          src={photo.image}
+          alt={photo.alt}
+          formats={['avif', 'webp']}
+          widths={widthsFor(photo.image, [400, 700, 1000])}
+          sizes="(min-width: 1000px) 33vw, 50vw"
+          loading={i < 6 ? 'eager' : 'lazy'}
+          draggable="false"
+        />
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: 14px;
+  }
+
+  a {
+    display: block;
+    aspect-ratio: 3 / 2;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--green-950);
+    cursor: zoom-in;
+  }
+
+  a :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+      transform 0.6s var(--ease),
+      filter 0.3s;
+  }
+
+  a:hover :global(img) {
+    transform: scale(1.03);
+    filter: brightness(1.08);
+  }
+
+  @media (max-width: 600px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    a {
+      border-radius: var(--radius-sm);
+    }
+  }
+</style>

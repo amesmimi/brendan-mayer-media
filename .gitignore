@@ -1,0 +1,17 @@
+# Planning notes (local only)
+PLAN.md
+
+# Full-res originals (never published)
+incoming/
+
+# Dependencies / build
+node_modules/
+dist/
+.astro/
+
+# Env / secrets
+.env
+.env.*
+
+# OS clutter
+.DS_Store

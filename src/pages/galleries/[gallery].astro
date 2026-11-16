@@ -1,0 +1,113 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GalleryGrid from '../../components/GalleryGrid.astro';
+import ContactCTA from '../../components/ContactCTA.astro';
+import { getGalleries, type Gallery } from '../../lib/galleries';
+import { site } from '../../data/site';
+import { url } from '../../lib/paths';
+
+export const getStaticPaths = (async () => {
+  const galleries = await getGalleries();
+  return galleries.map((gallery) => ({ params: { gallery: gallery.slug }, props: { gallery, galleries } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  gallery: Gallery;
+  galleries: Gallery[];
+}
+
+const { gallery, galleries } = Astro.props;
+---
+
+<BaseLayout
+  title={`${gallery.label} photography`}
+  description={`${gallery.label} photography by ${site.photographer}, ${site.location}. ${gallery.blurb}`}
+  image={gallery.photos[0]?.image}
+>
+  <section class="wrap intro" aria-labelledby="gallery-title">
+    <div class="heading">
+      <p class="eyebrow">Gallery · {String(gallery.photos.length).padStart(2, '0')} photos</p>
+      <h1 id="gallery-title">{gallery.label}</h1>
+      <p class="blurb">{gallery.blurb} Tap any photo to view it full screen.</p>
+    </div>
+    <nav aria-label="Other galleries">
+      <ul class="chips">
+        {galleries.map((g) => (
+          <li>
+            <a href={url(`galleries/${g.slug}/`)} aria-current={g.slug === gallery.slug ? 'page' : undefined}>
+              {g.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </section>
+
+  <div class="wrap">
+    <GalleryGrid photos={gallery.photos} label={gallery.label} />
+  </div>
+
+  <ContactCTA />
+</BaseLayout>
+
+<style>
+  .intro {
+    padding-top: clamp(40px, 6vw, 80px);
+    margin-bottom: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: 24px;
+  }
+
+  .heading {
+    display: grid;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  h1 {
+    font-size: clamp(60px, 10vw, 140px);
+    font-weight: 900;
+    line-height: 0.86;
+  }
+
+  .blurb {
+    color: var(--cream-muted);
+    max-width: 56ch;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 6px;
+    margin: 0;
+    list-style: none;
+    border-radius: 26px;
+    background: var(--green-950);
+    border: 1px solid var(--line);
+  }
+
+  .chips a {
+    display: inline-block;
+    padding: 12px 18px;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1;
+    text-decoration: none;
+    color: var(--cream-muted);
+  }
+
+  .chips a:hover {
+    color: var(--cream);
+  }
+
+  .chips a[aria-current='page'] {
+    background: var(--cream);
+    color: var(--ink);
+  }
+</style>

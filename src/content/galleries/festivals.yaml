@@ -1,0 +1,30 @@
+# Festivals gallery: captions for photos in src/assets/galleries/festivals/
+# See concerts.yaml for what each field does.
+# PLACEHOLDER captions below: replace with Brendan's real festivals, stages and dates.
+label: Festivals
+order: 2
+blurb: Multi-day festivals from the main stage to the beer garden. Headliners, crowds and everything between.
+photos:
+  - file: placeholder-festival-01.jpg
+    title: Main stage after dark, Royal Athletic Park
+    meta: 1/160 · f/2.8 · ISO 3200
+    featured: true
+  - file: placeholder-festival-02.jpg
+    title: Confetti drop on the final song
+    meta: 1/500 · f/2.8 · ISO 2000
+  - file: placeholder-festival-03.jpg
+    title: Late-night set, second stage
+    meta: 1/250 · f/2.0 · ISO 2500
+    featured: true
+  - file: placeholder-festival-04.jpg
+    title: Golden hour headliner, Victoria Folk Music Festival
+    meta: 1/640 · f/4 · ISO 400
+  - file: placeholder-festival-05.jpg
+    title: Purple wash, main stage
+    meta: 1/200 · f/2.8 · ISO 3200
+  - file: placeholder-festival-06.jpg
+    title: Confetti cannons, closing night
+    meta: 1/250 · f/2.8 · ISO 3200
+  - file: placeholder-festival-07.jpg
+    title: The dance floor from above, Ship Point
+    meta: 1/320 · f/4 · ISO 1600

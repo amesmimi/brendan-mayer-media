@@ -1,0 +1,31 @@
+# Concerts gallery: captions for photos in src/assets/galleries/concerts/
+# Photos listed here appear first, in this order. Unlisted photos still appear afterwards.
+#   file:     the photo's file name in src/assets/galleries/concerts/
+#   title:    caption shown on the site
+#   alt:      (optional) description for screen readers; defaults to the title
+#   meta:     (optional) camera settings, shown in small type
+#   featured: (optional) true = include in the homepage slideshow
+# PLACEHOLDER captions below: replace with Brendan's real artists, venues and dates.
+label: Concerts
+order: 1
+blurb: Club shows, theatres and arenas. Tight light, fast moments, and the crowd as part of the story.
+photos:
+  - file: placeholder-concert-01.jpg
+    title: Vocalist in the haze, Capital Ballroom
+    meta: 1/250 · f/2.0 · ISO 3200
+    featured: true
+  - file: placeholder-concert-02.jpg
+    title: Front row, Save-On-Foods Memorial Centre
+    meta: 1/320 · f/2.8 · ISO 2500
+  - file: placeholder-concert-03.jpg
+    title: Headliner under the lasers, Royal Theatre
+    meta: 1/200 · f/1.8 · ISO 3200
+  - file: placeholder-concert-04.jpg
+    title: Encore lights, Save-On-Foods Memorial Centre
+    meta: 1/500 · f/2.8 · ISO 4000
+  - file: placeholder-concert-05.jpg
+    title: Hands up for the last chorus, Capital Ballroom
+    meta: 1/250 · f/2.0 · ISO 5000
+  - file: placeholder-concert-06.jpg
+    title: Opening night, McPherson Playhouse
+    meta: 1/320 · f/2.8 · ISO 3200

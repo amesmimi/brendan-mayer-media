@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../lib/paths';
+---
+
+<BaseLayout title="Page not found">
+  <section class="wrap missing" aria-labelledby="missing-title">
+    <p class="eyebrow">Error 404</p>
+    <h1 id="missing-title">Missed the shot</h1>
+    <p>This page doesn't exist. It may have moved, or the link may have a typo.</p>
+    <div class="ctas">
+      <a class="btn btn-primary" href={url()}>
+        Back to the homepage
+      </a>
+      <a class="btn btn-ghost" href={url('#work')}>
+        See the work
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .missing {
+    padding-block: clamp(80px, 14vw, 180px) 0;
+    display: grid;
+    gap: 22px;
+    justify-items: start;
+  }
+
+  h1 {
+    font-size: clamp(60px, 12vw, 160px);
+    font-weight: 900;
+    line-height: 0.86;
+  }
+
+  p:not(.eyebrow) {
+    color: var(--cream-muted);
+    max-width: 48ch;
+  }
+
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+</style>

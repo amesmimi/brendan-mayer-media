@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroCarousel from '../components/HeroCarousel.astro';
+import WorkTabs from '../components/WorkTabs.astro';
+import About from '../components/About.astro';
+import Services from '../components/Services.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import { getFeaturedPhotos, getGalleries } from '../lib/galleries';
+
+const galleries = await getGalleries();
+const featured = await getFeaturedPhotos();
+---
+
+<BaseLayout isHome image={featured[0]?.image}>
+  <HeroCarousel photos={featured} />
+  <WorkTabs galleries={galleries} />
+  <About />
+  <Services galleries={galleries} />
+  <ContactCTA />
+</BaseLayout>

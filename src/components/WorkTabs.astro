@@ -1,0 +1,315 @@
+---
+import { Picture } from 'astro:assets';
+import type { Gallery } from '../lib/galleries';
+import { viewerImage, widthsFor } from '../lib/images';
+import { url } from '../lib/paths';
+
+interface Props {
+  galleries: Gallery[];
+}
+
+const { galleries } = Astro.props;
+const panels = await Promise.all(
+  galleries.map(async (gallery) => ({
+    gallery,
+    photos: await Promise.all(gallery.photos.map(async (photo) => ({ photo, large: await viewerImage(photo.image) }))),
+  })),
+);
+---
+
+<section class="section wrap" id="work" aria-labelledby="work-title" data-work>
+  <div class="section-head">
+    <div class="section-title">
+      <p class="eyebrow">Selected work</p>
+      <h2 id="work-title">From the photo pit</h2>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Photo categories">
+      {galleries.map((g, i) => (
+        <button
+          class="tab"
+          type="button"
+          role="tab"
+          id={`tab-${g.slug}`}
+          aria-controls={`panel-${g.slug}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+        >
+          {g.label} <small>{String(g.photos.length).padStart(2, '0')}</small>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  {panels.map(({ gallery, photos }, i) => (
+    <div
+      class="panel"
+      role="tabpanel"
+      id={`panel-${gallery.slug}`}
+      aria-labelledby={`tab-${gallery.slug}`}
+      hidden={i !== 0}
+    >
+      <div class="strip protect" data-gallery tabindex="0" aria-label={`${gallery.label} photos, scroll sideways`}>
+        {photos.map(({ photo, large }) => (
+          <a
+            class="frame"
+            href={large.src}
+            data-pswp-width={large.width}
+            data-pswp-height={large.height}
+            data-title={photo.title}
+            data-meta={photo.meta}
+          >
+            <Picture
+              src={photo.image}
+              alt={photo.alt}
+              formats={['avif', 'webp']}
+              widths={widthsFor(photo.image, [500, 800, 1200])}
+              sizes="(min-width: 900px) 50vw, 86vw"
+              loading="lazy"
+              draggable="false"
+            />
+            <span class="frame-cap">
+              {photo.title}
+              {photo.meta && <span>{photo.meta}</span>}
+            </span>
+          </a>
+        ))}
+      </div>
+      <div class="strip-foot">
+        <div class="track" aria-hidden="true">
+          <i />
+        </div>
+        <div class="strip-arrows">
+          <button class="icon-btn" type="button" data-scroll="-1" aria-label="Scroll photos left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M15 6l-6 6 6 6" />
+            </svg>
+          </button>
+          <button class="icon-btn" type="button" data-scroll="1" aria-label="Scroll photos right">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 6l6 6-6 6" />
+            </svg>
+          </button>
+        </div>
+        <a class="link-arrow" href={url(`galleries/${gallery.slug}/`)}>
+          Open the full {gallery.label} gallery <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  ))}
+</section>
+
+<style>
+  .tabs {
+    display: flex;
+    gap: 6px;
+    padding: 6px;
+    border-radius: var(--radius-pill);
+    background: var(--green-950);
+    border: 1px solid var(--line);
+    flex: 0 0 auto;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tab {
+    flex: none;
+    border: 0;
+    background: transparent;
+    color: var(--cream-muted);
+    cursor: pointer;
+    font: 600 15px/1 var(--font-body);
+    padding: 12px 18px;
+    border-radius: var(--radius-pill);
+    display: inline-flex;
+    gap: 8px;
+    align-items: baseline;
+  }
+
+  .tab small {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  .tab[aria-selected='true'] {
+    background: var(--cream);
+    color: var(--ink);
+  }
+
+  .tab:not([aria-selected='true']):hover {
+    color: var(--cream);
+  }
+
+  /* Phones: four categories in a 2 x 2 grid so none are cut off */
+  @media (max-width: 600px) {
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      border-radius: 26px;
+    }
+    .tab {
+      justify-content: center;
+    }
+  }
+
+  .strip {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    border-radius: var(--radius-md);
+  }
+
+  .strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .frame {
+    position: relative;
+    flex: none;
+    height: clamp(300px, 56vh, 580px);
+    max-width: 86vw;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    scroll-snap-align: start;
+    background: var(--green-950);
+    cursor: zoom-in;
+    text-decoration: none;
+  }
+
+  .frame :global(img) {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+  }
+
+  .frame:hover :global(img) {
+    transform: scale(1.03);
+  }
+
+  .frame-cap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 40px 16px 14px;
+    background: linear-gradient(180deg, transparent, rgb(8 32 29 / 0.85));
+    font-size: 14px;
+    display: grid;
+    gap: 2px;
+  }
+
+  .frame-cap span {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--cream-muted);
+  }
+
+  .strip-foot {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+  }
+
+  .track {
+    flex: 1 1 200px;
+    height: 3px;
+    background: var(--line);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .track i {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 20%;
+    background: var(--amber);
+    border-radius: 3px;
+  }
+
+  .strip-arrows {
+    display: flex;
+    gap: 8px;
+  }
+</style>
+
+<script>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('[data-work]').forEach((section) => {
+    const tabs = [...section.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...section.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+
+    const updateTrack = (panel: HTMLElement) => {
+      const strip = panel.querySelector<HTMLElement>('.strip')!;
+      const bar = panel.querySelector<HTMLElement>('.track i')!;
+      const visible = strip.clientWidth / strip.scrollWidth;
+      const max = strip.scrollWidth - strip.clientWidth;
+      bar.style.width = `${Math.max(visible * 100, 8)}%`;
+      bar.style.left = `${max > 0 ? (strip.scrollLeft / max) * (100 - visible * 100) : 0}%`;
+    };
+
+    const select = (index: number, focus = false) => {
+      tabs.forEach((tab, i) => {
+        const on = i === index;
+        tab.setAttribute('aria-selected', String(on));
+        tab.tabIndex = on ? 0 : -1;
+        panels[i].hidden = !on;
+      });
+      if (focus) tabs[index].focus();
+      updateTrack(panels[index]);
+    };
+
+    tabs.forEach((tab, i) => tab.addEventListener('click', () => select(i)));
+    section.querySelector('[role="tablist"]')?.addEventListener('keydown', (e) => {
+      const key = (e as KeyboardEvent).key;
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(key)) return;
+      e.preventDefault();
+      const current = tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true');
+      const next =
+        key === 'Home'
+          ? 0
+          : key === 'End'
+            ? tabs.length - 1
+            : (current + (key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+      select(next, true);
+    });
+
+    panels.forEach((panel) => {
+      const strip = panel.querySelector<HTMLElement>('.strip')!;
+      strip.addEventListener('scroll', () => updateTrack(panel), { passive: true });
+      panel.querySelectorAll<HTMLButtonElement>('[data-scroll]').forEach((button) => {
+        button.addEventListener('click', () =>
+          strip.scrollBy({
+            left: Number(button.dataset.scroll) * strip.clientWidth * 0.8,
+            behavior: reduceMotion ? 'auto' : 'smooth',
+          }),
+        );
+      });
+    });
+
+    // "See examples" links on the service cards switch to the matching tab.
+    document.querySelectorAll<HTMLAnchorElement>('[data-show-gallery]').forEach((link) => {
+      link.addEventListener('click', () => {
+        const index = tabs.findIndex((t) => t.id === `tab-${link.dataset.showGallery}`);
+        if (index >= 0) select(index);
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      const open = panels.find((p) => !p.hidden);
+      if (open) updateTrack(open);
+    });
+    select(0);
+  });
+</script>

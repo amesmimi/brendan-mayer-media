@@ -1,0 +1,39 @@
+# Sports gallery: captions for photos in src/assets/galleries/sports/
+# See concerts.yaml for what each field does.
+# PLACEHOLDER captions below: replace with Brendan's real teams, venues and dates.
+label: Sports
+order: 4
+blurb: Hockey, soccer, track and more. Peak action from the sidelines and the rinkside glass.
+photos:
+  - file: placeholder-sports-01.jpg
+    title: 200m butterfly, Saanich Commonwealth Place
+    meta: 1/1600 · f/2.8 · ISO 2000
+    featured: true
+  - file: placeholder-sports-02.jpg
+    title: Breakaway, Save-On-Foods Memorial Centre
+    meta: 1/1000 · f/2.8 · ISO 3200
+  - file: placeholder-sports-03.jpg
+    title: First touch, Starlight Stadium
+    meta: 1/2000 · f/2.8 · ISO 400
+  - file: placeholder-sports-04.jpg
+    title: Free kick, Royal Athletic Park
+    meta: 1/2500 · f/4 · ISO 200
+  - file: placeholder-sports-05.jpg
+    title: Criterium, downtown Victoria
+    meta: 1/1250 · f/4 · ISO 400
+  - file: placeholder-sports-06.jpg
+    title: Fast break, CARSA gym
+    meta: 1/1000 · f/2.8 · ISO 4000
+    featured: true
+  - file: placeholder-sports-07.jpg
+    title: On your marks, Centennial Stadium
+    meta: 1/2000 · f/2.8 · ISO 320
+  - file: placeholder-sports-08.jpg
+    title: Nothing but net
+    meta: 1/1600 · f/2.8 · ISO 1600
+  - file: placeholder-sports-09.jpg
+    title: Dawn session, Beacon Hill Park
+    meta: 1/2000 · f/2.8 · ISO 800
+  - file: placeholder-sports-10.jpg
+    title: Big air, Mount Washington
+    meta: 1/3200 · f/5.6 · ISO 100
