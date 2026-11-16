@@ -23,6 +23,10 @@ photos:
     title: Cirque du Soleil
     caption: Cirque du Soleil
     alt: A smiling Cirque du Soleil performer with taped hands, in black and white, sits on the stage before a show.
+  - file: brendan-motocross.jpg
+    x: 100
+    title: Motocross
+    alt: A motocross rider in a red and black helmet and goggles steers a red bike down a rocky dirt trail through the woods.
   - file: brendan-cadboro-bay-festival.jpg
     title: Cadboro Bay Festival
     caption: Cadboro Bay Festival
