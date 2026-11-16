@@ -10,6 +10,7 @@ photos:
   - file: brendan-red-smoke.jpg
     title: Portugal. The Man
     alt: A member of Portugal. The Man in a cap stands silhouetted in thick red and teal stage smoke.
+    featured: 2
     focus: top
   - file: brendan-orange-light.jpg
     title: Third Eye Blind
@@ -25,7 +26,6 @@ photos:
     title: Afternoon set
     alt: A tattooed singer with dark hair holds a microphone on an outdoor festival stage.
     focus: top
-    featured: 2
   - file: brendan-purple-drums.jpg
     title: Portugal. The Man
     alt: Portugal. The Man's drummer plays under purple and pink lights with glitter in the air.
