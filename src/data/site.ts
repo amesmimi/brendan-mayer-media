@@ -9,7 +9,7 @@ export const site = {
   description:
     'Brendan Mayer is a concert, festival, event and sports photographer based in Victoria, BC, working with artists, promoters, venues and teams.',
   location: 'Victoria, BC',
-  serviceArea: 'Based in Victoria, BC.',
+  serviceArea: 'Based in Victoria, BC. Available across Vancouver Island and beyond.',
   instagram: { handle: '@brendanmayer', url: 'https://www.instagram.com/brendanmayer/' },
   /**
    * Brendan's Gmail, approved by him for the site. Switching to a work address later (e.g. hello@brendanmayermedia.ca)

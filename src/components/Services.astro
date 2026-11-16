@@ -52,8 +52,12 @@ const rows = await Promise.all(
                 src={photo.image}
                 alt={photo.alt}
                 formats={['avif', 'webp']}
-                widths={widthsFor(photo.image, k === 0 ? [500, 800, 1100, 1400] : [300, 500, 700])}
-                sizes={k === 0 ? '(min-width: 900px) 48vw, 62vw' : '(min-width: 900px) 24vw, 31vw'}
+                widths={widthsFor(photo.image, k === 0 ? [500, 800, 1100, 1600] : [300, 500, 800])}
+                sizes={
+                  k === 0
+                    ? '(min-width: 1680px) 770px, (min-width: 900px) 48vw, 62vw'
+                    : '(min-width: 1680px) 380px, (min-width: 900px) 24vw, 31vw'
+                }
                 loading="lazy"
                 draggable="false"
               />
