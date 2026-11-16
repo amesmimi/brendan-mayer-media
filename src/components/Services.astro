@@ -2,7 +2,7 @@
 import { Picture } from 'astro:assets';
 import { services } from '../data/site';
 import type { Gallery } from '../lib/galleries';
-import { viewerImage, widthsFor } from '../lib/images';
+import { PHOTO_QUALITY, viewerImage, widthsFor } from '../lib/images';
 import { url } from '../lib/paths';
 
 interface Props {
@@ -28,95 +28,61 @@ const rows = await Promise.all(
 );
 ---
 
-<section class="section wrap" id="services" aria-labelledby="services-title">
-  <div class="intro">
-    <p class="eyebrow">Services</p>
-    <h2 id="services-title">What I shoot</h2>
-    <p class="lede">
-      Four kinds of work, each with a few favourites. Tap any photo to see it full screen, or open the full gallery.
-    </p>
-  </div>
-  <div class="rows">
-    {rows.map((row, i) => (
-      <article class:list={['row', { flip: i % 2 === 1 }]} aria-labelledby={`service-${row.gallery}`}>
-        <div class="mosaic protect" data-gallery>
-          {row.tiles.map(({ photo, x, large }, k) => (
-            <a
-              class:list={[{ big: k === 0 }, `x-${x}`]}
-              href={large.src}
-              data-pswp-width={large.width}
-              data-pswp-height={large.height}
-            >
-              <Picture
-                src={photo.image}
-                alt={photo.alt}
-                formats={['avif', 'webp']}
-                widths={widthsFor(photo.image, k === 0 ? [500, 800, 1100, 1600] : [300, 500, 800])}
-                sizes={
-                  k === 0
-                    ? '(min-width: 1680px) 770px, (min-width: 900px) 48vw, 62vw'
-                    : '(min-width: 1680px) 380px, (min-width: 900px) 24vw, 31vw'
-                }
-                loading="lazy"
-                draggable="false"
-              />
-            </a>
-          ))}
-        </div>
-        <div class="copy">
-          <h3 id={`service-${row.gallery}`}>{row.title}</h3>
-          <p>{row.text}</p>
-          <ul class="bullets">
-            {row.items.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-          <div>
-            <a class="btn btn-ghost" href={url(`galleries/${row.gallery}/`)} data-astro-prefetch>
-              {/* The site's camera mark, as in the favicon */}
-              <svg class="cam" viewBox="9 13 46 39" aria-hidden="true">
-                <rect class="body" x="22" y="13" width="17" height="9" rx="3"></rect>
-                <rect class="body" x="9" y="19" width="46" height="33" rx="8"></rect>
-                <circle class="hole" cx="32" cy="36" r="12"></circle>
-                <circle class="lens" cx="32" cy="36" r="7.5"></circle>
-                <circle class="hole" cx="47" cy="26" r="2.5"></circle>
-              </svg>
-              View gallery
-            </a>
-          </div>
-        </div>
-      </article>
-    ))}
-  </div>
+<section class="wrap services" id="services" aria-label="What I shoot">
+  {rows.map((row, i) => (
+    <article class:list={['row', { flip: i % 2 === 1 }]} aria-labelledby={`service-${row.gallery}`}>
+      <div class="mosaic protect" data-gallery>
+        {row.tiles.map(({ photo, x, large }, k) => (
+          <a
+            class:list={[{ big: k === 0 }, `x-${x}`]}
+            href={large.src}
+            data-pswp-width={large.width}
+            data-pswp-height={large.height}
+          >
+            <Picture
+              src={photo.image}
+              alt={photo.alt}
+              formats={['avif', 'webp']}
+              widths={widthsFor(photo.image, k === 0 ? [500, 800, 1100, 1600, 2000] : [300, 500, 800])}
+              quality={PHOTO_QUALITY}
+              sizes={
+                k === 0
+                  ? '(min-width: 1680px) 790px, (min-width: 900px) 50vw, 66vw'
+                  : '(min-width: 1680px) 395px, (min-width: 900px) 25vw, 33vw'
+              }
+              loading="lazy"
+              draggable="false"
+            />
+          </a>
+        ))}
+      </div>
+      <div class="copy">
+        <h2 id={`service-${row.gallery}`}>{row.title}</h2>
+        <p>{row.text}</p>
+        <a class="more" href={url(`galleries/${row.gallery}/`)} data-astro-prefetch>
+          View gallery<span class="visually-hidden">: {row.title}</span>
+        </a>
+      </div>
+    </article>
+  ))}
 </section>
 
 <style>
-  .intro {
+  .services {
     display: grid;
-    gap: 14px;
-    margin-bottom: clamp(48px, 6vw, 80px);
-  }
-
-  .lede {
-    color: var(--cream-muted);
-    max-width: 58ch;
-  }
-
-  .rows {
-    display: grid;
-    gap: clamp(56px, 6vw, 80px);
+    gap: clamp(64px, 7vw, 96px);
   }
 
   /* Photos take three-quarters of the row; every other row puts them on the right */
   .row {
     display: grid;
-    grid-template-columns: minmax(0, 3fr) minmax(280px, 1fr);
-    gap: 48px;
-    align-items: center;
+    grid-template-columns: minmax(0, 3fr) minmax(260px, 1fr);
+    gap: 40px;
+    align-items: end;
   }
 
   .row.flip {
-    grid-template-columns: minmax(280px, 1fr) minmax(0, 3fr);
+    grid-template-columns: minmax(260px, 1fr) minmax(0, 3fr);
   }
 
   .row.flip .mosaic {
@@ -127,14 +93,13 @@ const rows = await Promise.all(
   .mosaic {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
+    gap: 6px;
     align-items: start;
   }
 
   .mosaic a {
     display: block;
     aspect-ratio: 1;
-    border-radius: var(--radius-md);
     overflow: hidden;
     background: var(--charcoal-950);
   }
@@ -148,11 +113,6 @@ const rows = await Promise.all(
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s var(--ease);
-  }
-
-  .mosaic a:hover :global(img) {
-    transform: scale(1.03);
   }
 
   /* Horizontal crop from each photo's `x` in site.ts (classes, since the security policy blocks inline styles) */
@@ -220,66 +180,36 @@ const rows = await Promise.all(
   .copy {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    align-items: flex-start;
+    gap: 14px;
     min-width: 0;
+    padding-bottom: 4px;
   }
 
-  .copy h3 {
-    font-size: clamp(48px, 5vw, 72px);
-    line-height: 0.92;
+  .copy h2 {
+    font-size: 56px;
+    line-height: 0.95;
   }
 
   .copy p {
     color: var(--cream-muted);
   }
 
-  .bullets {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 8px;
-    font-size: 16px;
+  .more {
+    font-weight: 600;
+    text-underline-offset: 5px;
+    text-decoration-thickness: 1px;
   }
 
-  .bullets li {
-    display: flex;
-    gap: 12px;
-    align-items: baseline;
-  }
-
-  .bullets li::before {
-    content: '';
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--amber);
-    flex: none;
-    transform: translateY(-2px);
-  }
-
-  .cam {
-    width: 24px;
-    height: 20px;
-  }
-
-  .cam .body {
-    fill: currentColor;
-  }
-
-  .cam .hole {
-    fill: var(--charcoal);
-  }
-
-  .cam .lens {
-    fill: var(--amber);
+  .more:hover {
+    color: var(--amber);
   }
 
   @media (max-width: 900px) {
     .row,
     .row.flip {
       grid-template-columns: minmax(0, 1fr);
-      gap: 28px;
+      gap: 20px;
     }
     .row.flip .mosaic {
       order: 0;

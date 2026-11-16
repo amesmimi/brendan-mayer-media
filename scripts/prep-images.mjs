@@ -25,8 +25,9 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
 const AUTHOR = 'Brendan Mayer';
-const MAX_EDGE = 2400;
-const QUALITY = 82;
+// 3200px keeps photos crisp on high-resolution screens while staying well short of print quality.
+const MAX_EDGE = 3200;
+const QUALITY = 90;
 const NON_GALLERY_FOLDERS = new Set(['about', 'site']);
 const INPUT_TYPES = new Set(['.jpg', '.jpeg', '.png', '.tif', '.tiff', '.webp']);
 

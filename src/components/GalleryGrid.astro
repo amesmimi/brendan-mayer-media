@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import type { Photo } from '../lib/galleries';
-import { viewerImage, widthsFor } from '../lib/images';
+import { PHOTO_QUALITY, viewerImage, widthsFor } from '../lib/images';
 
 interface Props {
   photos: Photo[];
@@ -26,8 +26,9 @@ const items = await Promise.all(photos.map(async (photo) => ({ photo, large: awa
           src={photo.image}
           alt={photo.alt}
           formats={['avif', 'webp']}
-          widths={widthsFor(photo.image, [400, 700, 1000])}
-          sizes="(min-width: 1000px) 33vw, 50vw"
+          widths={widthsFor(photo.image, [400, 700, 1000, 1400])}
+          quality={PHOTO_QUALITY}
+          sizes="(min-width: 1680px) 525px, (min-width: 900px) 33vw, 50vw"
           loading={i < 6 ? 'eager' : 'lazy'}
           draggable="false"
         />
@@ -42,14 +43,13 @@ const items = await Promise.all(photos.map(async (photo) => ({ photo, large: awa
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
   }
 
   a {
     display: block;
     aspect-ratio: 3 / 2;
-    border-radius: var(--radius-md);
     overflow: hidden;
     background: var(--charcoal-950);
     /* Amber expand icon as the cursor (the same mark the homepage filmstrip used); magnifying glass as a fallback */
@@ -81,13 +81,10 @@ const items = await Promise.all(photos.map(async (photo) => ({ photo, large: awa
     filter: brightness(1.08);
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     .grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-    }
-    a {
-      border-radius: var(--radius-sm);
+      gap: 4px;
     }
   }
 </style>

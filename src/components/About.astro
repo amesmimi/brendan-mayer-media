@@ -2,72 +2,57 @@
 import { Picture } from 'astro:assets';
 import portrait from '../assets/about/brendan-moneyshot.jpg';
 import { about } from '../data/site';
+import { PHOTO_QUALITY } from '../lib/images';
 import { url } from '../lib/paths';
+
+const artists = new Intl.ListFormat('en-CA', { type: 'conjunction' }).format(about.artists);
 ---
 
-<section class="section wrap" id="about" aria-labelledby="about-title">
-  <div class="about">
-    <figure class="photo protect">
-      <Picture
-        src={portrait}
-        alt="Brendan Mayer smiling, wearing a black toque and tan jacket"
-        formats={['avif', 'webp']}
-        widths={[500, 800, 1100, 1400]}
-        sizes="(min-width: 860px) 42vw, 92vw"
-        loading="lazy"
-        draggable="false"
-      />
-    </figure>
-    <div class="body">
-      <p class="eyebrow">About</p>
-      <h2 id="about-title">{about.heading}</h2>
-      {about.paragraphs.map((p) => (
-        <p>{p}</p>
-      ))}
-      <div class="credits">
-        <h3>Artists I've photographed</h3>
-        <ul class="chips">
-          {about.artists.map((artist) => (
-            <li>{artist}</li>
-          ))}
-        </ul>
-      </div>
-      {/* Booking lives in the sticky nav's "Book a shoot"; the CV button shows once there's a CV to share */}
-      {about.cvFile && (
-        <div class="ctas">
-          <a class="btn btn-ghost" href={url(about.cvFile)} download>
-            Download CV (PDF)
-          </a>
-        </div>
-      )}
-    </div>
+<section class="wrap about" id="about" aria-labelledby="about-title">
+  <figure class="photo protect">
+    <Picture
+      src={portrait}
+      alt="Brendan Mayer smiling, wearing a black toque and tan jacket"
+      formats={['avif', 'webp']}
+      widths={[500, 800, 1100, 1400]}
+      quality={PHOTO_QUALITY}
+      sizes="(min-width: 1680px) 700px, (min-width: 900px) 42vw, 100vw"
+      loading="lazy"
+      draggable="false"
+    />
+  </figure>
+  <div class="body">
+    <h2 id="about-title">{about.heading}</h2>
+    {about.paragraphs.map((p, i) => (
+      <p class:list={{ lead: i === 0 }}>{p}</p>
+    ))}
+    <p class="artists">Artists photographed include {artists}.</p>
+    {/* Booking lives in the nav's "Book a shoot"; the CV link shows once there's a CV to share */}
+    {about.cvFile && (
+      <a class="cv" href={url(about.cvFile)} download>
+        Download CV (PDF)
+      </a>
+    )}
   </div>
 </section>
 
 <style>
-  /* Dark panel so the portrait is the warm focal point */
   .about {
-    background: var(--charcoal-950);
-    border: 1px solid var(--line);
-    color: var(--cream);
-    border-radius: var(--radius-lg);
+    margin-top: clamp(96px, 10vw, 128px);
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-    gap: clamp(28px, 5vw, 72px);
-    padding: clamp(20px, 3vw, 36px);
+    gap: clamp(28px, 5vw, 64px);
+    align-items: end;
   }
 
   .photo {
     margin: 0;
-    position: relative;
-    border-radius: calc(var(--radius-lg) - 10px);
+    aspect-ratio: 4 / 5;
     overflow: hidden;
-    min-height: 420px;
+    background: var(--charcoal-950);
   }
 
   .photo :global(img) {
-    position: absolute;
-    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -75,61 +60,42 @@ import { url } from '../lib/paths';
   }
 
   .body {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 22px;
-    align-content: center;
-    padding-block: clamp(8px, 2vw, 28px);
     min-width: 0;
   }
 
-  .body > p:not(.eyebrow) {
-    max-width: 60ch;
+  .body h2 {
+    font-size: 56px;
+    line-height: 0.95;
+  }
+
+  .body p {
+    max-width: 52ch;
     color: var(--cream-muted);
   }
 
-  .credits {
-    display: grid;
-    gap: 12px;
+  .body .lead {
+    font-size: 20px;
+    max-width: 46ch;
+    color: var(--cream);
   }
 
-  .credits h3 {
-    font-family: var(--font-mono);
-    font-size: var(--text-label);
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    color: var(--cream-muted);
+  .cv {
+    font-weight: 600;
+    text-underline-offset: 5px;
   }
 
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  .cv:hover {
+    color: var(--amber);
   }
 
-  .chips li {
-    border: 1px solid rgb(230 224 215 / 0.22);
-    border-radius: var(--radius-pill);
-    padding: 6px 14px;
-    font-size: var(--text-small);
-    font-weight: 500;
-  }
-
-  .ctas {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  @media (max-width: 860px) {
+  @media (max-width: 900px) {
     .about {
-      grid-template-columns: 1fr;
-    }
-    .photo {
-      min-height: 0;
-      aspect-ratio: 4 / 3.4;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 20px;
     }
   }
 </style>

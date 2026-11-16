@@ -58,7 +58,7 @@ body::before {
   inset: 0 0 auto;
   height: env(safe-area-inset-top, 0px);
   z-index: 60;
-  background: var(--charcoal-950);
+  background: var(--charcoal);
 }
 
 img {
@@ -73,7 +73,6 @@ a {
 :focus-visible {
   outline: 3px solid var(--amber);
   outline-offset: 3px;
-  border-radius: 6px;
 }
 
 h1,
@@ -89,11 +88,11 @@ h3 {
 }
 
 h2 {
-  font-size: var(--text-h2);
+  font-size: 56px;
 }
 
 h3 {
-  font-size: var(--text-h3);
+  font-size: 36px;
   line-height: 1;
 }
 
@@ -103,7 +102,7 @@ p {
 
 /* ---------- Page-to-page transitions ----------
  * Browsers that support cross-document view transitions (Chrome, Edge, Safari) cross-fade between pages
- * instead of flashing; the header and gallery chips stay still. Others navigate normally.
+ * instead of flashing; the header and gallery links stay still. Others navigate normally.
  */
 @view-transition {
   navigation: auto;
@@ -128,33 +127,6 @@ p {
   padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
 }
 
-.section {
-  margin-top: var(--section-gap);
-}
-
-.section-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 24px;
-  flex-wrap: wrap;
-  margin-bottom: 32px;
-}
-
-.section-head > .section-title {
-  display: grid;
-  gap: 14px;
-  min-width: 0;
-}
-
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--amber);
-}
-
 .visually-hidden {
   position: absolute !important;
   width: 1px;
@@ -172,89 +144,12 @@ p {
   background: var(--amber);
   color: var(--ink);
   padding: 12px 18px;
-  border-radius: var(--radius-pill);
   font-weight: 600;
   text-decoration: none;
 }
 
 .skip-link:focus {
   top: calc(env(safe-area-inset-top, 0px) + 12px);
-}
-
-/* ---------- Buttons and links ---------- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 48px;
-  padding: 0 24px;
-  border-radius: var(--radius-pill);
-  border: 2px solid transparent;
-  font: 600 16px/1 var(--font-body);
-  text-decoration: none;
-  cursor: pointer;
-  white-space: nowrap;
-  transition:
-    background-color 0.2s,
-    color 0.2s,
-    border-color 0.2s,
-    transform 0.2s;
-}
-
-.btn svg {
-  width: 18px;
-  height: 18px;
-  flex: none;
-}
-
-.btn-primary {
-  background: var(--amber);
-  color: var(--ink);
-}
-
-.btn-primary:hover {
-  background: var(--amber-hover);
-  transform: translateY(-1px);
-}
-
-.btn-ghost {
-  background: transparent;
-  color: var(--cream);
-  border-color: rgb(230 224 215 / 0.45);
-}
-
-.btn-ghost:hover {
-  border-color: var(--cream);
-  background: rgb(230 224 215 / 0.08);
-}
-
-.icon-btn {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  flex: none;
-  background: rgb(18 17 16 / 0.55);
-  color: var(--cream);
-  border: 1px solid rgb(230 224 215 / 0.3);
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition:
-    background-color 0.2s,
-    border-color 0.2s;
-}
-
-.icon-btn:hover {
-  background: rgb(18 17 16 / 0.85);
-  border-color: var(--cream);
-}
-
-.icon-btn svg {
-  width: 20px;
-  height: 20px;
 }
 
 /* ---------- Image protection (light deterrents) ---------- */
@@ -272,10 +167,6 @@ p {
   --pswp-icon-color: var(--cream);
   --pswp-icon-color-secondary: var(--charcoal-950);
   font-family: var(--font-body);
-}
-
-.pswp__img {
-  border-radius: var(--radius-sm);
 }
 
 .pswp__caption {

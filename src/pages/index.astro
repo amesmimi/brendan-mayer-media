@@ -5,6 +5,7 @@ import About from '../components/About.astro';
 import Services from '../components/Services.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 import { getFeaturedPhotos, getGalleries } from '../lib/galleries';
+import { site } from '../data/site';
 
 const galleries = await getGalleries();
 const featured = await getFeaturedPhotos();
@@ -12,7 +13,23 @@ const featured = await getFeaturedPhotos();
 
 <BaseLayout isHome image={featured[0]?.image} imageFocus={featured[0]?.focus}>
   <HeroCarousel photos={featured} />
+  <div class="wrap intro">
+    <h1>{site.intro}</h1>
+  </div>
   <Services galleries={galleries} />
   <About />
   <ContactCTA />
 </BaseLayout>
+
+<style>
+  .intro {
+    padding-top: clamp(56px, 6vw, 88px);
+    padding-bottom: clamp(64px, 7vw, 104px);
+  }
+
+  h1 {
+    max-width: 20ch;
+    font-size: clamp(44px, 5.4vw, 80px);
+    line-height: 0.95;
+  }
+</style>

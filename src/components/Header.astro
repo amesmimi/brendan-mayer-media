@@ -2,6 +2,7 @@
 import { getGalleries } from '../lib/galleries';
 import { getNavItems } from '../lib/nav';
 import { url } from '../lib/paths';
+import { site } from '../data/site';
 
 interface Props {
   isHome?: boolean;
@@ -16,9 +17,12 @@ const items = getNavItems(isHome, galleryHref, Astro.url.pathname.includes('/gal
 
 <header class="site-header">
   <nav class="wrap nav" aria-label="Main">
-    <a class="wordmark" href={url()}>
-      Brendan Mayer <span>Media</span>
-    </a>
+    <div class="brand">
+      <a class="wordmark" href={url()}>
+        Brendan Mayer <span>Media</span>
+      </a>
+      <span class="descriptor">{site.descriptor}</span>
+    </div>
     <ul class="nav-links">
       {items.map((item) => (
         <li>
@@ -27,17 +31,18 @@ const items = getNavItems(isHome, galleryHref, Astro.url.pathname.includes('/gal
           </a>
         </li>
       ))}
+      <li>
+        <a class="book" href={link('#contact')}>
+          Book a shoot
+        </a>
+      </li>
     </ul>
     <div class="nav-actions">
-      <a class="btn btn-primary book" href={link('#contact')}>
+      <a class="book" href={link('#contact')}>
         Book a shoot
       </a>
       <details class="mobile-menu" data-mobile-menu>
-        <summary class="icon-btn" aria-label="Menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M4 7h16M4 12h16M4 17h16"></path>
-          </svg>
-        </summary>
+        <summary>Menu</summary>
         <ul>
           {items.map((item) => (
             <li>
@@ -53,31 +58,36 @@ const items = getNavItems(isHome, galleryHref, Astro.url.pathname.includes('/gal
 </header>
 
 <style>
+  /* Plain text bar on the page background: the photos below do the talking */
   .site-header {
     view-transition-name: site-header;
     position: sticky;
     top: env(safe-area-inset-top, 0px);
     z-index: 50;
-    background: rgb(18 17 16 / 0.86);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--line);
+    background: var(--charcoal);
   }
 
   .nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 16px 32px;
     min-height: var(--header-height);
+  }
+
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    min-width: 0;
   }
 
   .wordmark {
     font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 26px;
+    font-weight: 900;
+    font-size: 34px;
     text-transform: uppercase;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
     text-decoration: none;
     line-height: 1;
     white-space: nowrap;
@@ -87,47 +97,66 @@ const items = getNavItems(isHome, galleryHref, Astro.url.pathname.includes('/gal
     color: var(--amber);
   }
 
+  .descriptor {
+    font-size: 14px;
+    color: var(--cream-muted);
+  }
+
   .nav-links {
     display: flex;
     gap: 28px;
     list-style: none;
     margin: 0;
     padding: 0;
+    font-size: var(--text-small);
+    white-space: nowrap;
   }
 
-  .nav-links a {
+  .nav-links a,
+  .mobile-menu a {
     text-decoration: none;
-    font-weight: 500;
-    font-size: var(--text-small);
-    color: var(--cream-muted);
+    text-underline-offset: 6px;
   }
 
   .nav-links a:hover,
-  .nav-links a[aria-current='page'] {
-    color: var(--cream);
+  .mobile-menu a:hover {
+    color: var(--amber);
   }
 
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  .nav-links a[aria-current='page'],
+  .mobile-menu a[aria-current='page'] {
+    text-decoration: underline;
+    text-decoration-color: var(--amber);
   }
 
   .book {
-    min-height: 42px;
-    padding: 0 18px;
+    color: var(--amber);
+    font-weight: 600;
     font-size: var(--text-small);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .book:hover {
+    color: var(--amber-hover);
+  }
+
+  .nav-actions {
+    display: none;
+    align-items: center;
+    gap: 20px;
   }
 
   .mobile-menu {
-    display: none;
     position: relative;
   }
 
   .mobile-menu summary {
     list-style: none;
-    width: 42px;
-    height: 42px;
+    cursor: pointer;
+    font-size: var(--text-small);
+    font-weight: 600;
+    padding: 10px 0;
   }
 
   .mobile-menu summary::-webkit-details-marker {
@@ -137,50 +166,48 @@ const items = getNavItems(isHome, galleryHref, Astro.url.pathname.includes('/gal
   .mobile-menu ul {
     position: absolute;
     right: 0;
-    top: calc(100% + 10px);
-    min-width: 200px;
+    top: 100%;
+    min-width: 180px;
     margin: 0;
-    padding: 8px;
+    padding: 8px 0;
     list-style: none;
     background: var(--charcoal-950);
     border: 1px solid var(--line);
-    border-radius: var(--radius-md);
-    box-shadow: 0 18px 40px rgb(0 0 0 / 0.35);
   }
 
   .mobile-menu a {
     display: block;
-    padding: 12px 14px;
-    border-radius: var(--radius-sm);
-    text-decoration: none;
+    padding: 12px 18px;
     font-weight: 500;
   }
 
-  .mobile-menu a:hover {
-    background: var(--charcoal-700);
+  @media (max-width: 1000px) {
+    .descriptor {
+      display: none;
+    }
   }
 
   @media (max-width: 820px) {
     .nav-links {
       display: none;
     }
-    .mobile-menu {
-      display: block;
+    .nav-actions {
+      display: flex;
     }
   }
 
   @media (max-width: 520px) {
     .wordmark {
-      font-size: 22px;
+      font-size: 26px;
     }
   }
 
   @media (max-width: 400px) {
     .wordmark {
-      font-size: 19px;
+      font-size: 22px;
     }
-    .book {
-      padding: 0 14px;
+    .nav-actions {
+      gap: 14px;
     }
   }
 </style>

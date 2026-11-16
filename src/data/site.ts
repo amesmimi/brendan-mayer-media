@@ -5,7 +5,10 @@
 export const site = {
   name: 'Brendan Mayer Media',
   photographer: 'Brendan Mayer',
-  tagline: 'Concert, festival, event and sports photography from Victoria, BC.',
+  /** Short line beside the wordmark in the top bar (hidden on phones). */
+  descriptor: 'Photographer based in Victoria, BC',
+  /** The big statement under the header slideshow; the homepage's main heading. */
+  intro: 'I photograph live music, festivals, events and sports on Vancouver Island.',
   description:
     'Brendan Mayer is a concert, festival, event and sports photographer based in Victoria, BC, working with artists, promoters, venues and teams.',
   location: 'Victoria, BC',
@@ -25,7 +28,7 @@ export const site = {
 } as const;
 
 export const about = {
-  heading: "Hi, I'm Brendan",
+  heading: 'About',
   paragraphs: [
     "I'm a photographer based in Victoria, BC. I spend most nights in photo pits and on sidelines, chasing the second when the lights hit, the crowd lifts or the puck crosses the line.",
     'I work with artists, promoters, venues and teams who want photos that feel the way the night felt. Fast turnaround, edited with care, delivered ready for press and socials.',
@@ -60,8 +63,8 @@ export interface Service {
   /** Must match a gallery file name; the "View gallery" button opens that gallery. */
   gallery: string;
   title: string;
+  /** One or two sentences: who it's for and what they get. */
   text: string;
-  items: string[];
   /** Three photos from the gallery: the big square first, then the two small ones stacked beside it. */
   photos: ServicePhoto[];
 }
@@ -71,8 +74,7 @@ export const services: Service[] = [
   {
     gallery: 'concerts',
     title: 'Concerts',
-    text: 'Live coverage for artists, management, venues and promoters.',
-    items: ['First three songs or the full set', 'Edited gallery within 48 hours', 'Press and social-ready crops'],
+    text: 'Live coverage for artists, management, venues and promoters. First three songs or the full set, edited within 48 hours.',
     photos: [
       { file: 'brendan-red-hood.jpg' },
       { file: 'brendan-green-stage.jpg', x: 30 },
@@ -82,8 +84,7 @@ export const services: Service[] = [
   {
     gallery: 'festivals',
     title: 'Festivals',
-    text: 'Full-day or multi-day coverage of stages, crowds and atmosphere.',
-    items: ['Artist sets and crowd moments', 'Same-night selects for socials', 'Sponsor and site photography'],
+    text: 'Full-day or multi-day coverage of stages, crowds and atmosphere, with same-night selects for socials.',
     photos: [
       { file: 'brendan-crowd-silhouettes.jpg' },
       { file: 'brendan-red-smoke.jpg' },
@@ -93,8 +94,7 @@ export const services: Service[] = [
   {
     gallery: 'events',
     title: 'Events',
-    text: 'Launches, galas, conferences and private celebrations.',
-    items: ['Speakers, panels and award moments', 'Candid guests and atmosphere', 'Fast selects for press and socials'],
+    text: 'Launches, galas, conferences and private celebrations. Speakers, guests and the room.',
     photos: [
       { file: 'placeholder-event-02.jpg' },
       { file: 'placeholder-event-03.jpg' },
@@ -104,12 +104,7 @@ export const services: Service[] = [
   {
     gallery: 'sports',
     title: 'Sports',
-    text: 'Game-day action for teams, leagues, athletes and media.',
-    items: [
-      'Hockey, soccer, basketball, track and more',
-      'Fast-glass low-light coverage',
-      'Team, roster and promo shots',
-    ],
+    text: 'Game-day action for teams, leagues, athletes and media, plus team and promo shots.',
     photos: [
       { file: 'placeholder-sports-01.jpg' },
       { file: 'placeholder-sports-02.jpg' },

@@ -2,19 +2,18 @@
  * Design tokens, locked from design pass 3.
  * A single deliberate dark look: warm charcoal with cream text, stage-light amber for actions.
  * Neutral so Brendan's photos are the only colour on the page (the old brand green clashed with red stage light).
+ * Square corners and text links throughout (the creative portfolio redesign): no cards, pills or rounded photos.
  */
 :root {
   /* Colour */
   --charcoal-950: #121110; /* panels, cards */
   --charcoal: #1c1b19; /* page background */
-  --charcoal-700: #2c2a27; /* hover fills */
   --line: rgb(230 224 215 / 0.14);
   --cream: #e6e0d7; /* brand cream */
   --cream-muted: #b8b6a9;
   --amber: #f2a93b; /* calls to action */
   --amber-hover: #ffbe5c;
   --ink: #121110; /* text on cream and amber */
-  --amber-ink: #8a4d00; /* amber-toned text on cream */
   --night: #0a0a09; /* photo viewer background */
 
   /* Type */
@@ -24,24 +23,14 @@
   --text-body: 17px;
   --text-small: 15px;
   --text-label: 13px;
-  --text-h2: clamp(44px, 7vw, 96px);
-  --text-h3: clamp(28px, 3vw, 36px);
-
-  /* Shape */
-  --radius-sm: 12px;
-  --radius-md: 20px;
-  --radius-lg: 32px;
-  --radius-pill: 999px;
 
   /* Space */
   --gutter: clamp(16px, 4vw, 48px);
   --max-width: 1680px; /* raised from 1440 for big monitors; lower it again if photos look soft */
-  --section-gap: clamp(72px, 10vw, 136px);
-  --header-height: 72px;
+  --header-height: 78px;
 
   /* Motion */
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --slide-duration: 6.5s;
 
   color-scheme: dark;
 }

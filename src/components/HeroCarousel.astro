@@ -1,8 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import type { Photo } from '../lib/galleries';
-import { widthsFor } from '../lib/images';
-import { site } from '../data/site';
+import { PHOTO_QUALITY, widthsFor } from '../lib/images';
 
 interface Props {
   photos: Photo[];
@@ -11,83 +10,34 @@ interface Props {
 const { photos } = Astro.props;
 ---
 
-<section class="hero wrap" aria-label="Featured photographs">
-  <div class="stage protect" data-hero>
-    <div class="slides">
-      {photos.map((photo, i) => (
-        <figure
-          class:list={['slide', photo.focus && `focus-${photo.focus}`, { 'is-active': i === 0 }]}
-          aria-hidden={i === 0 ? 'false' : 'true'}
-        >
-          <Picture
-            src={photo.image}
-            alt={photo.alt}
-            formats={['avif', 'webp']}
-            widths={widthsFor(photo.image, [800, 1200, 1600, 2000, 2400])}
-            sizes="(min-width: 1680px) 1584px, calc(100vw - 32px)"
-            loading={i === 0 ? 'eager' : 'lazy'}
-            fetchpriority={i === 0 ? 'high' : 'auto'}
-            draggable="false"
-          />
-        </figure>
-      ))}
-    </div>
-
-    <div class="hero-copy">
-      <h1>
-        Brendan Mayer <span class="media">Media</span>
-      </h1>
-      <p>{site.tagline}</p>
-    </div>
-
-    <div class="hero-bar">
-      <p class="hero-caption">
-        {photos.map((photo, i) => (
-          <span data-caption hidden={i !== 0}>
-            <b>{photo.galleryLabel}</b>
-          </span>
-        ))}
-      </p>
-      {/* Progress indicator only. The header sets the scene; visitors browse photos in What I shoot below. */}
-      <div class="segs" aria-hidden="true">
-        {photos.map((_, i) => (
-          <span class:list={['seg', { 'is-active': i === 0 }]}>
-            <i />
-          </span>
-        ))}
-      </div>
-    </div>
-  </div>
+<!-- Edge-to-edge slideshow with nothing over the photos: a slow crossfade and gentle zoom. -->
+<section class="hero protect" aria-label="Featured photographs" data-hero>
+  {photos.map((photo, i) => (
+    <figure
+      class:list={['slide', photo.focus && `focus-${photo.focus}`, { 'is-active': i === 0 }]}
+      aria-hidden={i === 0 ? 'false' : 'true'}
+    >
+      <Picture
+        src={photo.image}
+        alt={photo.alt}
+        formats={['avif', 'webp']}
+        widths={widthsFor(photo.image, [800, 1200, 1600, 2000, 2400, 2800, 3200])}
+        quality={PHOTO_QUALITY}
+        sizes="100vw"
+        loading={i === 0 ? 'eager' : 'lazy'}
+        fetchpriority={i === 0 ? 'high' : 'auto'}
+        draggable="false"
+      />
+    </figure>
+  ))}
 </section>
 
 <style>
   .hero {
-    padding-top: 16px;
-  }
-
-  /* Copy and controls sit in normal flow at the bottom, so the headline can't be pushed off the top. */
-  .stage {
     position: relative;
-    border-radius: var(--radius-lg);
+    height: clamp(420px, 56vw, 820px);
     overflow: hidden;
     background: var(--charcoal-950);
-    min-height: clamp(540px, 78vh, 820px);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: clamp(28px, 4vh, 48px);
-    padding: clamp(96px, 12vh, 140px) clamp(20px, 4vw, 56px) clamp(20px, 3vw, 32px);
-  }
-
-  .stage::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    /* Charcoal shade, so red and blue stage light stay true */
-    background:
-      linear-gradient(180deg, rgb(18 17 16 / 0) 35%, rgb(18 17 16 / 0.5) 65%, rgb(18 17 16 / 0.88) 100%),
-      linear-gradient(90deg, rgb(18 17 16 / 0.4) 0%, rgb(18 17 16 / 0) 55%);
   }
 
   .slide {
@@ -106,7 +56,6 @@ const { photos } = Astro.props;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform-origin: 60% 40%;
   }
 
   /* Photos marked `focus: top` (or bottom) in the captions file are anchored there when cropped */
@@ -127,10 +76,8 @@ const { photos } = Astro.props;
   }
 
   /* Held still for reduced-motion visitors, or while scrolled out of view */
-  .stage.paused .slide.is-active :global(img),
-  .stage.paused .seg.is-active i,
-  .stage.offscreen .slide.is-active :global(img),
-  .stage.offscreen .seg.is-active i {
+  .hero.paused .slide.is-active :global(img),
+  .hero.offscreen .slide.is-active :global(img) {
     animation-play-state: paused;
   }
 
@@ -142,119 +89,16 @@ const { photos } = Astro.props;
       transform: scale(1.08);
     }
   }
-
-  .hero-copy {
-    position: relative;
-    z-index: 2;
-    display: grid;
-    gap: 20px;
-    max-width: 980px;
-    min-width: 0;
-  }
-
-  h1 {
-    font-size: clamp(56px, 7.5vw, 120px);
-    font-weight: 900;
-    line-height: 0.86;
-  }
-
-  .media {
-    display: block;
-    color: transparent;
-    -webkit-text-stroke: 2px var(--amber);
-  }
-
-  .hero-copy p {
-    font-size: clamp(17px, 1.6vw, 21px);
-    max-width: 34ch;
-  }
-
-  .hero-bar {
-    position: relative;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .hero-caption {
-    font-family: var(--font-mono);
-    font-size: var(--text-label);
-    color: var(--cream-muted);
-    flex: 1 1 260px;
-    min-width: 0;
-  }
-
-  .hero-caption b {
-    color: var(--cream);
-    font-weight: 500;
-  }
-
-  .segs {
-    display: flex;
-    gap: 6px;
-    flex: 0 1 220px;
-    min-width: 120px;
-  }
-
-  .seg {
-    flex: 1;
-    height: 4px;
-    border-radius: 4px;
-    background: rgb(230 224 215 / 0.25);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .seg i {
-    position: absolute;
-    inset: 0;
-    background: var(--cream);
-    transform: scaleX(0);
-    transform-origin: left;
-  }
-
-  .seg.done i {
-    transform: scaleX(1);
-  }
-
-  .seg.is-active i {
-    animation: fill var(--slide-duration) linear forwards;
-  }
-
-  @keyframes fill {
-    to {
-      transform: scaleX(1);
-    }
-  }
-
-  @media (max-width: 640px) {
-    .stage {
-      min-height: clamp(560px, 84vh, 760px);
-    }
-    .media {
-      -webkit-text-stroke-width: 1.5px;
-    }
-    .hero-caption {
-      flex-basis: 100%;
-      order: 2;
-    }
-    /* Bars fill the row */
-    .segs {
-      flex: 1 1 auto;
-    }
-  }
 </style>
 
 <script>
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const SLIDE_MS = 6500;
 
-  document.querySelectorAll<HTMLElement>('[data-hero]').forEach((stage) => {
-    const slides = [...stage.querySelectorAll<HTMLElement>('.slide')];
-    const segs = [...stage.querySelectorAll<HTMLElement>('.seg')];
-    const captions = [...stage.querySelectorAll<HTMLElement>('[data-caption]')];
+  document.querySelectorAll<HTMLElement>('[data-hero]').forEach((hero) => {
+    const slides = [...hero.querySelectorAll<HTMLElement>('.slide')];
     let current = 0;
+    if (slides.length < 2) return;
 
     const show = (n: number) => {
       current = (n + slides.length) % slides.length;
@@ -264,14 +108,6 @@ const { photos } = Astro.props;
         s.classList.toggle('is-active', on);
         s.setAttribute('aria-hidden', String(!on));
       });
-      captions.forEach((c, i) => (c.hidden = i !== current));
-      segs.forEach((s, i) => {
-        s.classList.remove('is-active');
-        s.classList.toggle('done', i < current);
-      });
-      const seg = segs[current];
-      void seg.offsetWidth; // restart the progress animation
-      seg.classList.add('is-active');
     };
 
     // Once an outgoing slide has faded out, drop its zoom.
@@ -283,18 +119,21 @@ const { photos } = Astro.props;
       }),
     );
 
-    segs.forEach((seg, i) => {
-      seg.querySelector('i')?.addEventListener('animationend', () => {
-        if (i === current && !stage.classList.contains('paused') && !stage.classList.contains('offscreen')) {
-          show(current + 1);
-        }
-      });
-    });
+    // There's no pause button, so people who prefer reduced motion get a still header (the first photo).
+    hero.classList.toggle('paused', reduceMotion);
+    if (reduceMotion) return;
 
     // Hold the slideshow while it's scrolled out of view, so visitors come back to where they left it.
-    new IntersectionObserver(([entry]) => stage.classList.toggle('offscreen', !entry.isIntersecting)).observe(stage);
-
-    // There's no pause button, so people who prefer reduced motion get a still header (the first photo).
-    stage.classList.toggle('paused', reduceMotion);
+    let timer = 0;
+    const start = () => (timer ||= window.setInterval(() => show(current + 1), SLIDE_MS));
+    const stop = () => {
+      window.clearInterval(timer);
+      timer = 0;
+    };
+    new IntersectionObserver(([entry]) => {
+      hero.classList.toggle('offscreen', !entry.isIntersecting);
+      if (entry.isIntersecting) start();
+      else stop();
+    }).observe(hero);
   });
 </script>

@@ -43,7 +43,7 @@ npm run photos
 
 For every new photo this:
 
-- makes a web-sized copy (2400px on the long edge) in `src/assets/galleries/<gallery>/`
+- makes a web-sized copy (3200px on the long edge) in `src/assets/galleries/<gallery>/`
 - removes the GPS location and camera serial number
 - adds "© Brendan Mayer. All rights reserved." to the file's details
 
