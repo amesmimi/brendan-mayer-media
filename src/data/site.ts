@@ -89,7 +89,7 @@ export const services: Service[] = [
     title: 'Live Music',
     text: 'Concert and festival coverage for artists, management, venues and promoters. First three songs or the full set, edited within 48 hours.',
     photos: [
-      { file: 'brendan-sepia-guitar.jpg', x: 15 },
+      { file: 'brendan-sepia-guitar.jpg', x: 30 },
       { file: 'brendan-pedal-steel.jpg' },
       { file: 'brendan-billie-marten.jpg', x: 25 },
     ],
