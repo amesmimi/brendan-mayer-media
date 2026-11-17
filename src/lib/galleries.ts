@@ -7,7 +7,7 @@ export interface Photo {
   image: ImageMetadata;
   /** Optional label (e.g. the artist); not shown on the site. */
   title?: string;
-  /** Shown in the full-screen viewer above the copyright line. */
+  /** Shown over the photo on hover (e.g. the artist or team). */
   caption?: string;
   alt: string;
   /** true = in the slideshow; a number pins it to that slide position (1 = first). */
@@ -40,7 +40,7 @@ const images = new Map(
 
 let cache: Promise<Gallery[]> | undefined;
 
-/** All galleries in display order, each with its photos (captioned ones first, in YAML order). */
+/** All galleries in display order, each with its photos (listed ones first, in YAML order). */
 export function getGalleries(): Promise<Gallery[]> {
   cache ??= load();
   return cache;

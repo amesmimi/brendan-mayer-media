@@ -2,7 +2,7 @@
 # See live-music.yaml for what each field does.
 label: Events
 order: 3
-blurb: Community gatherings, cultural celebrations and the people who make them.
+blurb: Community gatherings, cultural celebrations and the stories behind them.
 photos:
   - file: brendan-farm.jpg
     title: Farm

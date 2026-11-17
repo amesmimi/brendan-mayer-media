@@ -1,5 +1,5 @@
 /**
- * Site-wide settings and copy. Most text edits that aren't photo captions happen here.
+ * Site-wide settings and copy. Most text edits happen here; photo descriptions live in the gallery files.
  */
 
 export const site = {
@@ -8,9 +8,9 @@ export const site = {
   /** The big statement under the header slideshow; the homepage's main heading. */
   intro: 'I photograph live music, sports, and events on Vancouver Island.',
   /** The line under the Gallery heading. */
-  galleryIntro: 'Live music, sports and events from Vancouver Island and beyond. Tap any photo to see it full screen.',
+  galleryIntro: 'Live music, sports and events from Vancouver Island and beyond.',
   description:
-    'Brendan Mayer is a live music, sports and event photographer based in Victoria, BC, working with artists, promoters, venues and teams.',
+    'Brendan Mayer is a live music, sports and event photographer based in Victoria, BC, working with artists, promoters, venues, sports leagues and teams.',
   location: 'Victoria, BC',
   serviceArea: 'Based in Victoria, BC. Available across Vancouver Island and beyond.',
   instagram: { handle: '@brendanmayer', url: 'https://www.instagram.com/brendanmayer/' },
@@ -35,20 +35,18 @@ export const site = {
 export const about = {
   heading: 'About',
   paragraphs: [
-    "I'm a photographer based in Victoria, BC. I spend most nights in photo pits and on sidelines, chasing the second when the lights hit, the crowd lifts or the puck crosses the line.",
-    'I work with artists, promoters, venues and teams who want photos that feel the way the night felt. Fast turnaround, edited with care, delivered ready for press and socials.',
+    "I'm a photographer in Victoria, BC. Most of my work is live music, sports and community events.",
+    'I like the in-between moments as much as the big ones. I shoot for artists, venues, leagues and teams, and I deliver edited galleries fast, ready for press and social media.',
   ],
+  /** Names with photos on the site ("I've photographed …" in About): sports and Cirque first, then the musicians together. */
   artists: [
-    'Jason Isbell',
-    'July Talk',
+    'Vancouver Whitecaps FC',
+    'Cirque du Soleil',
     'Portugal. The Man',
-    'Third Eye Blind',
-    'Frazey Ford',
+    'July Talk',
     'Allan Rayman',
-    'Billie Marten',
-    'Reignwolf',
     'Yonaka',
-    'Aqua',
+    'Billie Marten',
   ],
   /** Set to a file in public/ (e.g. 'brendan-mayer-cv.pdf') once Brendan has a CV to share. */
   cvFile: null as string | null,
@@ -79,17 +77,17 @@ export const services: Service[] = [
   {
     gallery: 'live-music',
     title: 'Live Music',
-    text: 'Concerts and festivals for artists, management, venues and promoters. First three songs or the full set, edited within 48 hours.',
+    text: 'Concert and festival coverage for artists, management, venues and promoters. First three songs or the full set, edited within 48 hours.',
     photos: [
       { file: 'brendan-sepia-guitar.jpg', x: 15 },
       { file: 'brendan-pedal-steel.jpg' },
-      { file: 'brendan-green-stage.jpg', x: 30 },
+      { file: 'brendan-billie-marten.jpg', x: 25 },
     ],
   },
   {
     gallery: 'sports',
     title: 'Sports',
-    text: 'Game-day action for teams, leagues, athletes and media, plus team and promo shots.',
+    text: 'Game-day action and the athletes behind it, for leagues, teams and media.',
     photos: [
       { file: 'brendan-whitecaps-huddle.jpg', x: 45 },
       { file: 'brendan-swimmer.jpg' },
@@ -99,7 +97,7 @@ export const services: Service[] = [
   {
     gallery: 'events',
     title: 'Events',
-    text: 'Launches, galas, conferences and private celebrations. Speakers, guests and the room.',
+    text: 'Community gatherings, cultural celebrations and the stories behind them.',
     photos: [
       { file: 'brendan-ceremonial-dance.jpg', x: 100 },
       { file: 'brendan-bar-portrait.jpg', x: 60 },

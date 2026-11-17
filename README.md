@@ -30,17 +30,17 @@ src/
   assets/galleries/<name>/ web-ready photos per gallery (output of npm run photos)
   assets/about/            Brendan's portrait
   assets/site/             other site images (contact background)
-  content/galleries/*.yaml one file per gallery: label, order, blurb, optional photo captions
+  content/galleries/*.yaml one file per gallery: label, order, blurb, photo order and descriptions
   data/site.ts             site copy: intro line, about text, services, email, Instagram
-  components/              Header, HeroCarousel, GalleryGrid, Lightbox, About, Services, ContactCTA, Footer, SEO
-  layouts/BaseLayout.astro page shell (fonts, header, footer, photo viewer)
+  components/              Header, HeroCarousel, GalleryWall, About, Services, ContactCTA, Footer, SEO
+  layouts/BaseLayout.astro page shell (fonts, header, footer)
   pages/                   index, galleries/[gallery], 404, robots.txt
   styles/tokens.css        design tokens (colours, type, spacing, radii)
 ```
 
 - **Adding photos:** see [`docs/ADDING-PHOTOS.md`](docs/ADDING-PHOTOS.md).
 - **Adding a gallery:** create `incoming/<name>/` and `src/content/galleries/<name>.yaml` (copy an existing one), then run `npm run photos`. It appears in the tabs, footer and its own page automatically. Add a service card in `src/data/site.ts` if needed.
-- **Editing text:** most copy lives in `src/data/site.ts`; gallery descriptions and captions live in the YAML files.
+- **Editing text:** most copy lives in `src/data/site.ts`; photo order, crops and descriptions live in the gallery YAML files.
 
 ## Deploying
 
@@ -59,7 +59,7 @@ In the repo settings, **Pages → Source** must be set to **GitHub Actions**.
 
 - [ ] Turn off preview mode: set `preview: false` in `src/data/site.ts` so search engines can index the site.
 - [x] Replace the placeholder email in `src/data/site.ts` with Brendan's address.
-- [ ] Swap the `placeholder-*` photos for Brendan's work and update the YAML captions.
+- [ ] Swap the `placeholder-*` photos for Brendan's work and update the YAML descriptions.
 - [ ] Confirm the bio and the artist list in `src/data/site.ts`.
 - [ ] Optional: add a CV PDF to `public/` and set `about.cvFile`.
 

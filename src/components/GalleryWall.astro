@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import type { Gallery } from '../lib/galleries';
-import { PHOTO_QUALITY, coverSizes, viewerImage, widthsFor } from '../lib/images';
+import { PHOTO_QUALITY, coverSizes, widthsFor } from '../lib/images';
 
 interface Props {
   galleries: Gallery[];
@@ -10,30 +10,18 @@ interface Props {
 const { galleries } = Astro.props;
 
 // Every gallery's photos in one continuous wall.
-const cats = await Promise.all(
-  galleries.map(async (gallery) => {
-    const items = await Promise.all(
-      gallery.photos.map(async (photo) => ({ photo, large: await viewerImage(photo.image) })),
-    );
-    return { gallery, items };
-  }),
-);
+const cats = galleries.map((gallery) => ({ gallery, items: gallery.photos }));
 ---
 
 <div class="wall-root" data-wall-root>
-  <!-- One viewer for the whole wall, so the full-screen view swipes through every photo. -->
-  <div class="wall protect" data-gallery data-wall>
+  <div class="wall protect" data-wall>
     {cats.map(({ gallery, items }) => (
       <section class="cat" id={gallery.slug} aria-labelledby={`${gallery.slug}-title`} data-label={gallery.label}>
         <ul class="grid">
-          {items.map(({ photo, large }, i) => (
+          {items.map((photo, i) => (
             <li>
-              <a
-                class:list={[photo.focus && `focus-${photo.focus}`, photo.x !== undefined && `x-${photo.x}`]}
-                href={large.src}
-                data-caption={photo.caption}
-                data-pswp-width={large.width}
-                data-pswp-height={large.height}
+              <div
+                class:list={['tile', photo.focus && `focus-${photo.focus}`, photo.x !== undefined && `x-${photo.x}`]}
               >
                 <Picture
                   src={photo.image}
@@ -45,7 +33,12 @@ const cats = await Promise.all(
                   loading={i < 6 && gallery === galleries[0] ? 'eager' : 'lazy'}
                   draggable="false"
                 />
-              </a>
+                {photo.caption && (
+                  <span class="name" aria-hidden="true">
+                    {photo.caption}
+                  </span>
+                )}
+              </div>
             </li>
           ))}
         </ul>
@@ -166,25 +159,18 @@ const cats = await Promise.all(
     gap: 6px;
   }
 
-  .grid a {
+  .grid .tile {
+    position: relative;
     display: block;
     aspect-ratio: 1; /* square, like an Instagram grid */
     overflow: hidden;
     background: var(--charcoal-950);
-    /* Amber expand icon as the cursor; magnifying glass as a fallback */
-    cursor:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23f2a93b' stroke='%23121110' stroke-width='1'/%3E%3Cg transform='translate%288 8%29 scale%280.6667%29' fill='none' stroke='%23121110' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7'/%3E%3C/g%3E%3C/svg%3E")
-        16 16,
-      zoom-in;
   }
 
   .grid :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition:
-      transform 0.6s var(--ease),
-      filter 0.3s;
   }
 
   /* Square crops: `x` in the gallery files sets the left-right position, `focus` the top-bottom one
@@ -193,78 +179,94 @@ const cats = await Promise.all(
     object-position: var(--x, 50%) var(--y, 50%);
   }
 
-  .grid a.focus-top {
+  .grid .tile.focus-top {
     --y: 0%;
   }
 
-  .grid a.focus-bottom {
+  .grid .tile.focus-bottom {
     --y: 85%;
   }
 
-  .grid a.x-0 {
+  .grid .tile.x-0 {
     --x: 0%;
   }
-  .grid a.x-5 {
+  .grid .tile.x-5 {
     --x: 5%;
   }
-  .grid a.x-10 {
+  .grid .tile.x-10 {
     --x: 10%;
   }
-  .grid a.x-15 {
+  .grid .tile.x-15 {
     --x: 15%;
   }
-  .grid a.x-20 {
+  .grid .tile.x-20 {
     --x: 20%;
   }
-  .grid a.x-25 {
+  .grid .tile.x-25 {
     --x: 25%;
   }
-  .grid a.x-30 {
+  .grid .tile.x-30 {
     --x: 30%;
   }
-  .grid a.x-35 {
+  .grid .tile.x-35 {
     --x: 35%;
   }
-  .grid a.x-40 {
+  .grid .tile.x-40 {
     --x: 40%;
   }
-  .grid a.x-45 {
+  .grid .tile.x-45 {
     --x: 45%;
   }
-  .grid a.x-55 {
+  .grid .tile.x-55 {
     --x: 55%;
   }
-  .grid a.x-60 {
+  .grid .tile.x-60 {
     --x: 60%;
   }
-  .grid a.x-65 {
+  .grid .tile.x-65 {
     --x: 65%;
   }
-  .grid a.x-70 {
+  .grid .tile.x-70 {
     --x: 70%;
   }
-  .grid a.x-75 {
+  .grid .tile.x-75 {
     --x: 75%;
   }
-  .grid a.x-80 {
+  .grid .tile.x-80 {
     --x: 80%;
   }
-  .grid a.x-85 {
+  .grid .tile.x-85 {
     --x: 85%;
   }
-  .grid a.x-90 {
+  .grid .tile.x-90 {
     --x: 90%;
   }
-  .grid a.x-95 {
+  .grid .tile.x-95 {
     --x: 95%;
   }
-  .grid a.x-100 {
+  .grid .tile.x-100 {
     --x: 100%;
   }
 
-  .grid a:hover :global(img) {
-    transform: scale(1.03);
-    filter: brightness(1.08);
+  /* The artist or team name fades in over the photo on hover (devices with a mouse) */
+  .name {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 28px 14px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--cream);
+    background: linear-gradient(transparent, rgb(18 17 16 / 0.75));
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    .tile:hover .name {
+      opacity: 1;
+    }
   }
 
   .mscrub {

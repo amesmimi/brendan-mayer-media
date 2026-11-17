@@ -26,7 +26,7 @@ const artists = new Intl.ListFormat('en-CA', { type: 'conjunction' }).format(abo
     {about.paragraphs.map((p, i) => (
       <p class:list={{ lead: i === 0 }}>{p}</p>
     ))}
-    <p class="artists">Artists photographed include {artists}.</p>
+    <p class="artists">I've photographed {artists}.</p>
     {/* Booking lives in the nav's "Work with me"; the CV link shows once there's a CV to share */}
     {about.cvFile && (
       <a class="cv" href={url(about.cvFile)} download>

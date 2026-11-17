@@ -19,7 +19,7 @@ const galleries = defineCollection({
           file: z.string(),
           // Not shown on the site: a label for us (e.g. the artist), also used in the screen-reader text.
           title: z.string().optional(),
-          // Shown above the copyright line when the photo is opened full screen. Leave it out to show only the copyright.
+          // Shown over the photo on hover (gallery and homepage). Leave it out where we don't know the name.
           caption: z.string().optional(),
           alt: z.string().optional(),
           // true = in the homepage slideshow; a number (1, 2, ...) also pins it to that slide position.

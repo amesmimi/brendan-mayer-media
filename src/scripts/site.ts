@@ -57,7 +57,7 @@ document.querySelectorAll<HTMLDetailsElement>('[data-mobile-menu]').forEach((men
 
 // ---------- Image protection (deterrents only; anything on screen can still be screenshotted) ----------
 document.addEventListener('contextmenu', (e) => {
-  if ((e.target as HTMLElement).closest('.protect, .pswp')) e.preventDefault();
+  if ((e.target as HTMLElement).closest('.protect')) e.preventDefault();
 });
 document.addEventListener('dragstart', (e) => {
   if ((e.target as HTMLElement).tagName === 'IMG') e.preventDefault();

@@ -2,7 +2,7 @@
 import { Picture } from 'astro:assets';
 import { services } from '../data/site';
 import type { Gallery } from '../lib/galleries';
-import { PHOTO_QUALITY, coverSizes, viewerImage, widthsFor } from '../lib/images';
+import { PHOTO_QUALITY, coverSizes, widthsFor } from '../lib/images';
 import { url } from '../lib/paths';
 
 interface Props {
@@ -20,10 +20,7 @@ const rows = await Promise.all(
       if (!photo) console.warn(`[services] ${service.title}: no photo "${file}" in the ${service.gallery} gallery.`);
       return photo ? [{ photo, x: Math.round(x / 5) * 5 }] : [];
     });
-    const tiles = await Promise.all(
-      picks.map(async (pick) => ({ ...pick, large: await viewerImage(pick.photo.image) })),
-    );
-    return { ...service, tiles };
+    return { ...service, tiles: picks };
   }),
 );
 ---
@@ -31,15 +28,9 @@ const rows = await Promise.all(
 <section class="wrap services" id="services" aria-label="What I shoot">
   {rows.map((row, i) => (
     <article class:list={['row', { flip: i % 2 === 1 }]} id={row.gallery} aria-labelledby={`service-${row.gallery}`}>
-      <div class="mosaic protect" data-gallery>
-        {row.tiles.map(({ photo, x, large }, k) => (
-          <a
-            class:list={[{ big: k === 0 }, `x-${x}`]}
-            href={large.src}
-            data-caption={photo.caption}
-            data-pswp-width={large.width}
-            data-pswp-height={large.height}
-          >
+      <div class="mosaic protect">
+        {row.tiles.map(({ photo, x }, k) => (
+          <div class:list={['tile', { big: k === 0 }, `x-${x}`]}>
             <Picture
               src={photo.image}
               alt={photo.alt}
@@ -59,7 +50,12 @@ const rows = await Promise.all(
               loading="lazy"
               draggable="false"
             />
-          </a>
+            {photo.caption && (
+              <span class="name" aria-hidden="true">
+                {photo.caption}
+              </span>
+            )}
+          </div>
         ))}
         {/* Empty squares hold the layout while a service has fewer than three photos */}
         {Array.from({ length: Math.max(0, 3 - row.tiles.length) }, (_, k) => (
@@ -107,12 +103,34 @@ const rows = await Promise.all(
     align-items: start;
   }
 
-  .mosaic a,
+  .mosaic .tile,
   .mosaic .slot {
+    position: relative;
     display: block;
     aspect-ratio: 1;
     overflow: hidden;
     background: var(--charcoal-950);
+  }
+
+  /* The artist or team name fades in over the photo on hover (devices with a mouse) */
+  .name {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 28px 14px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--cream);
+    background: linear-gradient(transparent, rgb(18 17 16 / 0.75));
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    .tile:hover .name {
+      opacity: 1;
+    }
   }
 
   .mosaic .big {

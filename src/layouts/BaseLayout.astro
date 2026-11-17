@@ -4,7 +4,6 @@ import '../styles/global.css';
 import SEO from '../components/SEO.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Lightbox from '../components/Lightbox.astro';
 import { url } from '../lib/paths';
 // Font files are preloaded so text renders in the right fonts straight away, with no flash of fallback fonts.
 import displayHeavy from '@fontsource/big-shoulders-display/files/big-shoulders-display-latin-800-normal.woff2?url';
@@ -54,7 +53,6 @@ const { title, description, image, imageFocus, isHome = false, hasContact = isHo
       <slot />
     </main>
     <Footer />
-    <Lightbox />
     <script>
       import '../scripts/site';
     </script>
