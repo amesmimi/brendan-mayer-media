@@ -16,7 +16,7 @@ const artists = new Intl.ListFormat('en-CA', { type: 'conjunction' }).format(abo
       formats={['avif', 'webp']}
       widths={widthsFor(portrait, [500, 800, 1100, 1400, 2000, 2600, 3200])}
       quality={PHOTO_QUALITY}
-      sizes={coverSizes(portrait, 4 / 5, '(min-width: 1680px) 700px, (min-width: 900px) 42vw, 100vw')}
+      sizes={coverSizes(portrait, 5 / 6, '(min-width: 1680px) 700px, (min-width: 900px) 42vw, 100vw')}
       loading="lazy"
       draggable="false"
     />
@@ -47,9 +47,16 @@ const artists = new Intl.ListFormat('en-CA', { type: 'conjunction' }).format(abo
 
   .photo {
     margin: 0;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 5 / 6;
     overflow: hidden;
     background: var(--charcoal-950);
+  }
+
+  /* Side by side with the text: never taller than the screen below the nav, so the whole photo fits on laptops */
+  @media (min-width: 901px) {
+    .photo {
+      max-height: calc(100svh - var(--header-height) - 48px);
+    }
   }
 
   .photo :global(img) {

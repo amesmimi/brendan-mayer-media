@@ -24,7 +24,7 @@ export const site = {
    * The photo shown when someone shares a link to the homepage (iMessage, Slack, social posts), cropped to 1200×630.
    * Separate from the header slideshow, so slide 1 can be something else. The gallery page uses it too.
    */
-  shareImage: { gallery: 'live-music', file: 'brendan-red-smoke.jpg' },
+  shareImage: { gallery: 'sports', file: 'brendan-whitecaps-winger.jpg' },
   /**
    * Unlisted preview mode for review before launch: pages ask search engines not to index them
    * and the sitemap isn't advertised. Set to false at launch.
@@ -75,16 +75,6 @@ export interface Service {
 /** The "What I shoot" section, one row per service. */
 export const services: Service[] = [
   {
-    gallery: 'live-music',
-    title: 'Live Music',
-    text: 'Concert and festival coverage for artists, management, venues and promoters. First three songs or the full set, edited within 48 hours.',
-    photos: [
-      { file: 'brendan-sepia-guitar.jpg', x: 15 },
-      { file: 'brendan-pedal-steel.jpg' },
-      { file: 'brendan-billie-marten.jpg', x: 25 },
-    ],
-  },
-  {
     gallery: 'sports',
     title: 'Sports',
     text: 'Game-day action and the athletes behind it, for leagues, teams and media.',
@@ -95,13 +85,23 @@ export const services: Service[] = [
     ],
   },
   {
+    gallery: 'live-music',
+    title: 'Live Music',
+    text: 'Concert and festival coverage for artists, management, venues and promoters. First three songs or the full set, edited within 48 hours.',
+    photos: [
+      { file: 'brendan-sepia-guitar.jpg', x: 15 },
+      { file: 'brendan-pedal-steel.jpg' },
+      { file: 'brendan-billie-marten.jpg', x: 25 },
+    ],
+  },
+  {
     gallery: 'events',
     title: 'Events',
     text: 'Community gatherings, cultural celebrations and the stories behind them.',
     photos: [
       { file: 'brendan-ceremonial-dance.jpg', x: 100 },
+      { file: 'brendan-greek-fest.jpg' },
       { file: 'brendan-bar-portrait.jpg', x: 60 },
-      { file: 'brendan-mother-and-son.jpg' },
     ],
   },
 ];

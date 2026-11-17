@@ -30,7 +30,7 @@ const rows = await Promise.all(
     <article class:list={['row', { flip: i % 2 === 1 }]} id={row.gallery} aria-labelledby={`service-${row.gallery}`}>
       <div class="mosaic protect">
         {row.tiles.map(({ photo, x }, k) => (
-          <div class:list={['tile', { big: k === 0 }, `x-${x}`]}>
+          <div class:list={['tile', { big: k === 0 }, `x-${x}`, photo.focus && `focus-${photo.focus}`]}>
             <Picture
               src={photo.image}
               alt={photo.alt}
@@ -144,66 +144,76 @@ const rows = await Promise.all(
     object-fit: cover;
   }
 
-  /* Horizontal crop from each photo's `x` in site.ts (classes, since the security policy blocks inline styles) */
-  .x-0 :global(img) {
-    object-position: 0% 50%;
+  /* Square crops: each photo's `x` in site.ts sets the left-right position, and its `focus` in the gallery
+     file the top-bottom one (classes, since the security policy blocks inline styles) */
+  .mosaic :global(img) {
+    object-position: var(--x, 50%) var(--y, 50%);
   }
-  .x-5 :global(img) {
-    object-position: 5% 50%;
+  .focus-top {
+    --y: 0%;
   }
-  .x-10 :global(img) {
-    object-position: 10% 50%;
+  .focus-bottom {
+    --y: 85%;
   }
-  .x-15 :global(img) {
-    object-position: 15% 50%;
+  .x-0 {
+    --x: 0%;
   }
-  .x-20 :global(img) {
-    object-position: 20% 50%;
+  .x-5 {
+    --x: 5%;
   }
-  .x-25 :global(img) {
-    object-position: 25% 50%;
+  .x-10 {
+    --x: 10%;
   }
-  .x-30 :global(img) {
-    object-position: 30% 50%;
+  .x-15 {
+    --x: 15%;
   }
-  .x-35 :global(img) {
-    object-position: 35% 50%;
+  .x-20 {
+    --x: 20%;
   }
-  .x-40 :global(img) {
-    object-position: 40% 50%;
+  .x-25 {
+    --x: 25%;
   }
-  .x-45 :global(img) {
-    object-position: 45% 50%;
+  .x-30 {
+    --x: 30%;
   }
-  .x-55 :global(img) {
-    object-position: 55% 50%;
+  .x-35 {
+    --x: 35%;
   }
-  .x-60 :global(img) {
-    object-position: 60% 50%;
+  .x-40 {
+    --x: 40%;
   }
-  .x-65 :global(img) {
-    object-position: 65% 50%;
+  .x-45 {
+    --x: 45%;
   }
-  .x-70 :global(img) {
-    object-position: 70% 50%;
+  .x-55 {
+    --x: 55%;
   }
-  .x-75 :global(img) {
-    object-position: 75% 50%;
+  .x-60 {
+    --x: 60%;
   }
-  .x-80 :global(img) {
-    object-position: 80% 50%;
+  .x-65 {
+    --x: 65%;
   }
-  .x-85 :global(img) {
-    object-position: 85% 50%;
+  .x-70 {
+    --x: 70%;
   }
-  .x-90 :global(img) {
-    object-position: 90% 50%;
+  .x-75 {
+    --x: 75%;
   }
-  .x-95 :global(img) {
-    object-position: 95% 50%;
+  .x-80 {
+    --x: 80%;
   }
-  .x-100 :global(img) {
-    object-position: 100% 50%;
+  .x-85 {
+    --x: 85%;
+  }
+  .x-90 {
+    --x: 90%;
+  }
+  .x-95 {
+    --x: 95%;
+  }
+  .x-100 {
+    --x: 100%;
   }
 
   .copy {

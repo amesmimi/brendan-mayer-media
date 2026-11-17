@@ -21,6 +21,7 @@ const { photos } = Astro.props;
       class:list={[
         'slide',
         photo.heroY !== undefined ? `y-${photo.heroY}` : photo.focus && `focus-${photo.focus}`,
+        photo.heroX !== undefined && `hx-${photo.heroX}`,
         { 'is-active': i === 0 },
       ]}
       aria-hidden={i === 0 ? 'false' : 'true'}
@@ -68,103 +69,149 @@ const { photos } = Astro.props;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: var(--hx, 50%) var(--hy, 50%);
+    transform-origin: var(--hx, 50%) var(--hy, 50%);
   }
 
   /* Photos marked `focus: top` (or bottom) in the gallery files are anchored there when cropped */
-  .slide.focus-top :global(img) {
-    object-position: 50% 12%;
-    transform-origin: 50% 12%;
+  .slide.focus-top {
+    --hy: 12%;
   }
 
-  .slide.focus-bottom :global(img) {
-    object-position: 50% 88%;
-    transform-origin: 50% 88%;
+  .slide.focus-bottom {
+    --hy: 88%;
   }
 
   /* Finer framing from a photo's `heroY` (classes, since the security policy blocks inline styles) */
-  .slide.y-0 :global(img) {
-    object-position: 50% 0%;
-    transform-origin: 50% 0%;
+  .slide.y-0 {
+    --hy: 0%;
   }
-  .slide.y-5 :global(img) {
-    object-position: 50% 5%;
-    transform-origin: 50% 5%;
+  .slide.y-5 {
+    --hy: 5%;
   }
-  .slide.y-10 :global(img) {
-    object-position: 50% 10%;
-    transform-origin: 50% 10%;
+  .slide.y-10 {
+    --hy: 10%;
   }
-  .slide.y-15 :global(img) {
-    object-position: 50% 15%;
-    transform-origin: 50% 15%;
+  .slide.y-15 {
+    --hy: 15%;
   }
-  .slide.y-20 :global(img) {
-    object-position: 50% 20%;
-    transform-origin: 50% 20%;
+  .slide.y-20 {
+    --hy: 20%;
   }
-  .slide.y-25 :global(img) {
-    object-position: 50% 25%;
-    transform-origin: 50% 25%;
+  .slide.y-25 {
+    --hy: 25%;
   }
-  .slide.y-30 :global(img) {
-    object-position: 50% 30%;
-    transform-origin: 50% 30%;
+  .slide.y-30 {
+    --hy: 30%;
   }
-  .slide.y-35 :global(img) {
-    object-position: 50% 35%;
-    transform-origin: 50% 35%;
+  .slide.y-35 {
+    --hy: 35%;
   }
-  .slide.y-40 :global(img) {
-    object-position: 50% 40%;
-    transform-origin: 50% 40%;
+  .slide.y-40 {
+    --hy: 40%;
   }
-  .slide.y-45 :global(img) {
-    object-position: 50% 45%;
-    transform-origin: 50% 45%;
+  .slide.y-45 {
+    --hy: 45%;
   }
-  .slide.y-50 :global(img) {
-    object-position: 50% 50%;
-    transform-origin: 50% 50%;
+  .slide.y-50 {
+    --hy: 50%;
   }
-  .slide.y-55 :global(img) {
-    object-position: 50% 55%;
-    transform-origin: 50% 55%;
+  .slide.y-55 {
+    --hy: 55%;
   }
-  .slide.y-60 :global(img) {
-    object-position: 50% 60%;
-    transform-origin: 50% 60%;
+  .slide.y-60 {
+    --hy: 60%;
   }
-  .slide.y-65 :global(img) {
-    object-position: 50% 65%;
-    transform-origin: 50% 65%;
+  .slide.y-65 {
+    --hy: 65%;
   }
-  .slide.y-70 :global(img) {
-    object-position: 50% 70%;
-    transform-origin: 50% 70%;
+  .slide.y-70 {
+    --hy: 70%;
   }
-  .slide.y-75 :global(img) {
-    object-position: 50% 75%;
-    transform-origin: 50% 75%;
+  .slide.y-75 {
+    --hy: 75%;
   }
-  .slide.y-80 :global(img) {
-    object-position: 50% 80%;
-    transform-origin: 50% 80%;
+  .slide.y-80 {
+    --hy: 80%;
   }
-  .slide.y-85 :global(img) {
-    object-position: 50% 85%;
-    transform-origin: 50% 85%;
+  .slide.y-85 {
+    --hy: 85%;
   }
-  .slide.y-90 :global(img) {
-    object-position: 50% 90%;
-    transform-origin: 50% 90%;
+  .slide.y-90 {
+    --hy: 90%;
   }
-  .slide.y-95 :global(img) {
-    object-position: 50% 95%;
-    transform-origin: 50% 95%;
+  .slide.y-95 {
+    --hy: 95%;
   }
-  .slide.y-100 :global(img) {
-    object-position: 50% 100%;
-    transform-origin: 50% 100%;
+  .slide.y-100 {
+    --hy: 100%;
+  }
+
+  /* Phones only, where the sides are cropped off: a photo's `heroX` sets how far across to frame it */
+  @media (max-width: 750px) {
+    .slide.hx-0 {
+      --hx: 0%;
+    }
+    .slide.hx-5 {
+      --hx: 5%;
+    }
+    .slide.hx-10 {
+      --hx: 10%;
+    }
+    .slide.hx-15 {
+      --hx: 15%;
+    }
+    .slide.hx-20 {
+      --hx: 20%;
+    }
+    .slide.hx-25 {
+      --hx: 25%;
+    }
+    .slide.hx-30 {
+      --hx: 30%;
+    }
+    .slide.hx-35 {
+      --hx: 35%;
+    }
+    .slide.hx-40 {
+      --hx: 40%;
+    }
+    .slide.hx-45 {
+      --hx: 45%;
+    }
+    .slide.hx-50 {
+      --hx: 50%;
+    }
+    .slide.hx-55 {
+      --hx: 55%;
+    }
+    .slide.hx-60 {
+      --hx: 60%;
+    }
+    .slide.hx-65 {
+      --hx: 65%;
+    }
+    .slide.hx-70 {
+      --hx: 70%;
+    }
+    .slide.hx-75 {
+      --hx: 75%;
+    }
+    .slide.hx-80 {
+      --hx: 80%;
+    }
+    .slide.hx-85 {
+      --hx: 85%;
+    }
+    .slide.hx-90 {
+      --hx: 90%;
+    }
+    .slide.hx-95 {
+      --hx: 95%;
+    }
+    .slide.hx-100 {
+      --hx: 100%;
+    }
   }
 
   /* The outgoing slide keeps its zoom while it fades out, so it doesn't snap back to full size. */

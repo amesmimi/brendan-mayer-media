@@ -18,13 +18,16 @@ photos:
     x: 75
     title: Portrait at the bar
     alt: An older man in a flat cap and white shirt leans on a bar and smiles, with shelves of bottles behind him.
-  - file: brendan-mother-and-son.jpg
-    title: Mother and son
-    alt: A smiling mother holds her young son, who grins at the camera.
   - file: brendan-greek-fest.jpg
     focus: top
     title: Greek fest
+    caption: Greek Fest
     alt: A woman in sunglasses and an "I can't keep calm, I'm Greek" T-shirt sings and gestures at the Greek festival.
+  - file: brendan-butchart-gardens-christmas.jpg
+    x: 75
+    title: Butchart Gardens Christmas
+    caption: Butchart Gardens
+    alt: Two children in winter hats look at a model Christmas village with a toy train, carousel and snowy hills at Butchart Gardens.
   - file: brendan-carved-paddle.jpg
     x: 40
     title: Carved paddle

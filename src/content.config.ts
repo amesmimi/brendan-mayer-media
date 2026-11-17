@@ -32,6 +32,9 @@ const galleries = defineCollection({
           // Homepage slideshow only, finer than focus: how far down the photo to frame it, from 0 (keep the top) to
           // 100 (keep the bottom), in steps of 5. Overrides focus there.
           heroY: z.number().int().min(0).max(100).multipleOf(5).optional(),
+          // Homepage slideshow on phones only, where the sides are cropped off: how far across the photo to frame it,
+          // from 0 (keep the left edge) to 100 (keep the right edge), in steps of 5. Default: centre.
+          heroX: z.number().int().min(0).max(100).multipleOf(5).optional(),
         }),
       )
       .default([]),

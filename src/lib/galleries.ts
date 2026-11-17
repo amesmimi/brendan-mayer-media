@@ -17,6 +17,8 @@ export interface Photo {
   x?: number;
   /** Homepage slideshow framing, 0 (top) to 100 (bottom); overrides `focus` there. */
   heroY?: number;
+  /** Homepage slideshow framing on phones, 0 (left) to 100 (right). */
+  heroX?: number;
   gallery: string;
   galleryLabel: string;
 }
@@ -68,6 +70,7 @@ async function load(): Promise<Gallery[]> {
         focus?: 'top' | 'center' | 'bottom';
         x?: number;
         heroY?: number;
+        heroX?: number;
       };
       const entries: Entry[] = [...listed, ...unlisted.map((file) => ({ file, featured: false }))];
       const photos: Photo[] = entries.map((p) => ({
@@ -80,6 +83,7 @@ async function load(): Promise<Gallery[]> {
         focus: p.focus,
         x: p.x,
         heroY: p.heroY,
+        heroX: p.heroX,
         gallery: slug,
         galleryLabel: data.label,
       }));
