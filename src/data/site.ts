@@ -35,8 +35,8 @@ export const site = {
 export const about = {
   heading: 'About',
   paragraphs: [
-    "I've spent more than ten years as a journalist, in radio newsrooms and then as a reporter at Victoria News, where I often shot my own photos. News taught me to work fast, read a room, and find the moment that tells the story.",
-    'I grew up in Saskatoon and moved to Vancouver Island in 2021. I care about this place and the people in it, and I like the in-between moments as much as the big ones. I deliver edited galleries fast, ready for press and social media.',
+    "I'm a photographer in Victoria, BC. Most of my work is live music, sports and community events.",
+    'I like the in-between moments as much as the big ones. I shoot for artists, venues, leagues and teams, and I deliver edited galleries fast, ready for press and social media.',
   ],
   /** Names with photos on the site ("I've photographed …" in About): sports and Cirque first, then the musicians together. */
   artists: [
