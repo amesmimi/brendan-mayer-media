@@ -29,14 +29,15 @@ export const site = {
    * Unlisted preview mode for review before launch: pages ask search engines not to index them
    * and the sitemap isn't advertised. Set to false at launch.
    */
-  preview: true,
+  preview: false,
 } as const;
 
 export const about = {
   heading: 'About',
   paragraphs: [
-    "I'm a photographer in Victoria, B.C. Most of my work is live music, sports and community events.",
-    'I like the in-between moments as much as the big ones. I shoot for artists, venues, leagues and teams, and I deliver edited galleries fast, ready for press and social media.',
+    "I'm a photographer based in Victoria, British Columbia, with a passion for music, sports, and people.",
+    'I enjoy capturing the in-between moments just as much as the big ones, working with artists, venues, leagues, and teams. I deliver professionally edited galleries quickly, ready for press and social media.',
+    'Above all, I aim to tell authentic stories, capture genuine emotion, and create images that bring moments to life.',
   ],
   /** Names with photos on the site ("I've photographed …" in About): sports and Cirque first, then the musicians together. */
   artists: [
@@ -87,7 +88,7 @@ export const services: Service[] = [
   {
     gallery: 'live-music',
     title: 'Live Music',
-    text: 'Concert and festival coverage for artists, management, venues and promoters. First three songs or the full set, edited within 48 hours.',
+    text: 'Concert and festival coverage for artists, management, venues and promoters. First three songs or the full set.',
     photos: [
       { file: 'brendan-sepia-guitar.jpg', x: 30 },
       { file: 'brendan-pedal-steel.jpg' },
