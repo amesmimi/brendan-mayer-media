@@ -5,13 +5,12 @@ order: 1
 blurb: Game-day action and the athletes behind it, from the pitch to the pool.
 photos:
   - file: brendan-whitecaps-winger.jpg
-    x: 45
+    x: 35
     title: Vancouver Whitecaps FC
     caption: Vancouver Whitecaps FC
     featured: 1
     alt: A Vancouver Whitecaps FC player in white dribbles down the wing under the lights, with a referee and a packed stand behind him.
   - file: brendan-whitecaps-huddle.jpg
-    x: 30
     title: Vancouver Whitecaps FC
     caption: Vancouver Whitecaps FC
     alt: Vancouver Whitecaps FC players huddle and celebrate in front of a crowd waving blue and yellow flags.
@@ -19,7 +18,7 @@ photos:
     title: Swimmer
     alt: A synchronized swimmer in goggles and a patterned suit raises both arms above the water, with a water slide behind her.
   - file: brendan-cirque-du-soleil.jpg
-    x: 45
+    x: 75
     title: Cirque du Soleil
     caption: Cirque du Soleil
     alt: A smiling Cirque du Soleil performer with taped hands, in black and white, sits on the stage before a show.
@@ -29,7 +28,7 @@ photos:
     caption: Cirque du Soleil
     alt: A Cirque du Soleil performer in a black OVO T-shirt rests his hand on top of a large steel wheel backstage, among racks of costumes and props.
   - file: brendan-cirque-du-soleil-taping.jpg
-    x: 35
+    x: 30
     title: Cirque du Soleil
     caption: Cirque du Soleil
     alt: A bearded Cirque du Soleil performer in a grey athletic shirt pulls a strip of white tape taut as he wraps his hands before a show.
