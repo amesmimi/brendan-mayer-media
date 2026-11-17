@@ -10,9 +10,9 @@ export const site = {
   /** The line under the Gallery heading. */
   galleryIntro: 'Live music, sports and events from Vancouver Island and beyond.',
   description:
-    'Brendan Mayer is a live music, sports and event photographer based in Victoria, BC, working with artists, promoters, venues, sports leagues and teams.',
-  location: 'Victoria, BC',
-  serviceArea: 'Based in Victoria, BC. Available across Vancouver Island and beyond.',
+    'Brendan Mayer is a live music, sports and event photographer based in Victoria, B.C., working with artists, promoters, venues, sports leagues and teams.',
+  location: 'Victoria, B.C.',
+  serviceArea: 'Based in Victoria, B.C.',
   instagram: { handle: '@brendanmayer', url: 'https://www.instagram.com/brendanmayer/' },
   /**
    * Brendan's Gmail, approved by him for the site. Switching to a work address later (e.g. hello@brendanmayermedia.ca)
@@ -35,7 +35,7 @@ export const site = {
 export const about = {
   heading: 'About',
   paragraphs: [
-    "I'm a photographer in Victoria, BC. Most of my work is live music, sports and community events.",
+    "I'm a photographer in Victoria, B.C. Most of my work is live music, sports and community events.",
     'I like the in-between moments as much as the big ones. I shoot for artists, venues, leagues and teams, and I deliver edited galleries fast, ready for press and social media.',
   ],
   /** Names with photos on the site ("I've photographed …" in About): sports and Cirque first, then the musicians together. */
@@ -81,7 +81,7 @@ export const services: Service[] = [
     photos: [
       { file: 'brendan-whitecaps-huddle.jpg', x: 45 },
       { file: 'brendan-swimmer.jpg' },
-      { file: 'brendan-cirque-du-soleil.jpg', x: 70 },
+      { file: 'brendan-speed-climber.jpg', x: 25 },
     ],
   },
   {
