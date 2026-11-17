@@ -39,16 +39,6 @@ export const about = {
     'I enjoy capturing the in-between moments just as much as the big ones, working with artists, venues, leagues, and teams. I deliver professionally edited galleries quickly, ready for press and social media.',
     'Above all, I aim to tell authentic stories, capture genuine emotion, and create images that bring moments to life.',
   ],
-  /** Names with photos on the site ("I've photographed …" in About): sports and Cirque first, then the musicians together. */
-  artists: [
-    'Vancouver Whitecaps FC',
-    'Cirque du Soleil',
-    'Portugal. The Man',
-    'July Talk',
-    'Allan Rayman',
-    'Yonaka',
-    'Billie Marten',
-  ],
   /** Set to a file in public/ (e.g. 'brendan-mayer-cv.pdf') once Brendan has a CV to share. */
   cvFile: null as string | null,
 };

@@ -4,8 +4,6 @@ import portrait from '../assets/about/brendan.jpg';
 import { about } from '../data/site';
 import { PHOTO_QUALITY, coverSizes, widthsFor } from '../lib/images';
 import { url } from '../lib/paths';
-
-const artists = new Intl.ListFormat('en-CA', { type: 'conjunction' }).format(about.artists);
 ---
 
 <section class="wrap about" id="about" aria-labelledby="about-title">
@@ -23,10 +21,9 @@ const artists = new Intl.ListFormat('en-CA', { type: 'conjunction' }).format(abo
   </figure>
   <div class="body">
     <h2 id="about-title">{about.heading}</h2>
-    {about.paragraphs.map((p, i) => (
-      <p class:list={{ lead: i === 0 }}>{p}</p>
+    {about.paragraphs.map((p) => (
+      <p>{p}</p>
     ))}
-    <p class="artists">I've photographed {artists}.</p>
     {/* Booking lives in the nav's "Work with me"; the CV link shows once there's a CV to share */}
     {about.cvFile && (
       <a class="cv" href={url(about.cvFile)} download>
@@ -82,12 +79,6 @@ const artists = new Intl.ListFormat('en-CA', { type: 'conjunction' }).format(abo
   .body p {
     max-width: 52ch;
     color: var(--cream-muted);
-  }
-
-  .body .lead {
-    font-size: 20px;
-    max-width: 46ch;
-    color: var(--cream);
   }
 
   .cv {
