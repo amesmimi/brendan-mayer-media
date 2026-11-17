@@ -10,18 +10,22 @@ photos:
     caption: Vancouver Whitecaps FC
     featured: 1
     alt: A Vancouver Whitecaps FC player in white dribbles down the wing under the lights, with a referee and a packed stand behind him.
-  - file: brendan-whitecaps-huddle.jpg
-    title: Vancouver Whitecaps FC
-    caption: Vancouver Whitecaps FC
-    alt: Vancouver Whitecaps FC players huddle and celebrate in front of a crowd waving blue and yellow flags.
-  - file: brendan-swimmer.jpg
-    title: Swimmer
-    alt: A synchronized swimmer in goggles and a patterned suit raises both arms above the water, with a water slide behind her.
   - file: brendan-cirque-du-soleil.jpg
     x: 75
     title: Cirque du Soleil
     caption: Cirque du Soleil
     alt: A smiling Cirque du Soleil performer with taped hands, in black and white, sits on the stage before a show.
+  - file: brendan-swimmer.jpg
+    title: Swimmer
+    alt: A synchronized swimmer in goggles and a patterned suit raises both arms above the water, with a water slide behind her.
+  - file: brendan-motocross.jpg
+    x: 100
+    title: Motocross
+    alt: A motocross rider in a red and black helmet and goggles steers a red bike down a rocky dirt trail through the woods.
+  - file: brendan-whitecaps-huddle.jpg
+    title: Vancouver Whitecaps FC
+    caption: Vancouver Whitecaps FC
+    alt: Vancouver Whitecaps FC players huddle and celebrate in front of a crowd waving blue and yellow flags.
   - file: brendan-cirque-du-soleil-wheel.jpg
     x: 65
     title: Cirque du Soleil
@@ -32,10 +36,6 @@ photos:
     title: Cirque du Soleil
     caption: Cirque du Soleil
     alt: A bearded Cirque du Soleil performer in a grey athletic shirt pulls a strip of white tape taut as he wraps his hands before a show.
-  - file: brendan-motocross.jpg
-    x: 100
-    title: Motocross
-    alt: A motocross rider in a red and black helmet and goggles steers a red bike down a rocky dirt trail through the woods.
   - file: brendan-cadboro-bay-festival.jpg
     title: Cadboro Bay Festival
     alt: A little girl in a floral dress grins as she carries a red ball across the grass at the Cadboro Bay Festival.
