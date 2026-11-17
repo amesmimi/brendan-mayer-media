@@ -6,11 +6,11 @@ export const site = {
   name: 'Brendan Mayer Media',
   photographer: 'Brendan Mayer',
   /** The big statement under the header slideshow; the homepage's main heading. */
-  intro: 'I photograph sports, live music, and events on Vancouver Island.',
+  intro: 'I photograph live music, sports, and events on Vancouver Island.',
   /** The line under the Gallery heading. */
-  galleryIntro: 'Sports, live music and events from Vancouver Island and beyond.',
+  galleryIntro: 'Live music, sports and events from Vancouver Island and beyond.',
   description:
-    'Brendan Mayer is a sports, live music and event photographer based in Victoria, BC, working with artists, promoters, venues, sports leagues and teams.',
+    'Brendan Mayer is a live music, sports and event photographer based in Victoria, BC, working with artists, promoters, venues, sports leagues and teams.',
   location: 'Victoria, BC',
   serviceArea: 'Based in Victoria, BC. Available across Vancouver Island and beyond.',
   instagram: { handle: '@brendanmayer', url: 'https://www.instagram.com/brendanmayer/' },
