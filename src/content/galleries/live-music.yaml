@@ -31,11 +31,6 @@ photos:
     caption: Yonaka
     alt: A curly-haired guitarist from Yonaka plays a solo in warm, low light.
     focus: top
-  - file: brendan-red-smoke.jpg
-    title: Portugal. The Man
-    caption: Portugal. The Man
-    alt: A member of Portugal. The Man in a cap stands silhouetted in thick red and teal stage smoke at Laketown Shakedown.
-    focus: top
   - file: brendan-green-stage.jpg
     x: 35
     title: July Talk
@@ -51,4 +46,9 @@ photos:
     title: Aaron Goldstein
     caption: Aaron Goldstein
     alt: Aaron Goldstein, bearded and in a grey toque, plays pedal steel under deep blue stage light.
+    focus: top
+  - file: brendan-red-smoke.jpg
+    title: Portugal. The Man
+    caption: Portugal. The Man
+    alt: A member of Portugal. The Man in a cap stands silhouetted in thick red and teal stage smoke at Laketown Shakedown.
     focus: top
