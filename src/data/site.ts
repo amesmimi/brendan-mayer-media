@@ -6,7 +6,7 @@ export const site = {
   name: 'Brendan Mayer Media',
   photographer: 'Brendan Mayer',
   /** The big statement under the header slideshow; the homepage's main heading. */
-  intro: 'I photograph live music, sports, and events on Vancouver Island.',
+  intro: 'I photograph live music, sports, and events on Vancouver Island',
   /** The line under the Gallery heading. */
   galleryIntro: 'Live music, sports and events from Vancouver Island and beyond.',
   description:
@@ -68,7 +68,7 @@ export const services: Service[] = [
   {
     gallery: 'sports',
     title: 'Sports',
-    text: 'Game-day action and the athletes behind it, for leagues, teams and media.',
+    text: 'Capturing game-day action and the athletes behind it',
     photos: [
       { file: 'brendan-whitecaps-huddle.jpg', x: 45 },
       { file: 'brendan-swimmer.jpg' },
@@ -78,7 +78,7 @@ export const services: Service[] = [
   {
     gallery: 'live-music',
     title: 'Live Music',
-    text: 'Concert and festival coverage for artists, management, venues and promoters. First three songs or the full set.',
+    text: 'Concert and festival coverage for artists, management, venues, and promoters',
     photos: [
       { file: 'brendan-sepia-guitar.jpg', x: 30 },
       { file: 'brendan-pedal-steel.jpg' },
@@ -88,7 +88,7 @@ export const services: Service[] = [
   {
     gallery: 'events',
     title: 'Events',
-    text: 'Community gatherings, cultural celebrations and the stories behind them.',
+    text: 'Community gatherings, cultural celebrations, and the stories behind them',
     photos: [
       { file: 'brendan-ceremonial-dance.jpg', x: 100 },
       { file: 'brendan-greek-fest.jpg' },
