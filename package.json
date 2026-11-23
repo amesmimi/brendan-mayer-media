@@ -15,13 +15,13 @@
   },
   "dependencies": {
     "@astrojs/check": "0.9.12",
-    "@astrojs/sitemap": "3.7.5",
+    "@astrojs/sitemap": "3.7.6",
     "@fontsource/big-shoulders-display": "5.3.0",
     "@fontsource/hanken-grotesk": "5.3.0",
     "@fontsource/ibm-plex-mono": "5.3.0",
-    "astro": "7.4.12",
+    "astro": "7.4.13",
     "sharp": "0.35.5",
-    "typescript": "6.0.3",
+    "typescript": "7.0.2",
     "yaml": "2.9.1"
   },
   "devDependencies": {
@@ -31,6 +31,6 @@
     "globals": "17.14.0",
     "prettier": "3.10.1",
     "prettier-plugin-astro": "1.1.2",
-    "typescript-eslint": "8.72.2"
+    "typescript-eslint": "8.73.0"
   }
 }
